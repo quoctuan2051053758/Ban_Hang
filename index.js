@@ -1,7 +1,10 @@
 const express = require('express')
 const route = require("./router/client/index.route")
+require('dotenv').config()
+
+
 const app= express()
-const port= 3000
+const port= process.env.PORT
 
 
 app.set('views','./views');
