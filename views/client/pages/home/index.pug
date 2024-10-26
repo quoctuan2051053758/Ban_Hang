@@ -1,9 +1,19 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
-    body 
-        h1 Trang chủ
-        h2 Danh sách sản phẩm
+extends ../../layouts/default.pug
+
+block main  
+    .container.my-3     
+        .row    
+            .col-12 
+                .box-head 
+                    h2.inner-title Danh sách sản phẩm 
+
+        .row 
+            .col-4.mb-3 
+                .product-item 
+                    .inner-image 
+                        img(src="https://aothudong.com/san-pham/289/ao-thun-nam-dai-tay-xanh-cuc-chat.html", alt="Quần áo nam", srcset="")
+                    .inner-content
+                        h3.inner-title Áo thun nam dài tay xanh
+                        .inner-price-new Giá bán: 500.500 Đ
+                        .inner-price-old Giá bán: 400.000 Đ
+                        .inner-discount -20%
