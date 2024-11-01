@@ -51,3 +51,91 @@ if(buttonsPagination){
 //end Pagination
 
 
+//Checkbox multi
+const checkboxMulti = document.querySelector("[checkbox-multi]")
+if(checkboxMulti){
+    const inputCheckAll= checkboxMulti.querySelector("input[name ='checkall']")
+    const inputsID=checkboxMulti.querySelectorAll("input[name='id']")
+    
+    inputCheckAll.addEventListener("click",()=>{
+        if(inputCheckAll.checked){
+           inputsID.forEach(input=>{
+            input.checked=true;
+           })
+        }else{
+            inputsID.forEach(input=>{
+                input.checked=false;
+               })
+        }
+    })
+    inputsID.forEach(input=>{
+        input.addEventListener("click",()=>{
+            const countChecked = checkboxMulti.querySelectorAll(
+                "input[name='id']:checked"
+            ).length
+            if(countChecked==inputsID.length){
+                inputCheckAll.checked=true
+            }else{
+                inputCheckAll.checked=false
+            }
+        })
+    })
+
+}
+//end checkbox
+
+//form Change Multi
+const formChangeMulti= document.querySelector("[form-change-multi]")
+if(formChangeMulti){
+ formChangeMulti.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const checkboxMulti = document.querySelector("[checkbox-multi]")
+    const inputChecked = checkboxMulti.querySelectorAll(
+        "input[name='id']:checked"
+    )
+
+    const typeChange = e.target.elements.type.value
+    if(typeChange=="delete-all"){
+        const isConfirm = confirm("bạn có chắc muốn xóa những sản phẩm này")
+        if(!isConfirm){
+            return;
+        }
+    }
+
+
+    if(inputChecked.length > 0){
+        let ids=[]
+        const inputIds= formChangeMulti.querySelector("input[name='ids']")
+        inputChecked.forEach(input=>{
+            const id=input.value;
+            if(typeChange=="change-position"){
+                const position = input.closest("tr").querySelector("input[name='position']").value
+                ids.push(`${id}-${position}`)
+            }else{
+                ids.push(id);
+            }
+            
+        })
+        inputIds.value=ids.join(", ")
+        formChangeMulti.submit();
+    }else{
+        alert('Vui lòng chọn ít nhất 1 bản ghi');
+    } 
+ })
+}
+//end form change
+
+
+//show alert
+const showAlert=document.querySelector("[show-alert]")
+if(showAlert){
+    const time = parseInt(showAlert.getAttribute("data-time"));
+    const closeAlert = showAlert.querySelector("[close-alert]")
+    setTimeout(()=>{
+        showAlert.classList.add("alert-hidden")
+    },time)
+    closeAlert.addEventListener("click",()=>{
+        showAlert.classList.add("alert-hidden")
+    })
+}
+//end show alert
