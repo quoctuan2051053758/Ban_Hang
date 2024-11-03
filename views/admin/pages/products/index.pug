@@ -9,7 +9,7 @@ include ../../mixins/alert.pug
 block main
     
     +alert-success(5000)
-    
+    +alert-error(5000)
     h1 Trang danh sách sản phẩm
     .card.mb-3 
         .card-header Bộ lọc và Tìm kiếm 
@@ -51,9 +51,10 @@ block main
                                 td #{index + 1}
                                 td
                                     img(
-                                    src=item.thumbnail
-                                    alt= item.title
-                                    height="auto"
+                                        src=item.thumbnail
+                                        alt= item.title
+                                        height="auto"
+                                        width="100px"
                                     )
                                 td #{item.title}
                                 td #{item.price}
@@ -66,19 +67,30 @@ block main
                                     )
                                 td
                                     if(item.status == "active")
-                                        a(href="javascript:;" 
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="badge badge-success")  Đang hoạt động
+                                        a(
+                                            href="javascript:;" 
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status
+                                            class="badge badge-success"
+                                        )  Đang hoạt động
                                     else    
-                                        a(href="javascript:;" 
-                                        data-status=item.status
-                                        data-id=item.id
-                                        button-change-status
-                                        class="badge badge-danger") ngừng hoạt động
+                                        a(
+                                            href="javascript:;" 
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status
+                                            class="badge badge-danger"
+                                        ) ngừng hoạt động
                                 td
-                                    button.btn.btn-warning.btn-sm Chỉnh sửa
+                                    a(
+                                        href=`${prefixAdmin}/products/detail/${item.id}` 
+                                        class="btn btn-secondary btn-sm"
+                                    ) Chi tiết
+                                    a(
+                                        href=`${prefixAdmin}/products/edit/${item.id}` 
+                                        class="btn btn-warning btn-sm"
+                                    ) Sửa
                                     button(
                                         class="btn btn-danger btn-sm"
                                         button-delete
