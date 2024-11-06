@@ -31,7 +31,7 @@ block main
         div(class="position mb-4") Vị trí: <strong>#{product.position}</strong>
 
     if(product.description)
-        div(class="description mb-4") Mô tả: #{product.description}
+        div(class="description mb-4") Mô tả: !{product.description}
     a(href=`${prefixAdmin}/products/edit/${product.id}` class="btn btn-warning") Chỉnh sửa
     
     script(src="/admin/js/product.js") 

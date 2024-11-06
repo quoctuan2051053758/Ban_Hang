@@ -1,12 +1,11 @@
 extends  ../../layouts/default.pug
 include ../../mixins/alert.pug
-
+include ../../mixins/select-tree.pug
 block main 
+    h1(class="mb-4") Thêm mới Danh dục
     +alert-error(5000)
-    h1(class="mb-4") Thêm mới sản phẩm 
     form(
-        action = `${prefixAdmin}/products/create`
-        id = "form-create-product"
+        action = `${prefixAdmin}/products-category/create`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -17,9 +16,21 @@ block main
                 class="form-control"
                 id="title"
                 name="title"
+                
                 required
             
             )
+        div(class="form-group")
+            label(for="title") Danh mục cha
+            select(
+                name="parent_id"
+                id="parent_id"
+                class="form-control"
+            )
+                option(value="") --chọn danh mục cha--
+                if(records)
+                    +select-tree(records)
+                        option(value=item.id) #{item.title}  
         div(class="form-group")
             label(for="desc") Mô tả 
             textarea(
@@ -28,40 +39,6 @@ block main
                 name="description"
                 rows="5"
             )
-
-        div(class="form-group")
-            label(for="price") Giá 
-            input(
-                type="number"
-                class="form-control"
-                id="price"
-                name="price"
-                value="0"
-                min="0"
-            )
-
-        div(class="form-group")
-            label(for="discount") % Giảm giá 
-            input(
-                type="number"
-                class="form-control"
-                id="discount"
-                name="discountPercentage"
-                value="0"
-                min="0"
-            )
-
-        div(class="form-group")
-            label(for="stock") Số lượng 
-            input(
-                type="number"
-                class="form-control"
-                id="stock"
-                name="stock"
-                value="0"
-                min="0"
-            )
-
         div(
             class="form-group"
             upload-image
@@ -109,7 +86,7 @@ block main
                 id="statusInActive"
                 name="status"
                 value="inactive"
-                checked
+
             )
             label(for="statusActive" class="form-check-label") Dừng hoạt động
             
@@ -118,5 +95,3 @@ block main
                 type="submit" 
                 class="btn btn-primary"
             ) Thêm sản phẩm
-
-    script(src="/admin/js/product.js") 

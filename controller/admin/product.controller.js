@@ -6,11 +6,8 @@ const paginationHelper = require("../../helpers/pagination")
 // const multer = require("multer")
 
 module.exports.index = async(req,res)=>{
-
-    
 // Nhúng bộ lọc
     const filterStatus = filterStatusHelper(req.query);
-    // console.log(filterStatus)
 
     let find = {
         deleted:false
@@ -18,10 +15,8 @@ module.exports.index = async(req,res)=>{
     if(req.query.status){
         find.status = req.query.status;
     }
-    
 
     const objectSearch = searchHelper(req.query);
-    // console.log(objectSearch)
     if(objectSearch.regex){
         find.title = objectSearch.regex
     }
@@ -37,13 +32,19 @@ module.exports.index = async(req,res)=>{
         countProducts
     )
 
+    //sort
+    const sort = {};
+    if(req.query.sortKey && req.query.sortValue){
+        sort[req.query.sortKey] =req.query.sortValue
+    }else{
+        sort.position = "desc"
+    }
 
-
-    //End Pagination
+    
     const products = await Product.find(find)
-        .sort({position:"desc"})
+        .sort(sort)
         .limit(objectPagination.limitItems)
-            .skip(objectPagination.skip)
+        .skip(objectPagination.skip)
 
     res.render('admin/pages/products/index',{
         pageTitle:"Danh sách sản phẩm",
@@ -114,12 +115,6 @@ module.exports.create = async(req,res)=>{
 
 //[POST] admin/products/create
 module.exports.createPost = async(req,res)=>{
-    
-    // if(req.body.title.length<8){
-    //     req.flash("error","Vui lòng nhập tiêu đề ít nhất 8 ký tự")
-    //     res.redirect("back")
-    //     return
-    // }
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
@@ -129,13 +124,11 @@ module.exports.createPost = async(req,res)=>{
     }else{
         req.body.position = parseInt(req.body.position)
     }
-    if(req.file){
-        req.body.thumbnail = `/uploads/${req.file.filename}`
-    }
 
     const product = new Product(req.body)
     await product.save()
     res.redirect(`${systemConfig.prefixAdmin}/products`)
+
 }
 
 //[GET] admin/product/edit/:id
