@@ -4,7 +4,7 @@ include ../../mixins/alert.pug
 block main 
     div(class="product-details container mt-5")
     if(product.title)
-        h1(class="product-title mb-4") #{product.title}
+        h1(class="product-title mb-4") Tiêu đề: #{product.title}
 
     if(product.price)
         h2(class="product-price mb-4 text-danger") Giá: #{product.price}
@@ -13,11 +13,11 @@ block main
         h3(class="product-discount mb-4 text-info") Giảm giá: #{product.discountPercentage}% 
 
     if(product.stock)
-        h4(class="product-stock mb-4") Tồn kho: #{product.stock}
+        h4(class="product-stock mb-4 ") Tồn kho: #{product.stock}
 
     if(product.thumbnail)
         div(class="thumbnail mb-4")
-            img(src=product.thumbnail, alt="Hình ảnh sản phẩm", class="img-fluid rounded")
+            img(src=product.thumbnail, alt="Hình ảnh sản phẩm", class="img-fluid rounded" width="150px")
 
     if(product.status)
         div(class="status mb-4")

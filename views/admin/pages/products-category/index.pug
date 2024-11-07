@@ -8,12 +8,11 @@ include ../../mixins/table-tree.pug
 block main
     h1 Trang danh mục sản phẩm
     .card.mb-3 
-        .card-header Bộ lọc và Tìm kiếm 
+        .card-header Tìm kiếm 
         .card-body
             .row
-                .col-6 
-                    +filter-status(filterStatus)
-                .col-6 
+                
+                .col-12
                     +search(keyword)
 
     .card.mb-3 
