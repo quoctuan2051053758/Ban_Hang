@@ -25,4 +25,4 @@ tinymce.init({
   
       input.click();
     },
-  });s
+  });
