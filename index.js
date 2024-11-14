@@ -8,7 +8,7 @@ const session=require("express-session")
 const route = require("./router/client/index.route")
 const admin = require("./router/admin/index.route")
 const flash=require("express-flash")
-
+const moment = require("moment")
 require('dotenv').config()
 const database=require("./config/database")
 
@@ -41,6 +41,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 
 // app locals variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
+app.locals.moment = moment
 
 app.use(express.static(`${__dirname}/public`))   
 

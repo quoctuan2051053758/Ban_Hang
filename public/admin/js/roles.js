@@ -22,7 +22,6 @@ if(tablePermissons){
                     if(checked){
                         permissions[index].permissions.push(name)
                     }
-                    
                 })
             }
 

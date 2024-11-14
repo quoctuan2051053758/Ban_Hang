@@ -48,7 +48,6 @@ module.exports.create = async(req,res)=>{
     });
 }
 module.exports.createPost = async(req,res)=>{
-    console.log(req.body)
     if(req.body.position==""){
         const count = await ProductCategory.countDocuments()
         req.body.position = count + 1;
@@ -103,7 +102,7 @@ module.exports.detail = async(req,res)=>{
 
     const records = await ProductCategory.findOne(find)
     res.render('admin/pages/products-category/detail',{
-        pageTitle:"Danh sách sản phẩm",
+        pageTitle:"Danh mục",
         records:records
     });
 }
