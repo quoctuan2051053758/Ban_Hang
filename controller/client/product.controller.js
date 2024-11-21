@@ -18,23 +18,32 @@ module.exports.index = async(req,res)=>{
     });
 }
 
-//[GET] /products/:slug
+//[GET] /products/:slugProduct
 
 module.exports.detail = async(req,res)=>{
-    try{
+    // try{
         const find = {
             deleted:false,
-            slug:req.params.slug,
+            slug:req.params.slugProduct,
             status:"active"
         }
         const product = await Product.findOne(find)
+        if(product.product_category_id){
+            const category = await ProductCategory.findOne({
+                _id:product.product_category_id,
+                status:"active",
+                deleted:"false"
+            })
+            product.category = category
+        }
+        product.priceNew=productsHelper.priceNewProduct(product)
         res.render('client/pages/products/detail',{
             pageTitle:product.title,
             product:product
         });
-    }catch(error){
-        res.redirect("/products")
-    }
+    // }catch(error){
+    //     res.redirect("/products")
+    // }
 }
 
 //[GET] /products/:slugCategory
