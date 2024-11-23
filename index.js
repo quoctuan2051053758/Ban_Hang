@@ -22,6 +22,8 @@ const port= process.env.PORT
 app.use(methodOverride("_method"))
 app.use(bodyParser.urlencoded({extended:false}))
 
+app.use(express.static(`${__dirname}/public`))   
+
 app.set('views',`${__dirname}/views`);
 app.set('view engine','pug')
 
@@ -34,6 +36,12 @@ app.use(flash());
 
 route(app);
 admin(app);
+app.get("*",(req,res)=>{
+    res.render("client/pages/errors/404",{
+        pageTitle:"404 Not Found"
+    })
+})
+
 
 //end tinyMCE
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
@@ -43,7 +51,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 app.locals.moment = moment
 
-app.use(express.static(`${__dirname}/public`))   
+
 
 app.listen(port,()=>{
     console.log('on port ',port);
