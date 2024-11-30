@@ -19,6 +19,8 @@ block main
                             th STT
                             th Ảnh
                             th Tên
+                            th Màu 
+                            th Size
                             th Giá
                             th Số lượng
                             th Tổng tiền
@@ -32,19 +34,22 @@ block main
                                         img(src=item.productInfo.thumbnail, alt=item.productInfo.title width="80px")
                                     td
                                         a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
-                                    td #{item.productInfo.priceNew}$
+                                    td #{item.color}
+                                    td #{item.size}
+                                    td #{item.productInfo.price}
                                     td 
                                         input(
                                             type="number"
                                             name="quantity"
                                             value=item.quantity
-                                            min="1"
-                                            
-                                            product-id = item.product_id
+                                            min="1"  
+                                            product-id = item.product_id,
+                                            product-size=item.size
+                                            product-color=item.color
                                             style="width:60px"
                                         )
                                     
-                                    td #{item.totalPrice} $
+                                    td #{item.totalPrice} 
                                     td 
                                         a(href=`/cart/delete/${item.product_id}`
                                             class="btn btn-danger"

@@ -42,6 +42,7 @@ module.exports.login =async (req,res)=>{
 module.exports.loginPost =async (req,res)=>{
     const email = req.body.email
     const password = req.body.password
+    const remember = req.body.remember
     const user = await User.findOne({
         email:email,
         deleted:false
@@ -73,10 +74,14 @@ module.exports.loginPost =async (req,res)=>{
             user_id:user.id
         })
     }
-
+    if(remember){
+        res.cookie("tokenUser", user.tokenUser, { maxAge: 30 * 24 * 60 * 60 * 1000 });
+    }else{
+        res.cookie("tokenUser",user.tokenUser)
+    }
     
 
-    res.cookie("tokenUser",user.tokenUser)
+    
     // res.cookie("cartId",cart.id)
     res.redirect("/")
 

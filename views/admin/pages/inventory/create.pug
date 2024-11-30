@@ -1,0 +1,37 @@
+
+extends  ../../layouts/default.pug
+
+block main
+    h1 Tạo giao dịch
+    .container
+        .row.justify-content-center
+            .col-md-6
+                form(action=`${prefixAdmin}/inventory/add`, method="POST")
+                    .form-group
+                        label(for="product_id") Chọn Sản Phẩm
+                        select(name="product_id", id="product_id", class="form-control")
+                            // Thay thế bằng danh sách sản phẩm từ backend
+                            option(value="") Chọn sản phẩm
+                            each product in products
+                            
+                                option(value=product.id) - #{product.title}
+
+                    .form-group
+                        label(for="quantity") Số Lượng
+                        input(type="number", name="quantity", id="quantity", class="form-control", required=true)
+
+                    .form-group
+                        label(for="price") Giá
+                        input(type="number", name="price", id="price", class="form-control", required=true)
+
+                    .form-group
+                        label(for="transactionType") Loại Giao Dịch
+                        select(name="transactionType", id="transactionType", class="form-control", required=true)
+                            option(value="import") Nhập Kho
+                            option(value="export") Xuất Kho
+
+                    .form-group
+                        label(for="note") Ghi Chú
+                        textarea(name="note", id="note", class="form-control")
+
+                    button(type="submit", class="btn btn-primary") Thêm Giao Dịch

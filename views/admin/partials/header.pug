@@ -1,16 +1,61 @@
-header.header 
-    .container-fluid 
-        .row.align-items-center 
-            .col-3 
-                .inner-logo 
-                    a(href="/admin/dashboard") ADMIN 
-            .col-9
-                div(class="text-right")
-                    a(
-                            href=`${prefixAdmin}/my-account`
-                            class="btn btn-primary btn-sm mr-2"
-                    ) #{user.fullName}
-                    a(
-                        href=`${prefixAdmin}/auth/logout`
-                        class="btn btn-danger btn-sm"
-                    ) Đăng xuất
+//- header.header 
+//-     .container-fluid 
+//-         .row.align-items-center 
+//-             .col-3 
+//-                 .inner-logo 
+//-                     a(href="/admin/dashboard") ADMIN 
+//-             .col-9
+//-                 div(class="text-right")
+//-                     a(
+//-                             href=`${prefixAdmin}/my-account`
+//-                             class="btn btn-primary btn-sm mr-2"
+//-                     ) #{user.fullName}
+//-                     a(
+//-                         href=`${prefixAdmin}/auth/logout`
+//-                         class="btn btn-danger btn-sm"
+//-                     ) Đăng xuất
+
+//- .page-topbar
+//-     .logo-area
+//-     .quick-area
+//-         .pull-left
+//-             ul.info-menu.left-links.list-inline.list-unstyled
+//-                 li.sidebar-toggle-wrap
+//-                     a(href="javascript:;" data-toggle="sidebar" class="sidebar_toggle")
+//-                         i.fa.fa-bars
+//-         .pull-right#profile-right
+//-             ul.info-menu.right-links.list-inline.list-unstyled
+//-                 li.profile
+//-                     a(href="#" data-toggle="dropdown" class="toggle")
+//-                         img(src=user.avatar, alt="user-image" class="img-circle img-inline avatar")
+//-                         span.name
+//-                             i.fa.fa-angle-down
+//-                     ul.dropdown-menu.profile.animated.fadeIn
+//-                         li
+//-                             a(href="#settings")
+//-                                 i.fa.fa-wrencqh Settings
+//-                         li
+//-                             a(href="#profile")
+//-                                 i.fa.fa-user Profile
+//-                         li.last
+//-                             a(href=`${prefixAdmin}/auth/logout`)
+//-                                 i.fa.fa-lock Đăng xuất
+nav.app-header.navbar.navbar-expand.bg-body
+        .container-fluid
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link(data-lte-toggle="sidebar", href="#", role="button")
+                        i.bi.bi-list
+            ul.navbar-nav.ms-auto
+                .dropdown-menu.dropdown-menu-lg.dropdown-menu-end
+                    span.dropdown-item.dropdown-header 15 Notifications
+                li.nav-item.dropdown.user-menu
+                    a.nav-link.dropdown-toggle(href="#", data-bs-toggle="dropdown")
+                        img(src="/admin/assets/img/user2-160x160.jpg", class="user-image rounded-circle shadow", alt="User Image")
+                        span.d-none.d-md-inline #{user.fullName}
+                    ul.dropdown-menu.dropdown-menu-lg.dropdown-menu-end
+                        li.user-header.text-bg-primary
+                            img(src="/admin/assets/img/user2-160x160.jpg", class="rounded-circle shadow", alt="User Image")
+                        li.user-footer
+                            a.btn.btn-default.btn-flat(href="#") Profile
+                            a.btn.btn-default.btn-flat.float-end(href=`${prefixAdmin}/auth/logout`) Sign out

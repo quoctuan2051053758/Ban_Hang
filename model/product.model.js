@@ -29,6 +29,14 @@ const productSchema=new mongoose.Schema(
                 default:Date.now
             }
         },
+        color: {
+            type: String,
+            default: ""
+        },
+        size:{
+            type: [String], // Mảng các kích cỡ
+            default: "freesize" //
+        },
         deleted: {
             type: Boolean,
             default:false,

@@ -42,7 +42,7 @@
 /* show-alert */
 
 [show-alert]{
-    position: fixed;
+    position: absolute;
     top: 70px;
     right: 15px;
     z-index: 9999;
@@ -126,3 +126,47 @@
     color: #666;
 }
 /* end detail */
+
+/* Căn giữa pagination */
+.pagination1 {
+    
+    justify-content: center; /* Căn giữa */
+    padding: 15px 0; /* Padding cho toàn bộ pagination */
+    display: flex;
+}
+
+/* Khoảng cách giữa các mục */
+.pagination1 .page-item {
+    margin: 0 5px; /* Khoảng cách giữa các item */
+}
+
+/* Nút trang */
+.pagination1 .page-link {
+    padding: 10px 15px; /* Padding cho nút */
+    border: 1px solid #007bff; /* Viền cho nút */
+    border-radius: 5px; /* Bo góc cho nút */
+    color: #007bff; /* Màu chữ */
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển động */
+}
+
+/* Hiệu ứng hover */
+.pagination1 .page-link:hover {
+    background-color: #007bff; /* Màu nền khi hover */
+    color: white; /* Màu chữ khi hover */
+}
+
+/* Trang hiện tại */
+.pagination1 .page-item.active .page-link {
+    background-color: #007bff; /* Màu nền cho trang hiện tại */
+    color: white; /* Màu chữ cho trang hiện tại */
+    border-color: #007bff; /* Viền cho trang hiện tại */
+}
+
+/* Trang bị vô hiệu hóa */
+.pagination1 .page-item.disabled .page-link {
+    color: #6c757d; /* Màu chữ cho item bị vô hiệu hóa */
+    background-color: transparent; /* Màu nền cho item bị vô hiệu hóa */
+    border-color: #6c757d; /* Viền cho item bị vô hiệu hóa */
+    pointer-events: none; /* Không cho click vào item bị vô hiệu hóa */
+}

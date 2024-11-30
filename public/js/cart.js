@@ -4,6 +4,8 @@ if(inputQuantity.length>0){
         input.addEventListener("change",()=>{
             // event.preventDefault();
             const productId=input.getAttribute("product-id")
+            const productSize = input.getAttribute("product-size")
+            const productColor = input.getAttribute("product-color")
             const quantity=input.value
             // $.ajax({
             //     url: `/cart/update/${productId}/${quantity}`, // Đường dẫn đến endpoint xử lý
@@ -11,7 +13,7 @@ if(inputQuantity.length>0){
                 
             // });
             
-            window.location.href=`/cart/update/${productId}/${quantity}`
+            window.location.href=`/cart/update/${productId}/${productSize}/${productColor}/${quantity}`
         })
     })
 }

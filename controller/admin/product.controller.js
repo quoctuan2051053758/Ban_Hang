@@ -180,18 +180,29 @@ module.exports.createPost = async(req,res)=>{
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
+
     if(req.body.position==""){
-        const countProducts = await Product.countDocuments()
-        req.body.position = countProducts + 1;
+        const maxPositionProduct  = await Product.findOne().sort({ position: -1 });
+        req.body.position = maxPositionProduct.position  + 1;
     }else{
         req.body.position = parseInt(req.body.position)
     }
     req.body.createdBy={
         account_id : res.locals.user.id
     }
-
+    if (req.body.color) {
+        req.body.color = req.body.color.trim(); // Bỏ khoảng trắng thừa
+    } else {
+        req.body.color = ""; // Hoặc bạn có thể để null nếu không muốn giá trị mặc định
+    }
+    if (req.body.size) {
+        req.body.size = Array.isArray(req.body.size) ? req.body.size : [req.body.size]; // Đảm bảo size là mảng
+    } else {
+        req.body.size = "freesize";
+    }
     const product = new Product(req.body)
     await product.save()
+    req.flash("success","Thêm sản phẩm thành công ")
     res.redirect(`${systemConfig.prefixAdmin}/products`)
 
 }
@@ -230,10 +241,14 @@ module.exports.editPatch = async(req,res)=>{
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
     req.body.position = parseInt(req.body.position)
-    // if(req.file){
-    //     req.body.thumbnail = `/uploads/${req.file.filename}`
-    // }
-
+    if(req.file){
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+    if (req.body.size) {
+        req.body.size = Array.isArray(req.body.size) ? req.body.size : [req.body.size]; // Đảm bảo size là mảng
+    } else {
+        req.body.size = "freesize";
+    }
     try{
         const updatedBy={
             account_id:res.locals.user.id,

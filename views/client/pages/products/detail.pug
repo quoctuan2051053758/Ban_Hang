@@ -21,7 +21,7 @@ block main
                         h2(class="inner-price-new") Giá: #{product.priceNew}$
                     
                     if(product.price)
-                        h2(class="inner-price-old") Giá: #{product.price}$
+                        h2(class="inner-price-old") Giá gốc: #{product.price}$
                     
                     if(product.discountPercentage)
                         h3(class="inner-percent") Giảm tới <span> #{product.discountPercentage}% </span>
@@ -30,6 +30,19 @@ block main
                         h4(class="inner-stock") Còn lại: <span> #{product.stock} </span> sản phẩm
 
                     form(action=`/cart/add/${product.id}` method="POST")
+                        .form-group
+                            label Màu Sắc:
+                            .d-flex.flex-wrap
+                                each color in product.color.split(', ')
+                                    .form-check.m-2
+                                        input.form-check-input(type="radio", name="color", value=color.trim(), id=`color-${color.trim()}`)
+                                        label.form-check-label(for=`color-${color.trim()}`) #{color.trim()}
+                        .form-group
+                            label Kích Cỡ:
+                            each size in product.size
+                                .form-check
+                                    input.form-check-input(type="radio", name="size", value=size)
+                                    label(for=`size-${size}`) #{size}
                         input(
                             class="form-control mb-2"
                             type="number"

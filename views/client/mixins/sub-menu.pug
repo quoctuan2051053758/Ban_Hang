@@ -1,7 +1,30 @@
+//- mixin sub-menu_parent(items, path)  
+//-     each item in items
+//-         if item.parent_id==="" 
+//-                 a(href=`${path}/${item.slug}`) #{item.title} 
+//-                 if item.children && item.children.length > 0
+//-                     +sub-menu(item.children, path) 
+
+//- mixin sub-menu(items, path)
+//-     ul.submenu 
+//-         each item in items
+//-             li 
+//-                 a(href=`${path}/${item.slug}`) #{item.title}
+//-                     if item.children && item.children.length > 0
+//-                         +sub-menu(item.children, path) 
+mixin sub-menu_parent(items, path)  
+        each item in items
+            if item.parent_id === "" 
+                li(class="sub-menu") 
+                    a(href=`${path}/${item.slug}`) #{item.title} 
+                    if item.children && item.children.length > 0
+                        +sub-menu(item.children, path) // Gọi mixin cho submenu
+
 mixin sub-menu(items, path)
-    ul 
+    ul
         each item in items
             li 
-                a(href=`${path}/${item.slug}`) #{item.title} 
+                a(href=`${path}/${item.slug}`) #{item.title}
+                // Kiểm tra nếu item có children
                 if item.children && item.children.length > 0
-                    +sub-menu(item.children,path)
+                    +sub-menu(item.children, path) // Chỉ gọi mixin nếu có children

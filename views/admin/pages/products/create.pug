@@ -59,7 +59,27 @@ block main
                     name="description"
                     rows="5"
                 )
+            div(class="form-group")
+                label(for="color") Màu sắc
+                input#color.form-control(type="text", name="color")
 
+            div(class="form-group")
+                label Kích Cỡ:
+                .form-check
+                    input#sizeS.form-check-input(type="checkbox", name="size", value="S")
+                    label(for="sizeS")  S
+                .form-check
+                    input#sizeM.form-check-input(type="checkbox", name="size", value="M")
+                    label(for="sizeM")  M
+                .form-check
+                    input#sizeL.form-check-input(type="checkbox", name="size", value="L")
+                    label(for="sizeL")  L
+                .form-check
+                    input#sizeXL.form-check-input(type="checkbox", name="size", value="XL")
+                    label(for="sizeXL") XL
+                .form-check
+                    input#sizeXXL.form-check-input(type="checkbox", name="size", value="XXL")
+                    label(for="sizeXXL") XXL
             div(class="form-group")
                 label(for="price") Giá 
                 input(

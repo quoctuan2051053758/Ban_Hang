@@ -1,31 +1,328 @@
-extends  ../../layouts/default.pug
+extends ../../layouts/default.pug
 
 block main
-    h1 Trang Tổng Quan
+  main.app-main
+  
+    .app-content-header
+      .container-fluid
+        .row
+          .col-sm-6
+            h3.mb-0 Dashboard
+          .col-sm-6
+            ol.breadcrumb.float-sm-end
+              li.breadcrumb-item
+                a(href="#") Home
+              li.breadcrumb-item.active(aria-current="page") Dashboard
+
+    .app-content
+      .container-fluid
+        .row
+          .col-lg-3.col-6
+
+            .small-box.text-bg-primary
+              .inner
+                h3 150
+                p New Orders
+              svg.small-box-icon(
+                aria-hidden="true" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+              )
+                path(d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z")
+              a.small-box-footer.link-light.link-underline-opacity-0.link-underline-opacity-50-hover(href="#")
+                | More info
+                i.bi.bi-link-45deg
+           
+
+          .col-lg-3.col-6
+            .small-box.text-bg-success
+              .inner
+                h3
+                  | 53
+                  sup.fs-5 %
+                p Bounce Rate
+              svg.small-box-icon(
+                aria-hidden="true" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+              )
+                path(d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z")
+              a.small-box-footer.link-light.link-underline-opacity-0.link-underline-opacity-50-hover(href="#")
+                | More info
+                i.bi.bi-link-45deg
+            
+
+          .col-lg-3.col-6
+            
+            .small-box.text-bg-warning
+              .inner
+                h3 44
+                p User Registrations
+              svg.small-box-icon(
+                aria-hidden="true" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+              )
+                path(d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z")
+              a.small-box-footer.link-dark.link-underline-opacity-0.link-underline-opacity-50-hover(href="#")
+                | More info
+                i.bi.bi-link-45deg
+            
+
+          .col-lg-3.col-6
+            
+            .small-box.text-bg-danger
+              .inner
+                h3 65
+                p Unique Visitors
+              svg.small-box-icon(
+                aria-hidden="true" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+              )
+                path(d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" fill-rule="evenodd" clip-rule="evenodd")
+                path(d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" fill-rule="evenodd" clip-rule="evenodd")
+              a.small-box-footer.link-light.link-underline-opacity-0.link-underline-opacity-50-hover(href="#")
+                | More info
+                i.bi.bi-link-45deg
+           
+        .row
+          // Start col
+          .col-lg-7.connectedSortable
+            .card.mb-4
+              .card-header
+                h3.card-title Sales Value
+              .card-body
+                #revenue-chart
+            
+            .card.direct-chat.direct-chat-primary.mb-4
+              .card-header
+                h3.card-title Direct Chat
+                .card-tools
+                  span.badge.text-bg-primary(title="3 New Messages") 3
+                  button.btn.btn-tool(data-lte-toggle="card-collapse" type="button")
+                    i.bi.bi-plus-lg(data-lte-icon="expand")
+                    i.bi.bi-dash-lg(data-lte-icon="collapse")
+                  button.btn.btn-tool(data-lte-toggle="chat-pane" title="Contacts" type="button")
+                    i.bi.bi-chat-text-fill
+                  button.btn.btn-tool(data-lte-toggle="card-remove" type="button")
+                    i.bi.bi-x-lg
+              .card-body
+            
+                .direct-chat-messages
+                  
+                  .direct-chat-msg
+                    .direct-chat-infos.clearfix
+                      span.direct-chat-name.float-start Alexander Pierce
+                      span.direct-chat-timestamp.float-end 23 Jan 2:00 pm
+                    img.direct-chat-img(alt="message user image" src="../../dist/assets/img/user1-128x128.jpg")
+                    .direct-chat-text Is this template really for free? That's unbelievable!
+                  
+                  .direct-chat-msg.end
+                    .direct-chat-infos.clearfix
+                      span.direct-chat-name.float-end Sarah Bullock
+                      span.direct-chat-timestamp.float-start 23 Jan 2:05 pm
+                    img.direct-chat-img(alt="message user image" src="../../dist/assets/img/user3-128x128.jpg")
+                    .direct-chat-text You better believe it!
+                 
+
+                  
+                  .direct-chat-msg
+                    .direct-chat-infos.clearfix
+                      span.direct-chat-name.float-start Alexander Pierce
+                      span.direct-chat-timestamp.float-end 23 Jan 5:37 pm
+                    img.direct-chat-img(alt="message user image" src="../../dist/assets/img/user1-128x128.jpg")
+                    .direct-chat-text Working with AdminLTE on a great new app! Wanna join?
+                  
+                  .direct-chat-msg.end
+                    .direct-chat-infos.clearfix
+                      span.direct-chat-name.float-end Sarah Bullock
+                      span.direct-chat-timestamp.float-start 23 Jan 6:10 pm
+                    img.direct-chat-img(alt="message user image" src="../../dist/assets/img/user3-128x128.jpg")
+                    .direct-chat-text I would love to.
+                  
+                .direct-chat-contacts
+                  ul.contacts-list
+                    li
+                      a(href="#")
+                        img.contacts-list-img(alt="User Avatar" src="../../dist/assets/img/user1-128x128.jpg")
+                        .contacts-list-info
+                          span.contacts-list-name Count Dracula
+                          small.contacts-list-date.float-end 2/28/2023
+                          span.contacts-list-msg How have you been? I was...
+                    li
+                      a(href="#")
+                        img.contacts-list-img(alt="User Avatar" src="../../dist/assets/img/user7-128x128.jpg")
+                        .contacts-list-info
+                          span.contacts-list-name Sarah Doe
+                          small.contacts-list-date.float-end 2/23/2023
+                          span.contacts-list-msg I will be waiting for...
+                    li
+                      a(href="#")
+                        img.contacts-list-img(alt="User Avatar" src="../../dist/assets/img/user3-128x128.jpg")
+                        .contacts-list-info
+                          span.contacts-list-name Nadia Jolie
+                          small.contacts-list-date.float-end 2/20/2023
+                          span.contacts-list-msg I'll call you back at...
+                    li
+                      a(href="#")
+                        img.contacts-list-img(alt="User Avatar" src="../../dist/assets/img/user5-128x128.jpg")
+                        .contacts-list-info
+                          span.contacts-list-name Nora S. Vans
+                          small.contacts-list-date.float-end 2/10/2023
+                          span.contacts-list-msg Where is your new...
+                    li
+                      a(href="#")
+                        img.contacts-list-img(alt="User Avatar" src="../../dist/assets/img/user6-128x128.jpg")
+                        .contacts-list-info
+                          span.contacts-list-name John K.
+                          small.contacts-list-date.float-end 1/27/2023
+                          span.contacts-list-msg Can I take a look at...
+                    li
+                      a(href="#")
+                        img.contacts-list-img(alt="User Avatar" src="../../dist/assets/img/user8-128x128.jpg")
+                        .contacts-list-info
+                          span.contacts-list-name Kenneth M.
+                          small.contacts-list-date.float-end 1/4/2023
+                          span.contacts-list-msg Never mind I found...
+                  
+              .card-footer
+                form(method="post" action="#")
+                  .input-group
+                    input.form-control(placeholder="Type Message ..." name="message" type="text")
+                    span.input-group-append
+                      button.btn.btn-primary(type="button") Send
+              
+          .col-lg-5.connectedSortable
+            .card.text-white.bg-primary.bg-gradient.border-primary.mb-4
+              .card-header.border-0
+                h3.card-title Sales Value
+                .card-tools
+                  button.btn.btn-primary.btn-sm(data-lte-toggle="card-collapse" type="button")
+                    i.bi.bi-plus-lg(data-lte-icon="expand")
+                    i.bi.bi-dash-lg(data-lte-icon="collapse")
+              .card-body
+                #world-map(style="height: 220px")
+              .card-footer.border-0
+                .row
+                  .col-4.text-center
+                    #sparkline-1.text-dark
+                    .text-white Visitors
+                  .col-4.text-center
+                    #sparkline-2.text-dark
+                    .text-white Online
+                  .col-4.text-center
+                    #sparkline-3.text-dark
+                    .text-white Sales
+          
     
-    .row.mt-4 
-        .col-12 
-            .card.mb-4 
-                .card-header Thông tin tài khoản 
-                .card-body 
-                    if(user.avatar)
-                        img(
-                            src=user.avatar
-                            style="height:100px; margin-bottom:15px"
-                        )
-                    if(user.fullName)
-                        p Họ tên: <b>#{user.fullName} </b>
-                    if(user.email)
-                        p Email: <b>#{user.email} </b>
-                    if(user.phone)
-                        p Số điện thoại: <b>#{user.phone} </b>
-                    if(role.title)
-                        p Phân quyền: <b>#{role.title} </b>
-            .col-6 
-                .card.mb-4 
-                    .card-header Danh mục sản phẩm 
-                    .card-body 
-                        p Số lượng: <b>#{statistic.categoryProduct.total} </b>
-                        p Hoạt động: <b>#{statistic.categoryProduct.active} </b>
-                        p Dừng hoạt động: <b>#{statistic.categoryProduct.inactive} </b>
+    
+    //- .row.mt-4 
+    //-     .col-12 
+    //-         .card.mb-4 
+    //-             .card-header Thông tin tài khoản 
+    //-             .card-body 
+    //-                 if(user.avatar)
+    //-                     img(
+    //-                         src=user.avatar
+    //-                         style="height:100px; margin-bottom:15px"
+    //-                     )
+    //-                 if(user.fullName)
+    //-                     p Họ tên: <b>#{user.fullName} </b>
+    //-                 if(user.email)
+    //-                     p Email: <b>#{user.email} </b>
+    //-                 if(user.phone)
+    //-                     p Số điện thoại: <b>#{user.phone} </b>
+    //-                 if(role.title)
+    //-                     p Phân quyền: <b>#{role.title} </b>
+    //-         .col-6 
+    //-             .card.mb-4 
+    //-                 .card-header Danh mục sản phẩm 
+    //-                 .card-body 
+    //-                     p Số lượng: <b>#{statistic.categoryProduct.total} </b>
+    //-                     p Hoạt động: <b>#{statistic.categoryProduct.active} </b>
+    //-                     p Dừng hoạt động: <b>#{statistic.categoryProduct.inactive} </b>
+    //- section#main-content
+    //-     section.wrapper.main-wrapper.row
+    //-     .col-xs-12
+    //-         .page-title
+    //-             .pull-left
+    //-                 h1.title Dashboard
+    //-                 if (messages.success)
+    //-                     | #{success_msg.info}
+    //-     .clearfix
+
+    //-     .col-lg-12
+    //-         section.box.nobox.marginBottom0
+    //-             .content-body
+    //-                 .row
+    //-                     .col-md-3.col-sm-6.col-xs-12
+    //-                         .r4_counter.db_box
+    //-                             i.pull-left.fa.fa-thumbs-up.icon-md.icon-rounded.icon-primary
+    //-                             .stats
+    //-                                 h4
+    //-                                     strong 45%
+    //-                                 span New Orders
+    //-                     .col-md-3.col-sm-6.col-xs-12
+    //-                         .r4_counter.db_box
+    //-                             i.pull-left.fa.fa-shopping-cart.icon-md.icon-rounded.icon-accent
+    //-                             .stats
+    //-                                 h4
+    //-                                     strong 243
+    //-                                 span New Products
+    //-                     .col-md-3.col-sm-6.col-xs-12
+    //-                         .r4_counter.db_box
+    //-                             i.pull-left.fa.fa-dollar.icon-md.icon-rounded.icon-purple
+    //-                             .stats
+    //-                                 h4
+    //-                                     strong #{total}
+    //-                                 span Lợi nhuận
+    //-                     .col-md-3.col-sm-6.col-xs-12
+    //-                         .r4_counter.db_box
+    //-                             i.pull-left.fa.fa-users.icon-md.icon-rounded.icon-warning
+    //-                             .stats
+    //-                                 h4
+    //-                                     strong 1433
+    //-                                 span New Users
+
+    //-     .col-xs-12
+    //-         section.box
+    //-             header.panel_header
+    //-                 h2.title.pull-left Visitor's Statistics
+    //-                 .actions.panel_actions.pull-right
+    //-                     a.box_toggle.fa.fa-chevron-down
+    //-                     a.box_setting.fa.fa-cog(data-toggle="modal" href="#section-settings")
+    //-                     a.box_close.fa.fa-times
+    //-             .content-body
+    //-                 .row
+    //-                     .col-xs-12
+    //-                         .wid-vectormap
+    //-                             .row
+    //-                                 .col-xs-12.col-sm-9
+    //-                                     figure
+    //-                                         #db-world-map-markers(style="width: 100%; height: 300px")
+    //-                                 .map_progress.col-xs-12.col-sm-3
+    //-                                     h4 Unique Visitors
+    //-                                     span.text-muted
+    //-                                         small Last Week Rise by 62%
+    //-                                     .progress
+    //-                                         .progress-bar.progress-bar-primary(role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%")
+    //-                                     br
+    //-                                     h4 Registrations
+    //-                                     span.text-muted
+    //-                                         small Up by 57% last 7 days
+    //-                                     .progress
+    //-                                         .progress-bar.progress-bar-primary(role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%")
+    //-                                     br
+    //-                                     h4 Direct Sales
+    //-                                     span.text-muted
+    //-                                         small Last Month Rise by 22%
+    //-                                     .progress
+    //-                                         .progress-bar.progress-bar-primary(role="progressbar" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100" style="width: 22%")
+
+
 
