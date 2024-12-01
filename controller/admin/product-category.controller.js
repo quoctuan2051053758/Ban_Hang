@@ -100,9 +100,9 @@ module.exports.detail = async(req,res)=>{
         deleted:false
     }
 
-    const records = await ProductCategory.findOne(find)
+    const product = await ProductCategory.findOne(find)
     res.render('admin/pages/products-category/detail',{
         pageTitle:"Danh mục",
-        records:records
+        product:product
     });
 }

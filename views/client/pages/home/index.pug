@@ -4,18 +4,104 @@ include ../../mixins/product-layout.pug
 
 block main  
     +alert-success(3000)
-    h1 Trang chủ
-    .section-products-featured.my-5 
-        .container 
-            .row 
-                .col-12 
-                    +box-head("Sản phẩm nổi bật")
-            +product-grid(productsFeatured)
-    .section-products-featured.my-5 
-        .container 
-            .row 
-                .col-12 
-                    +box-head("Sản phẩm mới")
-            +product-grid(productsNew)
+    //- h1 Trang chủ
+    //- .section-products-featured.my-5 
+    //-     .container 
+    //-         .row 
+    //-             .col-12 
+    //-                 +box-head("Sản phẩm nổi bật")
+    //-         +product-grid(productsFeatured)
+    //- .section-products-featured.my-5 
+    //-     .container 
+    //-         .row 
+    //-             .col-12 
+    //-                 +box-head("Sản phẩm mới")
+    //-         +product-grid(productsNew)
+    div.best__selling.sp_bottom_80
+        .container
+            .row
+                .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+                    .section__title
+                        h2 Bán chạy
+                .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+                    .best__selling__tab
+                        ul.nav.best__selling__tab__wrap(id="myTab" role="tablist")
+                            li.nav-item(role="presentation")
+                                button.product__tap__link.active(data-bs-toggle="tab" data-bs-target="#projects__one" type="button") Nam
+                            li.nav-item(role="presentation")
+                                button.product__tap__link(data-bs-toggle="tab" data-bs-target="#projects__two" type="button") Nữ
+                            li.nav-item(role="presentation")
+                                button.product__tap__link(data-bs-toggle="tab" data-bs-target="#projects__three" type="button") Phụ kiện
+            .tab-content(id="myTabContent")
+                .tab-pane.fade.active.show(id="projects__one" role="tabpanel" aria-labelledby="projects__one")
+                    .row.grid__responsive
+                        +product-grid(productsNew)
+                .tab-pane.fade( id="projects__two" role="tabpanel" aria-labelledby="projects__two")
+                    .row.grid__responsive
+                .tab-pane.fade( id="projects__three" role="tabpanel" aria-labelledby="projects__three")
+                    .row.grid__responsive
+                
+                        //- .col-xl-3.col-lg-3.col-md-4.col-sm-6.col-6
+                        //-     .grid__wraper
+                        //-         .grid__wraper__img
+                        //-             .grid__wraper__img__inner
+                        //-                 a(href="single-product.html")
+                        //-                     img.primary__image(src="img/grid/grid__1.png" alt="Primary Image")
+                        //-                     // img.secondary__image(src="img/grid/grid__2.png" alt="Secondary Image")
+                        //-             .grid__wraper__icon
+                        //-                 ul
+                        //-                     li
+                        //-                         span(data-bs-toggle="modal" data-bs-target="#exampleModal")
+                        //-                             a.quick__view__action(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Quick View" data-bs-original-title="Quick View")
+                        //-                                 i.far.fa-eye
+                        //-                     li
+                        //-                         a(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart" data-bs-original-title="Add To Cart")
+                        //-                             i.fas.fa-shopping-cart
+                        //-                     li
+                        //-                         a(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Wishlist" data-bs-original-title="Add To Wishlist")
+                        //-                             i.far.fa-heart
+                        //-                     li
+                        //-                         a(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Compare" data-bs-original-title="Add To Compare")
+                        //-                             i.fas.fa-exchange-alt
+                        //-             .grid__wraper__badge
+                        //-                 span.new__badge New
+                        //-                 span.sale__badge -15%
+                        //-         .grid__wraper__info
+                        //-             h3.grid__wraper__tittle
+                        //-                 a(href="single-product.html" tabindex="0") W. Men Formal T-shirt
+                        //-             .grid__wraper__price
+                        //-                 del $72.00
+                        //-                 span $47.00
+                        
+                        //- .col-xl-3.col-lg-3.col-md-4.col-sm-6.col-6
+                            .grid__wraper
+                                .grid__wraper__img
+                                    .grid__wraper__img__inner
+                                        a(href="single-product.html")
+                                            img.primary__image(src="img/grid/grid__5.png" alt="Primary Image")
+                                            img.secondary__image(src="img/grid/grid__6.png" alt="Secondary Image")
+                                    .grid__wraper__icon
+                                        ul
+                                            li
+                                                span(data-bs-toggle="modal" data-bs-target="#exampleModal")
+                                                    a.quick__view__action(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Quick View" data-bs-original-title="Quick View")
+                                                        i.far.fa-eye
+                                            li
+                                                a(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart" data-bs-original-title="Add To Cart")
+                                                    i.fas.fa-shopping-cart
+                                            li
+                                                a(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Wishlist" data-bs-original-title="Add To Wishlist")
+                                                    i.far.fa-heart
+                                            li
+                                                a(href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Compare" data-bs-original-title="Add To Compare")
+                                                    i.fas.fa-exchange-alt
+                                    .grid__wraper__badge
+                                        span.sold__out Sold Out
+                                .grid__wraper__info
+                                    h3.grid__wraper__tittle
+                                        a(href="single-product.html" tabindex="0") F. Ultimate Smart Watch
+                                    .grid__wraper__price
+                                        span $47.00
+
         
             

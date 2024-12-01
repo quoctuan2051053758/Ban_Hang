@@ -13,13 +13,13 @@ mixin table-tree(items, level=1)
                     width="100px"
                 )
             td #{prefix} #{item.title}
-            td 
-                input(type="number"
-                    value=item.position 
-                    style="width:60px"
-                    name="position"
-                    min="1"
-                )
+            //- td 
+            //-     input(type="number"
+            //-         value=item.position 
+            //-         style="width:60px"
+            //-         name="position"
+            //-         min="1"
+            //-     )
             td
                 if(role.permissions.includes("products-category_edit"))
                     if(item.status == "active")

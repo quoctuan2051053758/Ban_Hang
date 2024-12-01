@@ -1,55 +1,430 @@
-include ../mixins/sub-menu.pug
-header.header
-    .container  
-        .row.align-items-center
-            .col-3 
-                .inner-logo
-                    a(href="/") 
-                        img(src=settingGeneral.logo, alt=settingGeneral.websiteName style="width:100%")
-            .col-5 
-                form(
-                    action="/search"
-                    method="GET"
-                )
-                    div(class="form-group d-flex mb-0")
-                        input(
-                            type="text"
-                            placehoder="Nhập từ khóa..."  
-                            class="form-control"
-                            name="keyword"
-                            value=keyword
-                        )
-                        button(
-                            type="submit"
-                            class="btn btn-primary"
-                        ) Tìm 
-            
-            
-            .col-4  
-                .inner-menu 
-                    ul  
-                        li 
-                            a(href="/") Trang chủ
-                        li(class="sub-menu")   
-                            -const pathProduct = "/products"
-                            //- a(href=pathProduct) Sản phẩm
-                            +sub-menu_parent(layoutProductsCategory,pathProduct)
+//- include ../mixins/sub-menu.pug
 
-                        li 
-                            a(href="/cart") Giỏ hàng (#{ miniCart ? miniCart.totalQuantity:0})
-                        li 
-                            a(href="/purchased") Đơn đã mua
+    //- .container  
+    //-     .row.align-items-center
+    //-         .col-3 
+    //-             .inner-logo
+    //-                 a(href="/") 
+    //-                     img(src=settingGeneral.logo, alt=settingGeneral.websiteName style="width:100%")
+    //-         .col-5 
+    //-             form(
+    //-                 action="/search"
+    //-                 method="GET"
+    //-             )
+    //-                 div(class="form-group d-flex mb-0")
+    //-                     input(
+    //-                         type="text"
+    //-                         placehoder="Nhập từ khóa..."  
+    //-                         class="form-control"
+    //-                         name="keyword"
+    //-                         value=keyword
+    //-                     )
+    //-                     button(
+    //-                         type="submit"
+    //-                         class="btn btn-primary"
+    //-                     ) Tìm 
+            
+            
+    //-         .col-4  
+    //-             .inner-menu 
+    //-                 ul  
+    //-                     li 
+    //-                         a(href="/") Trang chủ
+    //-                     li(class="sub-menu")   
+    //-                         -const pathProduct = "/products"
+    //-                         //- a(href=pathProduct) Sản phẩm
+    //-                         +sub-menu_parent(layoutProductsCategory,pathProduct)
+
+    //-                     li 
+    //-                         a(href="/cart") Giỏ hàng (#{ miniCart ? miniCart.totalQuantity:0})
+    //-                     li 
+    //-                         a(href="/purchased") Đơn đã mua
                         
-                        if(user)
-                            li 
-                                a(href="/user/info") #{user.fullName}
-                            li 
-                                a(href="/user/logout") Đăng xuất
-                        else
-                            li 
-                                a(href="/user/register") Đăng ký
-                            li  
-                                a(href="/user/login") Đăng Nhập
-                            //- a(href="/user/forgot-password") Quên mật khẩu
-                        
+    //-                     if(user)
+    //-                         li 
+    //-                             a(href="/user/info") #{user.fullName}
+    //-                         li 
+    //-                             a(href="/user/logout") Đăng xuất
+    //-                     else
+    //-                         li 
+    //-                             a(href="/user/register") Đăng ký
+    //-                         li  
+    //-                             a(href="/user/login") Đăng Nhập
+    //-                         //- a(href="/user/forgot-password") Quên mật khẩu
+
+
+.header__topbar.desktop__menu__wrapper
+    .container
+        .row
+            .col-xl-7.col-lg-7
+                .header__topbar__left
+                    ul
+                        li
+                            svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                                rect(x="48" y="96" width="416" height="320" rx="40" ry="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M112 160l144 112 144-112")
+                            | #{settingGeneral.email}
+                        li
+                            svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                                path(d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                circle(cx="256" cy="192" r="48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                            | #{settingGeneral.address}
+            .col-xl-5.col-lg-5
+                .header__topbar__right
+                    .header__topbar__social__icon
+                        ul
+                            li
+                                a(href="#")
+                                    i.fab.fa-facebook-f
+                            li
+                                a(href="#")
+                                    i.fab.fa-twitter
+                            li
+                                a(href="#")
+                                    i.fab.fa-youtube
+                            li
+                                a(href="#")
+                                    i.fab.fa-instagram
+                            li
+                                a(href="#")
+                                    i.fab.fa-tiktok
+header
+    div.headerarea.header__sticky
+        .container.desktop__menu__wrapper
+            .row.common__row.position-relative
+                .col-xl-3.col-lg-3.col-md-6
+                    .headerarea__logo
+                        a(href="/")
+                            img(src=settingGeneral.logo alt="")
+                .col-xl-6.col-lg-6.col-md-6.main_menu_wrap
+                    .headerarea__main__menu
+                        nav
+                            ul
+                                li
+                                    a(href="/") Trang chủ
+                                li.position-static
+                                    a.headerarea__has__dropdown(href="shop.html") Shop
+                                        span.header__label New
+                                    ul.headerarea__submenu.headerarea__megamenu
+                                        li.mega__menu__li
+                                            a.menu__title(href="categories.html") Women's Fashion
+                                            ul
+                                                li
+                                                    a(href="#") Dresses
+                                                li
+                                                    a(href="#") Sweaters & Cardigans
+                                        li.mega__menu__li
+                                            a.menu__title(href="categories.html") Men's Fashion
+                                            ul
+                                                li
+                                                    a(href="#") Shirts
+                                                li
+                                                    a(href="#") T-Shirts & Polos
+                                                        span.header__label.hot__color Hot
+                                        li.mega__menu__li
+                                            a.menu__title(href="categories.html") Accessories
+                                            ul
+                                                li
+                                                    a(href="#") Bags & Purses
+                                                li
+                                                    a(href="#") Sunglasses
+                                                        span.header__label New
+                                        
+                                li.position-static
+                                    a.headerarea__has__dropdown(href="categories.html") Categories
+                                        span.header__label.hot__color Hot
+                                    ul.headerarea__submenu.headerarea__megamenu
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Featured Product
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__1.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") New Arrivals
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__2.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Summer Styles
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__3.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Winter Fashion
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__4.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Accessories
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__5.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Footwear
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__6.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Men
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__7.png" alt="Collection")
+                                        li.mega__menu__li.mega__menu__image
+                                            a.menu__title(href="categories.html") Women
+                                            ul
+                                                li
+                                                    a(href="categories.html")
+                                                        img.img-fluid(src="img/collection/collection__8.png" alt="Collection")
+                                li
+                                    a(href="about.html") Blog
+                                li
+                                    a(href="about.html") About
+                .col-xl-3.col-lg-3.col-md-6
+                    .headerarea__right
+                        ul.headerarea__right__nav
+                            li
+                                .headerarea__search.cursor__pointer
+                                    svg(role="presentation" stroke-width="2" focusable="false" width="22" height="22" class="icon icon-search" viewBox="0 0 22 22")
+                                        circle(cx="11" cy="10" r="7" fill="none" stroke="currentColor")
+                                        path(d="m16 15 3 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round")
+                            li
+                                .setting__wrap.cursor__pointer
+                                    .setting__wrap__active
+                                        svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                                            path(d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                            path(d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32")
+                            li
+                                .headermiddle__bar.cursor__pointer
+                                    .headermiddle__account
+                                        .headermiddle__account__img
+                                            svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                                                circle(cx="176" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                                circle(cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                                path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256")
+                                                path(d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                                span.bigcounter 2
+        
+    //- mobie_menu
+
+
+    div.container-fluid.mob_menu_wrapper.headerarea.header__sticky
+        .row.align-items-center
+            .col-sm-4.col-2
+                .mobile-off-canvas
+                    a.mobile-aside-button(href="#")
+                        svg(xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu")
+                            line(x1="3" y1="12" x2="21" y2="12")
+                            line(x1="3" y1="6" x2="21" y2="6")
+                            line(x1="3" y1="18" x2="21" y2="18")
+            .col-sm-4.col-5
+                .mobile-logo
+                    a.logo__mobile(href="#")
+                        img(src=settingGeneral.logo alt="logo")
+            .col-sm-4.col-5
+                .header-right-wrap
+                    .header__right__inner__wrap.d-flex.align-items-center.justify-content-end
+                        ul.headerarea__right.headerarea__right__mobail__menu
+                            li
+                                .headerarea__search.cursor__pointer
+                                    svg(role="presentation" stroke-width="2" focusable="false" width="22" height="22" class="icon icon-search" viewBox="0 0 22 22")
+                                        circle(cx="11" cy="10" r="7" fill="none" stroke="currentColor")
+                                        path(d="m16 15 3 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round")
+                            li
+                                .setting__wrap.cursor__pointer
+                                    .setting__wrap__active
+                                        svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                                            path(d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                            path(d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32")
+                            li
+                                .headermiddle__bar.cursor__pointer
+                                    .headermiddle__account
+                                        .headermiddle__account__img
+                                            svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                                                circle(cx="176" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                                circle(cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                                path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256")
+                                                path(d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
+                                            span.bigcounter 2
+
+    //- Mobile Menu Start Here
+    div.mobile-off-canvas-active
+        a.mobile-aside-close
+            i.fa.fa-close
+        .header-mobile-aside-wrap
+            .mobile__logo
+                a(href="index.html")
+                    img(src="img/logo/logo__1.png" alt="Logo")
+            .mobile-search
+                form.search-form(action="#")
+                    input(type="text" placeholder="Search entire store…")
+                    button.button-search
+                        i.fa.fa-search
+            .mobile-menu-wrap
+                .mobile-navigation
+                    nav
+                        ul.mobile-menu
+                            li.menu-item-has-children
+                                a(href="index.html") Home
+                                ul.dropdown
+                                    li
+                                        a(href="index.html") Fashion 1
+                                    li
+                                        a(href="home-2.html") Fashion 2
+                                    li
+                                        a(href="home-3.html") Fashion 3
+                                    li
+                                        a(href="home-4.html") Beauty
+                                    
+                            li.menu-item-has-children
+                                a(href="shop.html") Shop
+                                ul.dropdown
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Women's Fashion
+                                        ul.dropdown
+                                            li
+                                                a(href="#") Dresses
+                                            li
+                                                a(href="#") Tops & Blouses
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Men's Fashion
+                                        ul.dropdown
+                                            li
+                                                a(href="#") Shirts
+                                        
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Accessories
+                                        ul.dropdown
+                                            li
+                                                a(href="#") Bags & Purses
+                                            li
+                                                a(href="#") Sunglasses
+                                                    span.header__label New
+                                            li
+                                                a(href="#") Jewelry
+                                            li
+                                                a(href="#") Watches
+                                            li
+                                                a(href="#") Mobile
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Footwear
+                                        ul.dropdown
+                                            li
+                                                a(href="#") Flats & Loafers
+                            li.menu-item-has-children
+                                a(href="categories.html") Categories
+                                ul.dropdown
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Summer Styles
+                                        ul.dropdown
+                                            li
+                                                a(href="categories.html")
+                                                    img.img-fluid(src="img/collection/collection__3.png" alt="Collection")
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Men
+                                        ul.dropdown
+                                            li
+                                                a(href="categories.html")
+                                                    img.img-fluid(src="img/collection/collection__7.png" alt="Collection")
+                                    li.menu-item-has-children
+                                        a.menu__title(href="categories.html") Women
+                                        ul.dropdown
+                                            li
+                                                a(href="categories.html")
+                                                    img.img-fluid(src="img/collection/collection__8.png" alt="Collection")
+                            li
+                                a(href="about.html") About
+                            li.menu-item-has-children
+                                a(href="blog.html") Pages
+            .mobile-social-wrap
+                a.facebook(href="#")
+                    i.fab.fa-facebook
+                a.twitter(href="#")
+                    i.fab.fa-twitter
+                a.pinterest(href="#")
+                    i.fab.fa-pinterest
+                a.instagram(href="#")
+                    i.fab.fa-instagram
+                a.google(href="#")
+                    i.fab.fa-youtube
+
+    div.setting__wrap__list
+        button.setting__wrap__close
+            svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                title Close
+                path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368")
+        div.setting__wrap__heading
+            h6
+                a(href="#") Account
+        div.setting__wrap__list__inner
+            ul
+                li
+                    a(href="/user/register") Đăng ký
+                li
+                    a(href="/user/login") Đăng nhập
+    
+    //- header__search
+    div.headersearch__active
+        .headersearch__active__icon
+            button.headersearch__active__close
+                svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
+                    title Close
+                    path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368")
+        .headersearch__active__input
+            form(action="https://marinothemes.com/search" method="get" role="search" style="position: relative;")
+                .header__form__search
+                    input(type="search" name="q" value="" placeholder="Search our store" class="input-text" autocomplete="off")
+                    button(type="submit")
+                        i.fa.fa-search
+
+    section.minicart
+        .minicart__inner
+            .minicart__wrapper
+                .minicart__close__icon
+                    .minicart__cart__text
+                        strong Cart
+                    button.minicart__close__btn
+                        i.fa.fa-close
+                .minicart__single__wraper
+                    .minicart__single
+                        .minicart__single__img
+                            a(href="single-product.html")
+                                img(src="img/grid/grid__1.png" alt="product")
+                            .minicart__single__close
+                                button(title="Remove")
+                                    i.fa.fa-close
+                        .minicart__single__content
+                            h4
+                                a(href="single-product.html") E. Casual Comforts T-shirt
+                            span 1 x 
+                                span.money $5.00 USD
+                    .minicart__single
+                        .minicart__single__img
+                            a(href="single-product.html")
+                                img(src="img/grid/grid__2.png" alt="product")
+                            .minicart__single__close
+                                button(title="Remove")
+                                    i.fa.fa-close
+                        .minicart__single__content
+                            h4
+                                a(href="single-product.html") M. Denim Clothing Jacket
+                            span 1 x 
+                                span.money $4.00 USD
+                .minicart__footer
+                    .minicart__subtotal
+                        span.subtotal__title Subtotal:
+                        span.subtotal__amount $9.00 USD
+                    .minicart__button
+                        a(href="cart.html" class="default__button") View Cart
+                        a(href="checkout.html" class="default__button") Checkout
+                    //- .cart__note__text
+                    //-     p Free Shipping on All Orders Over $100!
+
+
                             

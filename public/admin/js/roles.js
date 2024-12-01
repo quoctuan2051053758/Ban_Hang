@@ -50,7 +50,6 @@ if(dataRecords){
             input.checked=true
         })
     })
-
 }
 
 //End permissions data default

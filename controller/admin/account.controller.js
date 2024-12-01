@@ -18,7 +18,7 @@ module.exports.index = async(req,res)=>{
         record.role=role
     }
     res.render('admin/pages/accounts/index',{
-        pageTitle:"Trang tổng quan",
+        pageTitle:"Trang danh sách tài khoản",
         records:records
     });
 }
@@ -28,7 +28,7 @@ module.exports.create = async(req,res)=>{
         deleted:false   
     })
     res.render('admin/pages/accounts/create',{
-        pageTitle:"Trang tài khoản",
+        pageTitle:"Trang tạo tài khoản",
         roles:roles
     });
 }

@@ -8,6 +8,7 @@ const authRoutes=require("./auth.route")
 const myAccountRoutes=require("./my-account.route")
 const settingRoutes=require("./setting.route")
 const inventoryRoutes=require("./inventory.route")
+const orderRoutes=require("./order.route")
 const authMiddleware=require("../../middlewares/admin/auth.middleware")
 
 module.exports = (app)=>{
@@ -30,6 +31,8 @@ module.exports = (app)=>{
     app.use(PATH_ADMIN + "/settings",authMiddleware.requireAuth,settingRoutes)
 
     app.use(PATH_ADMIN + "/inventorys",authMiddleware.requireAuth,inventoryRoutes)
+
+    app.use(PATH_ADMIN + "/orders",authMiddleware.requireAuth,orderRoutes)
 
 }
 

@@ -4881,7 +4881,7 @@ textarea.form-control-lg {
   top: -1px;
 }
 
-.alert {
+/* .alert {
   --bs-alert-bg: transparent;
   --bs-alert-padding-x: 1rem;
   --bs-alert-padding-y: 1rem;
@@ -4974,7 +4974,7 @@ textarea.form-control-lg {
   --bs-alert-bg: var(--bs-dark-bg-subtle);
   --bs-alert-border-color: var(--bs-dark-border-subtle);
   --bs-alert-link-color: var(--bs-dark-text-emphasis);
-}
+} */
 
 @keyframes progress-bar-stripes {
   0% {

@@ -14,7 +14,7 @@ module.exports.index = async(req,res)=>{
     const productsNew = await Product.find({
         deleted:false,
         status:"active"
-    }).sort({position:"desc"}).limit(6)
+    }).sort({position:"desc"}).limit(4)
 
     const newproductsNew = productsHelper.priceNewProducts(productsNew)
     

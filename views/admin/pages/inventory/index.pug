@@ -1,23 +1,26 @@
 extends  ../../layouts/default.pug
 
 block main
-    h1 Kho hàng
-    table(class="table table-hover table-sm" checkbox-multi)
-        thead
-            tr
-                th Sản Phẩm
-                th Số Lượng
-                th Giá
-                th Ngày Nhập
-                th Ghi Chú
-        tbody
-            if(inventories && inventories.length  > 0)
-                each inventory in inventories
+    
+    .app-main 
+        .container-fluid
+            h1 Kho hàng
+            table(class="table table-hover table-sm" checkbox-multi)
+                thead
                     tr
-                        td #{inventory.product_id.title}
-                        td #{inventory.quantity}
-                        td #{inventory.price}
-                        td #{inventory.createdAt.toLocaleDateString()} #{inventory.createdAt.toLocaleTimeString()}
-                        td #{inventory.note}
-            else 
-                p Chưa có giao dịch nào
+                        th Sản Phẩm
+                        th Số Lượng
+                        th Giá
+                        th Ngày Nhập
+                        th Ghi Chú
+                tbody
+                    if(inventories && inventories.length  > 0)
+                        each inventory in inventories
+                            tr
+                                td #{inventory.product_id.title}
+                                td #{inventory.quantity}
+                                td #{inventory.price}
+                                td #{inventory.createdAt.toLocaleDateString()} #{inventory.createdAt.toLocaleTimeString()}
+                                td #{inventory.note}
+                    else 
+                        p Chưa có giao dịch nào
