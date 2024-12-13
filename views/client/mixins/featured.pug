@@ -1,0 +1,38 @@
+mixin featured(items)
+    each item in items 
+        .col-xl-3.column__custom__class
+            .grid__wraper
+                .grid__wraper__img
+                    .grid__wraper__img__inner
+                        a(href=`/products/detail/${item.slug}`)
+                            img.primary__image(src=item.thumbnail[0], alt=item.title)
+                            //- img.secondary__image(src="img/grid/grid__2.png", alt="Secondary Image")
+                    .grid__wraper__icon
+                        ul
+                            li
+                                span(data-bs-toggle="modal" data-bs-target=`#${item.id}`)
+                                    a.quick__view__action(href=`/products/detail/${item.slug}` data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết" data-bs-original-title="Quick View")
+                                        i.far.fa-eye
+                            li
+                                a(href=`/cart/add/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-bs-original-title="Add To Cart")
+                                    i.fas.fa-shopping-cart
+                            li
+                                a(href=`/wishlists/toggle/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Wishlist" data-bs-original-title="Add To Wishlist")
+                                    if item.isInWishlist
+                                        i.fas.fa-heart
+                                    else
+                                        i.far.fa-heart
+                    .grid__wraper__badge
+                        
+                        if(item.discountPercentage)
+                            span.sale__badge -#{item.discountPercentage}%
+                .grid__wraper__info
+                    h3.grid__wraper__tittle
+                        a(href="single-product.html", tabindex="0") #{item.title}
+                    .grid__wraper__price
+                        if item.variants.length > 0
+                            - var discountAmount = item.variants[0].price * (item.discountPercentage / 100)
+                                //- span #{(item.variants[0].price - discountAmount).toFixed(0)} Đ 
+                                del #{item.variants[0].price}
+                                span #{(item.variants[0].price - discountAmount).toFixed(0)} Đ 
+                    

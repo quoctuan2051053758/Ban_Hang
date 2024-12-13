@@ -73,14 +73,6 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
                 
                 li.nav-item
                     a.nav-link(href=`${prefixAdmin}/orders`) Đơn đặt hàng
-                
-                if(role.permissions.includes("accounts_view"))
-                    li.nav-item
-                        a.nav-link(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
-                if(role.permissions.includes("settings_update"))
-                    li.nav-item
-                        a.nav-link(href=`${prefixAdmin}/settings/general`) Cài đặt chung
-                
                 li.nav-item
                         a.nav-link(href="#") Kho hàng
                             i.nav-arrow.bi.bi-chevron-right
@@ -93,9 +85,28 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
                                 a.nav-link(href=`${prefixAdmin}/inventorys/import`)
                                     i.nav-icon.bi.bi-circle
                                     p Nhập hàng
+                
+                li.nav-item
+                    a.nav-link(href=`${prefixAdmin}/blogs`) Tin tức
+                        i.nav-arrow.bi.bi-chevron-right
+                    ul.nav.nav-treeview
                             li.nav-item
-                                a.nav-link(href=`${prefixAdmin}/inventorys/export`)
+                                a.nav-link(href=`${prefixAdmin}/blogs`)
                                     i.nav-icon.bi.bi-circle
-                                    p Xuất hàng
+                                    p Danh sách
+                            li.nav-item
+                                a.nav-link(href=`${prefixAdmin}/blogs/create`)
+                                    i.nav-icon.bi.bi-circle
+                                    p Thêm
+                
+                if(role.permissions.includes("accounts_view"))
+                    li.nav-item
+                        a.nav-link(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
+                if(role.permissions.includes("settings_update"))
+                    li.nav-item
+                        a.nav-link(href=`${prefixAdmin}/settings/general`) Cài đặt chung
+                
+                
+                            
                 
                 

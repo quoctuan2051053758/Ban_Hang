@@ -63,11 +63,15 @@ block main
                                                     td #{order.userInfo.fullName}
                                                     td    
                                                         each product in order.products
-                                                            |  #{product.productInfo.title} ,
-                                                    td    
-                                                        each product in order.products
-                                                            |  #{product.quantity} ,
-                                                    td #{order.totalPrice}
+                                                            if product.productInfo
+                                                                | #{product.productInfo.title} - Giá: #{product.productInfo.price}
+                                                            else 
+                                                                | sản phẩm không còn nữa
+                                                    
+                                                    //- td    
+                                                    //-     each product in order.products
+                                                    //-         |  #{product.quantity} ,
+                                                    //- td #{order.totalPrice}
                                                     
                                                 
                                         </tbody>

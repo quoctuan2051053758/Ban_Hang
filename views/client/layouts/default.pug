@@ -21,11 +21,12 @@ html(lang="en")
         //- +alert-success(3000)
         main.main_wrapper.body__overlay.overflow__hidden
             include ../partials/header.pug
-            include ../partials/banner.pug
+            //- include ../partials/banner.pug
             block main
 
             include ../partials/footer.pug
 
+            include ../partials/model.pug
         script(src="/js/vendor/modernizr-3.5.0.min.js")
         script(src="/js/jquery-3.6.0.min.js")
         script(src="/js/popper.min.js")
@@ -47,3 +48,56 @@ html(lang="en")
         script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js")
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js")      
         script(src="/js/script.js") 
+        script.
+            document.querySelectorAll('input[name="color"]').forEach((input) => {
+                input.addEventListener('change', function() {
+                    const selectedColor = this.value;
+                    const selectedPrice = this.dataset.price; // Lấy giá đã giảm từ data-price
+                    const originalPrice = this.dataset.originalPrice; // Lấy giá gốc từ data-original-price
+
+                    const priceDisplay = document.getElementById('price-display');
+                    priceDisplay.textContent = parseFloat(selectedPrice) + 'Đ'; // Cập nhật giá đã giảm
+
+                    // Nếu có giá gốc, hiển thị nó
+                    const originalPriceDisplay = document.querySelector('.original-price');
+                    if (originalPriceDisplay) {
+                        originalPriceDisplay.textContent = parseFloat(originalPrice) + 'Đ';
+                    }
+                    // Ẩn tất cả kích cỡ và chỉ hiển thị kích cỡ của màu đã chọn
+                    document.querySelectorAll('.color-sizes').forEach((sizeElement) => {
+                        sizeElement.style.display = 'none';
+                    });
+
+                    const selectedSizeContainer = document.getElementById(`sizes-${selectedColor}`);
+                    if (selectedSizeContainer) {
+                        selectedSizeContainer.style.display = 'block'; // Hiển thị kích cỡ của màu đã chọn
+                    }
+                    // Reset stock display
+                    const stockDisplay = document.getElementById('stock-display');
+                    //- stockDisplay.textContent = 'Còn 0 sản phẩm trong kho'; // Reset stock
+
+                    // Reset max quantity
+                    const quantityInput = document.querySelector('input[name="quantity"]');
+                    quantityInput.max = 0;
+
+                });
+            });
+            document.querySelectorAll('input[name="size"]').forEach((input) => {
+                input.addEventListener('change', function() {
+                    const selectedSizeStock = this.dataset.stock; // Lấy stock từ data-stock
+                    const stockDisplay = document.getElementById('stock-display');
+                    stockDisplay.textContent = `Còn ${selectedSizeStock} sản phẩm trong kho`; // Cập nhật thông tin tồn kho
+                    const quantityInput = document.querySelector('input[name="quantity"]');
+                    quantityInput.max = selectedSizeStock;
+                });
+            });
+
+            document.querySelectorAll('.form-check-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    // Xóa lớp 'selected' từ tất cả các label
+                    document.querySelectorAll('.form-check-label').forEach(l => l.classList.remove('selected'));
+                    
+                    // Thêm lớp 'selected' cho label được nhấp
+                    this.classList.add('selected');
+                });
+            });

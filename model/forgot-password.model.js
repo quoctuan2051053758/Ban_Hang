@@ -10,7 +10,7 @@ const forgotPasswordSchema=new mongoose.Schema(
         }
     },{
         timestamps:true
-    }
+    } 
 );
 
 const forgotPassword = mongoose.model('forgotPassword',forgotPasswordSchema,"forgot-password")

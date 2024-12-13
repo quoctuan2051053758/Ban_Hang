@@ -16,7 +16,7 @@ route.delete('/delete/:id',controller.deleteItem)
 route.get('/create',controller.create)
 route.post(
     '/create',
-    upload.single('thumbnail'),
+    upload.array('thumbnail',10),
     uploadCound.upload,
     validate.createPost,
     controller.createPost
@@ -24,7 +24,7 @@ route.post(
 route.get('/edit/:id',controller.edit)
 route.patch(
     '/edit/:id',
-    upload.single('thumbnail'),
+    upload.array('thumbnail',10),
     uploadCound.upload,
     validate.createPost,
     controller.editPatch

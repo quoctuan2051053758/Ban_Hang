@@ -1,0 +1,47 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+include ../../mixins/sub-menu.pug
+include ../../mixins/pagination.pug
+block main
+    .cartarea.sp_bottom_100.sp_top_100
+        .container
+            .row
+                .col-xl-12
+                    form(action="#")
+                        .cartarea__table__content.table-responsive
+                            table
+                                thead
+                                    tr
+                                        th Ảnh
+                                        th Sản phẩm
+                                        th Giá
+                                        //- th Quantity
+                                        th Thêm vào giỏ
+                                        th Remove
+                                tbody
+                                    each product in products
+                                        tr
+                                            td.cartarea__product__thumbnail
+                                                a(href=`/products/${product.slug}`)
+                                                    img(src=product.thumbnail[0], alt="food-1")
+                                            td.cartarea__product__name
+                                                a(href=`/products/${product.slug}`)  #{product.title}
+                                            td.cartarea__product__price__cart
+                                                span.amount 
+                                                    - var discountAmount = product.variants[0].price * (product.discountPercentage / 100)
+                                                    span #{(product.variants[0].price - discountAmount).toFixed(0)} Đ 
+                                            td.cartarea__product__quantity
+                                                .cartarea__plus__button
+                                                    
+                                                    a.default__button(href=`/products/detail/${product.slug}` data-bs-toggle="modal" data-bs-target=`#${product._id}`) Thêm vào giỏ hàng
+                                                    
+                                           
+                                            td
+                                                a(href=`/wishlists/remove/${product._id}`)
+                                                    svg(xmlns="http://www.w3.org/2000/svg", class="ionicon", viewBox="0 0 512 512")
+                                                        title Xóa
+                                                        path(d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320", fill="none", stroke="currentColor", stroke-linecap="round", stroke-linejoin="round", stroke-width="32")
+                                                        path(stroke="currentColor", stroke-linecap="round", stroke-miterlimit="10", stroke-width="32", d="M80 112h352")
+                                                        path(d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224", fill="none", stroke="currentColor", stroke-linecap="round", stroke-linejoin="round", stroke-width="32")
+                                    

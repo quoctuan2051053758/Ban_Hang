@@ -6,7 +6,8 @@ route.get('/',controller.index)
 
 
 route.post('/add/:productId',controller.add)
-route.get('/delete/:productId',controller.delete)
+route.get('/delete/:productId/:productSize/:productColor',controller.delete)
+
 route.get('/update/:productId/:productSize/:productColor/:quantity',controller.update)
 
 

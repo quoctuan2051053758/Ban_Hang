@@ -7,7 +7,7 @@ tinymce.init({
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
   
-      input.addEventListener('change', (e) => {
+      input.addEventListener('change', (e) => { 
         const file = e.target.files[0];
   
         const reader = new FileReader();

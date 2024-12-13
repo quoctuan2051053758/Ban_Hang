@@ -3,61 +3,75 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
 
 
-
 block main
-    +alert-success(5000) 
-    +alert-error(5000)
-    .container.my-3
-        .row 
-            .col-12 
-                +box-head("Giỏ hàng")
-        .row 
-            .col-12                        
-                table(class="table table-bordered")
-                    thead
-                        tr
-                            th STT
-                            th Ảnh
-                            th Tên
-                            th Màu 
-                            th Size
-                            th Giá
-                            th Số lượng
-                            th Tổng tiền
-                            th Hành động
-                    tbody
-                        if(cartDetail.products.length>0)
-                            each item,index in cartDetail.products
-                                tr
-                                    td #{index+1}
-                                    td 
-                                        img(src=item.productInfo.thumbnail, alt=item.productInfo.title width="80px")
-                                    td
-                                        a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
-                                    td #{item.color}
-                                    td #{item.size}
-                                    td #{item.productInfo.price}
-                                    td 
-                                        input(
-                                            type="number"
-                                            name="quantity"
-                                            value=item.quantity
-                                            min="1"  
-                                            product-id = item.product_id,
-                                            product-size=item.size
-                                            product-color=item.color
-                                            style="width:60px"
-                                        )
-                                    
-                                    td #{item.totalPrice} 
-                                    td 
-                                        a(href=`/cart/delete/${item.product_id}`
-                                            class="btn btn-danger"
-                                        ) Xóa
-                        else 
-                            p Không có sản phẩm nào trong giỏ hàng
-                h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}Đ
+    
+    .cartarea.sp_bottom_100.sp_top_100
+        .container
+            .row
+                .col-xl-12
+                        .cartarea__table__content.table-responsive
+                            table
+                                thead
+                                    tr
+                                        //- th Ảnh
+                                        //- th Product
+                                        //- th Price
+                                        //- th Quantity
+                                        //- th Total
+                                        //- th Remove
+                                        th Ảnh
+                                        th Tên
+                                        //- th Màu 
+                                        //- th Size
+                                        th Giá
+                                        th Số lượng
+                                        th Tổng tiền
+                                        th Hành động
+                                tbody
+                                    if(cartDetail.products.length>0)
+                                        each item,index in cartDetail.products
+                                            tr
+                                                td.cartarea__product__thumbnail
+                                                    a(href=`/products/detail/${item.productInfo.slug}`) 
+                                                        img(src=item.productInfo.thumbnail[0], alt=item.productInfo.title)
+                                                td.cartarea__product__name
+                                                    a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title} - #{item.size} / #{item.color}
+                                                    
+                                                td.cartarea__product__price__cart
+                                                    span.amount #{item.discountPrice}
+                                                td.cartarea__product__quantity
+                                                    .featurearea__quantity
+                                                        .qty-container
+                                                            button.qty-btn-minus.btn-qty(type="button")
+                                                                i.fa.fa-minus
+                                                            //- input.input-qty(type="text", name="qty", value="1")
+                                                            input.input-qty(
+                                                                type="number"
+                                                                name="quantity"
+                                                                value=item.quantity
+                                                                min="1"  
+                                                                product-id = item.product_id,
+                                                                product-size=item.size
+                                                                product-color=item.color
+                                                                style="width:60px"
+                                                            )
+                                                            button.qty-btn-plus.btn-qty(type="button")
+                                                                i.fa.fa-plus
+                                                td.cartarea__product__subtotal #{item.totalPrice} 
+                                                td.cartarea__product__remove
+                                                    a(href=`/cart/delete/${item.product_id}/${item.size}/${item.color}`)
+                                                        svg(xmlns="http://www.w3.org/2000/svg", class="ionicon", viewBox="0 0 512 512")
+                                                            title Trash
+                                                            path(d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320", fill="none", stroke="currentColor", stroke-linecap="round", stroke-linejoin="round", stroke-width="32")
+                                                            path(stroke="currentColor", stroke-linecap="round", stroke-miterlimit="10", stroke-width="32", d="M80 112h352")
+                                                            path(d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224", fill="none", stroke="currentColor", stroke-linecap="round", stroke-linejoin="round", stroke-width="32")
 
-                div(class="text-right mt-3")
-                    a(href="/checkout" class="btn btn-success") Thanh Toán 
-    script(src="/js/cart.js") 
+            .row
+                .col-lg-12
+                    .cartarea__shiping__update__wrapper
+                        .cartarea__shiping__update
+                            h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}
+                            //- a.default__button(href="shop.html") Thanh toán
+                        .cartarea__clear
+                            a.default__button(href="/checkout") Thanh toán
+    script(src="/js/cart.js")

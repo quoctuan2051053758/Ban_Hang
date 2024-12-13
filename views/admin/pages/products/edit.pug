@@ -1,183 +1,232 @@
-extends  ../../layouts/default.pug
+extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main 
     if(role.permissions.includes("products_edit"))
-        
         .app-main 
             .container-fluid
-                
-                    .card.card-primary.card-outline.mb-4
-                        .card-header
-                            h3.card-title Chỉnh sửa sản phẩm
-                        form(
-                            action = `${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
-                            id = "form-edit-product"
-                            method="POST"
-                            enctype="multipart/form-data"
+                +alert-error(5000)
+                h1(class="mb-4") Chỉnh sửa sản phẩm 
+                form(
+                    action = `${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+                    id = "form-edit-product"
+                    method="POST"
+                    enctype="multipart/form-data"
+                )
+                    div(class="form-group")
+                        label(for="title") Tiêu đề 
+                        input(
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            required
+                            value=product.title
                         )
-                            .card-body
-                                div(class="form-group")
-                                    label(for="title") Tiêu đề 
-                                    input(
-                                        type="text"
-                                        class="form-control"
-                                        id="title"
-                                        name="title"
-                                        required
-                                        value=product.title
-                                    )
-                                div(class="form-group")
-                                    label(for="product_category_id") Danh mục
-                                    select(
-                                        name="product_category_id"
-                                        id="product_category_id"
-                                        class="form-control"
-                                    )
-                                        option(value="") --chọn danh mục cha--
-                                        if(category)
-                                            +select-tree(category,1,product.product_category_id)
+                    div(class="form-group")
+                        label(for="product_category_id") Danh mục
+                        select(
+                            name="product_category_id"
+                            id="product_category_id"
+                            class="form-control"
+                        )
+                            option(value="") --chọn danh mục cha--
+                            if(category)
+                                +select-tree(category, 1, product.product_category_id)
 
-                                div(class="form-group form-check form-check-inline")
-                                    input(
-                                        type="radio"
-                                        class="form-check-input"
-                                        id="featured1"
-                                        name="featured"
-                                        value="1"
-                                        checked=(product.featured=="1"?true:false)
-                                    ) 
-                                    label(for="featured1" class="form-check-label") Nổi bật
+                    div(class="form-group form-check form-check-inline")
+                        input(
+                            type="radio"
+                            class="form-check-input"
+                            id="featured1"
+                            name="featured"
+                            value="1"
+                            checked=(product.featured=="1")
+                        ) 
+                        label(for="featured1" class="form-check-label") Nổi bật
 
-                                div(class = "form-group form-check form-check-inline")
-                                    input(
-                                        type="radio"
-                                        class="form-check-input"
-                                        id="featured0"
-                                        name="featured"
-                                        value="0"
-                                        checked=(product.featured=="0"?true:false)
-                                    ) 
-                                    label(for="featured0" class="form-check-label") Không
-                                div(class="form-group")
-                                        label(for="desc") Mô tả 
-                                        textarea(
-                                            class="form-control textarea-mce"
-                                            id="desc"
-                                            name="description"
-                                            rows="5"
-                                            value=product.description
-                                        ) #{product.description}
+                    div(class="form-group form-check form-check-inline")
+                        input(
+                            type="radio"
+                            class="form-check-input"
+                            id="featured0"
+                            name="featured"
+                            value="0"
+                            checked=(product.featured=="0")
+                        ) 
+                        label(for="featured0" class="form-check-label") Không
 
-                                div(class="form-group")
-                                    label(for="color") Màu sắc 
-                                    input(
-                                        type="text"
-                                        class="form-control"
-                                        id="color"
-                                        name="color"
-                                        value=product.color
-                                        min="0"
-                                    )
-                                div(class="form-group")
-                                    label Kích Cỡ:
-                                    - const availableSizes = ["S", "M", "L", "XL", "XXL"]; // Tất cả kích cỡ có sẵn
-                                    
-                                    
-                                    each size in availableSizes
-                                        .form-check
-                                            input#sizeS.form-check-input(type="checkbox", name="size", value=size, checked=((product.size).includes(size) ? true : false))
-                                            label(for=`size#{size}`)  #{size}
-                                
+                    div(class="form-group")
+                        label(for="desc") Mô tả 
+                        textarea(
+                            class="form-control textarea-mce"
+                            id="desc"
+                            name="description"
+                            rows="5"
+                        ) #{product.description}
 
-                                div(class="form-group")
-                                    label(for="price") Giá 
-                                    input(
-                                        type="number"
-                                        class="form-control"
-                                        id="price"
-                                        name="price"
-                                        value=product.price
-                                        min="0"
-                                    )
+                    h3 Thông tin biến thể (Màu sắc, Kích thước và Giá)
+                    div(id="variants-container")
+                        button(type="button" class="btn btn-secondary mt-2" id="add-variant") Thêm biến thể
+                        
+                        each variant, index in product.variants
+                            
+                            .variant-entry.mb-3
+                                .row
+                                    .col-md-3
+                                        input(type="text" class="form-control" name="variantColor" placeholder="Màu sắc" required value=variant.color)
+                                    .col-md-3
+                                        select(class="form-control" name="variantSize" required)
+                                            option(value=variant.size) #{variant.size}
+                                            option(value="S") S
+                                            option(value="M") M
+                                            option(value="L") L
+                                            option(value="XL") XL
+                                            option(value="XXL") XXL
+                                    .col-md-3
+                                        input(type="number" class="form-control" name="variantPrice" placeholder="Giá" required value=variant.price)
+                                    .col-md-3
+                                        input(type="number" class="form-control" name="variantStock" placeholder="Kho" required value=variant.stock)
+                                    .col-md-1
+                                        button(type="button" class="btn btn-danger remove-variant") Xóa
 
-                                div(class="form-group")
-                                    label(for="discount") % Giảm giá 
-                                    input(
-                                        type="number"
-                                        class="form-control"
-                                        id="discount"
-                                        name="discountPercentage"
-                                        value=product.discountPercentage
-                                        min="0"
-                                    )
+                        
 
-                                div(class="form-group")
-                                    label(for="stock") Số lượng 
-                                    input(
-                                        type="number"
-                                        class="form-control"
-                                        id="stock"
-                                        name="stock"
-                                        value=product.stock
-                                        min="0"
-                                    )
+                    div(class="form-group")
+                        label(for="discount") % Giảm giá 
+                        input(
+                            type="number"
+                            class="form-control"
+                            id="discount"
+                            name="discountPercentage"
+                            value=product.discountPercentage
+                            min="0"
+                        )
 
-                                div(
-                                    class="form-group"
-                                    upload-image
-                                )
-                                    label(for="thumbnail") Ảnh 
-                                    input(
-                                        type="file"
-                                        class="form-control-file"
-                                        id="thumbnail"
-                                        name="thumbnail"
-                                        accept="image/*"
-                                        upload-image-input
-                                    )
+                    div(class="form-group" upload-image)
+                        label(for="thumbnail") Ảnh 
+                        input(
+                            type="file"
+                            class="form-control-file"
+                            id="thumbnail"
+                            name="thumbnail"
+                            accept="image/*"
+                            multiple
+                            upload-image-input
+                        )
+                        .image-preview-container(style="display: flex; flex-wrap: wrap; margin-top: 10px;")
+                            if product.thumbnail
+                                each image in product.thumbnail
                                     img(
-                                        src=product.thumbnail, alt=""
+                                        src=image
+                                        alt=""
                                         upload-image-preview
                                         class="image-preview"
+                                        style="margin-right: 10px; max-width: 100px; display: inline-block;"
                                     )
 
+                    div(class="form-group form-check form-check-inline")
+                        input(
+                            type="radio"
+                            class="form-check-input"
+                            id="statusActive"
+                            name="status"
+                            value="active"
+                            checked=(product.status=="active")
+                        )
+                        label(for="statusActive" class="form-check-label") Hoạt động
+                    div(class="form-group form-check form-check-inline")
+                        input(
+                            type="radio"
+                            class="form-check-input"
+                            id="statusInActive"
+                            name="status"
+                            value="inactive"
+                            checked=(product.status=="inactive")
+                        )
+                        label(for="statusInActive" class="form-check-label") Dừng hoạt động
+                        
+                    div(class="form-group")
+                        button(
+                            type="submit" 
+                            class="btn btn-primary"
+                        ) Cập nhật sản phẩm
 
-                                div(class="form-group")
-                                    label(for="position") Vị trí 
-                                    input(
-                                        type="number"
-                                        class="form-control"
-                                        id="position"
-                                        name="position"
-                                        placeholder="tự động tăng"
-                                        min="1"
-                                        value=product.position
-                                    )
-                                div(class="form-group form-check form-check-inline")
-                                    input(
-                                        type="radio"
-                                        class="form-check-input"
-                                        id="statusActive"
-                                        name="status"
-                                        value="active"
-                                        checked=(product.status=="active"?true:false)
-                                    )
-                                    label(for="statusActive" class="form-check-label") Hoạt động
-                                div(class="form-group form-check form-check-inline")
-                                    input(
-                                        type="radio"
-                                        class="form-check-input"
-                                        id="statusInActive"
-                                        name="status"
-                                        value="inactive"
-                                        checked=(product.status=="inactive"?true:false)
-                                    )
-                                    label(for="statusActive" class="form-check-label") Dừng hoạt động          
-                                
-                            .card-footer
-                                button(type="submit" class="btn btn-primary") Cập nhật
-
-    
         script(src="/admin/js/product.js") 
+        script.
+            document.getElementById('add-variant').addEventListener('click', function() {
+                const color = document.querySelector('input[name="variantColor"]').value;
+                const size = document.querySelector('select[name="variantSize"]').value;
+                const price = document.querySelector('input[name="variantPrice"]').value;
+                const stock = document.querySelector('input[name="variantStock"]').value;
+
+                if (color && size && price && stock) {
+                    const variantEntry = document.createElement('div');
+                    variantEntry.classList.add('variant-entry', 'mb-3', 'row');
+                    variantEntry.innerHTML = `
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="variantColor" placeholder="Màu sắc" required value="${color}">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" name="variantSize" required>
+                                <option value="${size}">${size}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" name="variantPrice" placeholder="Giá" required value="${price}">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" name="variantStock" placeholder="Kho" required value="${stock}">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-danger remove-variant">Xóa</button>
+                        </div>
+                    `;
+                    document.getElementById('variants-container').appendChild(variantEntry);
+
+                    // Clear input fields
+                    document.querySelector('input[name="variantColor"]').value = '';
+                    document.querySelector('select[name="variantSize"]').value = '';
+                    document.querySelector('input[name="variantPrice"]').value = '';
+                    document.querySelector('input[name="variantStock"]').value = '';
+
+                    // Gán sự kiện xóa cho nút Xóa
+                    variantEntry.querySelector('.remove-variant').addEventListener('click', function() {
+                        variantEntry.remove(); // Xóa biến thể
+                    });
+
+                } else {
+                    alert("Vui lòng điền đầy đủ thông tin biến thể.");
+                }
+            });
+
+            // Gán sự kiện xóa cho các biến thể hiện có
+            const removeButtons = document.querySelectorAll('.remove-variant');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const variantEntry = this.closest('.variant-entry');
+                    variantEntry.remove(); // Xóa biến thể
+                });
+            });
+
+            document.getElementById('form-edit-product').addEventListener('submit', function(event) {
+                const variants = [];
+                const variantEntries = document.querySelectorAll('.variant-entry');
+
+                variantEntries.forEach(entry => {
+                    const color = entry.querySelector('input[name="variantColor"]').value;
+                    const size = entry.querySelector('select[name="variantSize"]').value;
+                    const price = entry.querySelector('input[name="variantPrice"]').value;
+                    const stock = entry.querySelector('input[name="variantStock"]').value;
+
+                    variants.push({ color, size, price: Number(price), stock: Number(stock) });
+                });
+                const inputVariants = document.createElement('input');
+                inputVariants.type = 'hidden';
+                inputVariants.name = 'variants';
+                inputVariants.value = JSON.stringify(variants);
+                
+                this.appendChild(inputVariants);
+                this.submit();
+            });

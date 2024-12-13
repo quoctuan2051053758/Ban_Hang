@@ -1,18 +1,36 @@
 const mongoose = require("mongoose")
+const slug = require("mongoose-slug-updater")
+mongoose.plugin(slug)
 
 const blogSchema=new mongoose.Schema(
     { 
-        user_id:String,
         title:String,
-        description:String,
-        products:[
+        content: {
+            type: String,
+            required: true,
+        },
+        thumbnail: String,
+        status:{
+            type:String,
+            enum: ['active', 'inactive'],
+            default: 'inactive',
+        },
+        updatedBy:[
             {
-                product_id:String,
-                quantity:Number,
-                size:String,
-                color:String
+                account_id:String,
+                updatedAt:Date
             }
-        ]
+        ],
+        author:String,
+        slug: {
+            type:String,
+            slug:"title",
+            unique:true
+        },
+        createdBy: {
+            account_id: { type: String, required: true }, 
+            createdAt: { type: Date, default: Date.now }
+        }
     },{
         timestamps:true
     }

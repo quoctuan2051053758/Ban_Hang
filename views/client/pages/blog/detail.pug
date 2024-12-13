@@ -1,0 +1,30 @@
+extends ../../layouts/default.pug
+block main
+    div.blog.sp_bottom_80.sp_top_40
+        .container
+            .row
+                .col-lg-12
+                    .ltn__blog-details-wrap--
+                        .ltn__page-details-inner.ltn__blog-details-inner
+                            img.img-fluid(src="img/blog/blog_details.jpg", alt="blog_details")
+                        h1.ltn__blog-title #{blog.title}
+                        .ltn__blog-meta
+                            ul
+                                li.ltn__blog-author
+                                    i.far.fa-user
+                                    | by: #{blog.author}
+                                li.ltn__blog-date
+                                    i.far.fa-calendar-alt
+                                    | #{new Date(blog.createdAt).toLocaleDateString('en-VI', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+                                li
+                                    a(href="#")
+                                        i.fas.fa-comment
+                                        | 2 comments
+                        p.sp_top_20 !{blog.content}
+                        //- blockquote
+                        //-     span Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+                        //-     i.fa.fa-quote-left
+                        //- p
+                        //-     span Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+                        //- p
+                        //-     span Ita que earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.

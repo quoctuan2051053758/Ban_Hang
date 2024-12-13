@@ -191,40 +191,7 @@
 
 /* end product detail */
 
-/* alert
-[show-alert]{
-    position: fixed;
-    top: 70px;
-    right: 15px;
-    z-index: 9999;
-}
-[show-alert].alert-hidden{
-    animation-name: alert-hidden;
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-}
-@keyframes alert-hidden {
-    from{
-        right:15px;
-    }
-    to{
-        right:-100%;
-        display: none;
-    }
-    
-}
-[show-alert] [close-alert]{
-    background-color: #ffffffc4;
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    text-align: center;
-    font-weight: 600;
-    border-radius: 50%;
-    cursor: pointer;
-} */
-/* end alert */
+
 
 
 /**************************************************************
@@ -280,6 +247,41 @@
 	|___ End Style Sheet Indexing
 
 ***************************************************************/
+/* alert */
+[show-alert]{
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    z-index: 9999;
+}
+[show-alert].alert-hidden{
+    animation-name: alert-hidden;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+@keyframes alert-hidden {
+    from{
+        right:15px;
+    }
+    to{
+        right:-100%;
+        display: none;
+    }
+    
+}
+[show-alert] [close-alert]{
+    background-color: #ffffffc4;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: pointer;
+} 
+  /* /* end alert */
+
 @import url("https://fonts.googleapis.com/css2?family=Bungee&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;display=swap");
@@ -7484,3 +7486,67 @@ blockquote i {
 .is_dark .slider__default__arrow--2 .slick-arrow:hover {
   color: var(--blackColor);
 }/*# sourceMappingURL=style.css.map */
+.selector__wrapper .d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px; 
+}
+
+.form-check-label {
+  display: inline-block;
+  padding: 8px 14px; 
+  font-size: 14px; 
+  font-weight: 500;
+  border: 1.5px solid transparent; 
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0px 5px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9; 
+  color: #333; 
+}
+
+
+.form-check-label:hover {
+  border-color: #007bff; 
+  background-color: #eef4ff; 
+}
+
+
+.form-check-input {
+  display: none; /* Ẩn radio input mặc định */
+}
+
+.form-check-input:checked + .form-check-label {
+  border-color: #007bff; 
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.single__product__swatch .d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px; 
+}
+.single__product__swatch span {
+  margin-right: 10px; 
+  font-weight: bold;
+  color: #333;
+  font-size:15px
+}
+.selector__wrapper span {
+  margin-right: 10px; 
+  font-weight: bold;
+  color: #333;
+  font-size:15px
+}
+.color-sizes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  
+}

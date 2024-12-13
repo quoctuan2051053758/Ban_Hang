@@ -140,16 +140,23 @@ if(showAlert){
 //end show alert
 
 //Upload Image
-const uploadImage = document.querySelector("[upload-image]")
-if(uploadImage){
-    const uploadImageInput=document.querySelector("[upload-image-input]")
-    const uploadImagePreview=document.querySelector("[upload-image-Preview]")
+const uploadImageInput = document.querySelector("[upload-image-input]");
+const uploadImagePreviewContainer = document.querySelector(".image-preview-container");
+// const uploadImage = document.querySelector("[upload-image]")
+if(uploadImageInput){
     uploadImageInput.addEventListener("change",(e)=>{
-        // console.log(e);
-        const file = e.target.files[0];
-        if(file){
-            uploadImagePreview.src=URL.createObjectURL(file)
-        }
+        uploadImagePreviewContainer.innerHTML = '';
+        const files = e.target.files;
+        Array.from(files).forEach(file => {
+            if (file) {
+                const img = document.createElement('img'); // Tạo thẻ img cho mỗi ảnh
+                img.src = URL.createObjectURL(file); // Tạo URL cho ảnh
+                img.className = 'image-preview'; // Thêm class cho ảnh
+                img.style.display = 'block'; // Hiện ảnh
+                uploadImagePreviewContainer.appendChild(img); // Thêm ảnh vào container
+            }
+        });
+        
     })
 }
 //end Upload Image

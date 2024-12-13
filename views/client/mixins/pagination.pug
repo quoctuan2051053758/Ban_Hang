@@ -1,0 +1,17 @@
+mixin pagination(pagination)
+    .pagination__wraper.text-center.sp_top_40
+        ul
+            if pagination.currentPage > 1
+                li.disabled.prev
+                    a(button-pagination=pagination.currentPage -1)
+                        span
+                            i.fas.fa-angle-double-left
+            - for(let i = 1; i <= pagination.totalPage; i++)       
+                li
+                    a( class=`${pagination.currentPage == i? "active":""}` button-pagination=i) #{i}
+                
+            if pagination.currentPage < pagination.totalPage
+                li.next
+                    a( title="Next »" button-pagination=pagination.currentPage + 1)
+                        span(aria-hidden="true")
+                            i.fas.fa-angle-double-right  

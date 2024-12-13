@@ -14,17 +14,35 @@ module.exports.index =async (req,res)=>{
             const productId = item.product_id
             const productInfo = await Product.findOne({
                 _id:productId,
-            }).select("title thumbnail slug price discountPercentage")
-            productInfo.priceNew=productsHelper.priceNewProduct(productInfo)
-            item.productInfo = productInfo
-            item.totalPrice = productInfo.priceNew * item.quantity
+            }).select("title thumbnail slug price discountPercentage variants")
+            item.productInfo=productInfo
+            const selectedVariant = productInfo.variants.find(variant => 
+                variant.color === item.color && variant.size === item.size
+            )
+            if(selectedVariant){
+                const discountPrice = selectedVariant.price - (selectedVariant.price * (productInfo.discountPercentage / 100));
+                item.price = selectedVariant.price; //
+                item.discountPrice = discountPrice;
+            }else{
+                item.price = 0; // Nếu không tìm thấy variant, gán giá mặc định
+                item.discountPrice = 0;
+            }
+            item.totalPrice = item.discountPrice * item.quantity   
         }   
     }
+
     cart.totalPrice = cart.products.reduce((sum,item)=>sum+item.totalPrice,0)
+    cart.totalPrice = cart.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    cart.products.forEach(item => {
+        item.priceFormatted = item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        item.discountPrice = item.discountPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        item.totalPrice = item.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    });
+    // cart.totalPrice = cart.products.reduce((sum,item)=>sum+item.totalPrice,0)
     res.render('client/pages/checkout/index',{
         pageTitle:"Đặt hàng",
         cartDetail:cart
-    });
+    }); 
 }
 
 // [POST] /checkout/order
@@ -47,11 +65,25 @@ module.exports.order =async (req,res)=>{
         const productInfo = await Product.findOne({
             _id:product.product_id
         }).select("price discountPercentage stock")
-        objectProduct.price=productInfo.price
-        objectProduct.discountPercentage=productInfo.discountPercentage
-        products.push(objectProduct)
-        productInfo.stock -= product.quantity
-        await productInfo.save()
+        item.productInfo=productInfo
+        const selectedVariant = productInfo.variants.find(variant => 
+            variant.color === product.color && variant.size === product.size
+        )
+        if(selectedVariant){
+            // const discountPrice = selectedVariant.price - (selectedVariant.price * (productInfo.discountPercentage / 100));
+            objectProduct.price = selectedVariant.price; 
+            objectProduct.discountPercentage = productInfo.discountPercentage
+            products.push(objectProduct)
+        }else{
+            product.price = 0; // Nếu không tìm thấy variant, gán giá mặc định
+            product.discountPrice = 0;
+        }
+        item.totalPrice = item.discountPrice * item.quantity
+        // objectProduct.price=productInfo.price
+        // objectProduct.discountPercentage=productInfo.discountPercentage
+        // products.push(objectProduct)
+        // productInfo.stock -= product.quantity
+        // await productInfo.save()
     }
     const orderInfo = {
         cart_id:cartId,

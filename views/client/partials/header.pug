@@ -1,4 +1,4 @@
-//- include ../mixins/sub-menu.pug
+include ../mixins/sub-menu.pug
 
     //- .container  
     //-     .row.align-items-center
@@ -103,89 +103,15 @@ header
                                 li
                                     a(href="/") Trang chủ
                                 li.position-static
-                                    a.headerarea__has__dropdown(href="shop.html") Shop
+                                    a.headerarea__has__dropdown(href="/products") Sản phẩm
                                         span.header__label New
-                                    ul.headerarea__submenu.headerarea__megamenu
-                                        li.mega__menu__li
-                                            a.menu__title(href="categories.html") Women's Fashion
-                                            ul
-                                                li
-                                                    a(href="#") Dresses
-                                                li
-                                                    a(href="#") Sweaters & Cardigans
-                                        li.mega__menu__li
-                                            a.menu__title(href="categories.html") Men's Fashion
-                                            ul
-                                                li
-                                                    a(href="#") Shirts
-                                                li
-                                                    a(href="#") T-Shirts & Polos
-                                                        span.header__label.hot__color Hot
-                                        li.mega__menu__li
-                                            a.menu__title(href="categories.html") Accessories
-                                            ul
-                                                li
-                                                    a(href="#") Bags & Purses
-                                                li
-                                                    a(href="#") Sunglasses
-                                                        span.header__label New
-                                        
-                                li.position-static
-                                    a.headerarea__has__dropdown(href="categories.html") Categories
-                                        span.header__label.hot__color Hot
-                                    ul.headerarea__submenu.headerarea__megamenu
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Featured Product
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__1.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") New Arrivals
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__2.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Summer Styles
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__3.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Winter Fashion
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__4.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Accessories
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__5.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Footwear
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__6.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Men
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__7.png" alt="Collection")
-                                        li.mega__menu__li.mega__menu__image
-                                            a.menu__title(href="categories.html") Women
-                                            ul
-                                                li
-                                                    a(href="categories.html")
-                                                        img.img-fluid(src="img/collection/collection__8.png" alt="Collection")
+                                    - const pathProduct = "/products"
+                                        //- a(href=pathProduct) Sản phẩm
+                                    +sub-menu_parent(layoutProductsCategory,pathProduct)
                                 li
-                                    a(href="about.html") Blog
+                                    a(href="/blogs") Blog
                                 li
-                                    a(href="about.html") About
+                                    a(href="/about") About
                 .col-xl-3.col-lg-3.col-md-6
                     .headerarea__right
                         ul.headerarea__right__nav
@@ -209,7 +135,7 @@ header
                                                 circle(cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
                                                 path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256")
                                                 path(d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
-                                                span.bigcounter 2
+                                                span.bigcounter #{ miniCart ? miniCart.totalQuantity : 0}
         
     //- mobie_menu
 
@@ -225,7 +151,7 @@ header
                             line(x1="3" y1="18" x2="21" y2="18")
             .col-sm-4.col-5
                 .mobile-logo
-                    a.logo__mobile(href="#")
+                    a.logo__mobile(href="/")
                         img(src=settingGeneral.logo alt="logo")
             .col-sm-4.col-5
                 .header-right-wrap
@@ -251,7 +177,7 @@ header
                                                 circle(cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
                                                 path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256")
                                                 path(d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
-                                            span.bigcounter 2
+                                            span.bigcounter #{ miniCart ? miniCart.totalQuantity : 0}
 
     //- Mobile Menu Start Here
     div.mobile-off-canvas-active
@@ -270,53 +196,15 @@ header
                 .mobile-navigation
                     nav
                         ul.mobile-menu
-                            li.menu-item-has-children
-                                a(href="index.html") Home
-                                ul.dropdown
-                                    li
-                                        a(href="index.html") Fashion 1
-                                    li
-                                        a(href="home-2.html") Fashion 2
-                                    li
-                                        a(href="home-3.html") Fashion 3
-                                    li
-                                        a(href="home-4.html") Beauty
+                            li
+                                a(href="/") Trang chủ
+                            
                                     
                             li.menu-item-has-children
-                                a(href="shop.html") Shop
+                                a(href="shop.html") Sản phẩm
                                 ul.dropdown
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Women's Fashion
-                                        ul.dropdown
-                                            li
-                                                a(href="#") Dresses
-                                            li
-                                                a(href="#") Tops & Blouses
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Men's Fashion
-                                        ul.dropdown
-                                            li
-                                                a(href="#") Shirts
-                                        
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Accessories
-                                        ul.dropdown
-                                            li
-                                                a(href="#") Bags & Purses
-                                            li
-                                                a(href="#") Sunglasses
-                                                    span.header__label New
-                                            li
-                                                a(href="#") Jewelry
-                                            li
-                                                a(href="#") Watches
-                                            li
-                                                a(href="#") Mobile
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Footwear
-                                        ul.dropdown
-                                            li
-                                                a(href="#") Flats & Loafers
+                                    
+                                    +sub-menu_mobie(layoutProductsCategory,"/products")         
                             li.menu-item-has-children
                                 a(href="categories.html") Categories
                                 ul.dropdown
@@ -359,15 +247,32 @@ header
             svg(xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512")
                 title Close
                 path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368")
-        div.setting__wrap__heading
-            h6
-                a(href="#") Account
-        div.setting__wrap__list__inner
-            ul
-                li
-                    a(href="/user/register") Đăng ký
-                li
-                    a(href="/user/login") Đăng nhập
+        
+        
+        if (user)
+            div.setting__wrap__heading
+                h6
+                    a(href="/user/info") #{user.fullName}
+            div.setting__wrap__list__inner
+                ul
+                    li
+                        a(href="/user/logout") Đăng xuất
+                    li
+                        a(href="/cart") Giỏ hàng
+                    li
+                        a(href="/wishlists") Yêu thích
+        else
+            div.setting__wrap__heading
+                h6
+                    a(href="#") Account
+            div.setting__wrap__list__inner
+                ul
+                    li
+                        a(href="/user/login") Đăng nhập
+                    li
+                        a(href="/cart") Giỏ hàng
+                    li
+                        a(href="/wishlist") Yêu thích
     
     //- header__search
     div.headersearch__active
@@ -377,9 +282,9 @@ header
                     title Close
                     path(fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368")
         .headersearch__active__input
-            form(action="https://marinothemes.com/search" method="get" role="search" style="position: relative;")
+            form(action="/search" method="GET" style="position: relative;")
                 .header__form__search
-                    input(type="search" name="q" value="" placeholder="Search our store" class="input-text" autocomplete="off")
+                    input(type="search" name="keyword" value=keyword placeholder="Search our store" class="input-text" autocomplete="off")
                     button(type="submit")
                         i.fa.fa-search
 
@@ -388,43 +293,33 @@ header
             .minicart__wrapper
                 .minicart__close__icon
                     .minicart__cart__text
-                        strong Cart
+                        strong Giỏ hàng
                     button.minicart__close__btn
                         i.fa.fa-close
                 .minicart__single__wraper
-                    .minicart__single
-                        .minicart__single__img
-                            a(href="single-product.html")
-                                img(src="img/grid/grid__1.png" alt="product")
-                            .minicart__single__close
-                                button(title="Remove")
-                                    i.fa.fa-close
-                        .minicart__single__content
-                            h4
-                                a(href="single-product.html") E. Casual Comforts T-shirt
-                            span 1 x 
-                                span.money $5.00 USD
-                    .minicart__single
-                        .minicart__single__img
-                            a(href="single-product.html")
-                                img(src="img/grid/grid__2.png" alt="product")
-                            .minicart__single__close
-                                button(title="Remove")
-                                    i.fa.fa-close
-                        .minicart__single__content
-                            h4
-                                a(href="single-product.html") M. Denim Clothing Jacket
-                            span 1 x 
-                                span.money $4.00 USD
+                    each item,index in cartsub.products
+                        .minicart__single
+                            .minicart__single__img
+                                a(href=`/products/detail/${item.productInfo.slug}`)
+                                    img(src=item.productInfo.thumbnail[0] alt="product")
+                                .minicart__single__close
+                                    button(href=`/cart/delete/${item.product_id}/${item.size}/${item.color}`)
+                                        i.fa.fa-close
+                            .minicart__single__content
+                                h4
+                                    a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
+                                span #{item.quantity} x 
+                                    span.money #{ item.discountPrice}
+                    
                 .minicart__footer
                     .minicart__subtotal
-                        span.subtotal__title Subtotal:
-                        span.subtotal__amount $9.00 USD
+                        span.subtotal__title Tổng đơn hàng:
+                        span.subtotal__amount #{cartsub.totalPrice}
                     .minicart__button
-                        a(href="cart.html" class="default__button") View Cart
-                        a(href="checkout.html" class="default__button") Checkout
-                    //- .cart__note__text
-                    //-     p Free Shipping on All Orders Over $100!
+                        a(href="/cart" class="default__button") Giỏ hàng
+                        a(href="/checkout" class="default__button") Thanh toán
+                    
+                
 
 
                             

@@ -1,37 +1,122 @@
-
-extends  ../../layouts/default.pug
+extends ../../layouts/default.pug
 
 block main
-    h1 Tạo giao dịch
-    .container
-        .row.justify-content-center
-            .col-md-6
-                form(action=`${prefixAdmin}/inventory/add`, method="POST")
-                    .form-group
-                        label(for="product_id") Chọn Sản Phẩm
-                        select(name="product_id", id="product_id", class="form-control")
-                            // Thay thế bằng danh sách sản phẩm từ backend
-                            option(value="") Chọn sản phẩm
+    .app-main 
+        .container-fluid
+            h1 Tạo đơn nhập hàng
+
+            form(action=`${prefixAdmin}/inventorys/addReceiveInventory`, method='POST', id='inventoryForm')
+                .form-group
+                    label(for='expectedDate') Dự Kiến Ngày Nhập:
+                    input.form-control(type='date', name='expectedDate', required)
+
+                .form-group
+                    input(type="checkbox" name="status" id="status") 
+                    label(for="status") Nhập ngay sau khi tạo đơn nhập
+                h3 Nhập Hàng
+                div#items
+                    div.item.form-inline.mb-3
+                        label Sản Phẩm:
+                        select(name='items[0][variantId]', required onchange='updateItem(this)', class='form-control mx-2')
+                            option(value='') Chọn sản phẩm...
                             each product in products
-                            
-                                option(value=product.id) - #{product.title}
+                                each variant in product.variants
+                                    option(value=variant._id, data-title=`${product.title}`, data-price=`${variant.price}`,data-color=`${variant.color}`, data-size=`${variant.size}`) #{product.title} - #{variant.size}/#{variant.color} - #{variant.stock}
 
-                    .form-group
-                        label(for="quantity") Số Lượng
-                        input(type="number", name="quantity", id="quantity", class="form-control", required=true)
+                h3 Danh Sách Mặt Hàng
+                table#itemsTable.table.table-striped.mt-3
+                    thead
+                        tr
+                            th Sản Phẩm
+                            th Số Lượng Nhận
+                            th Đơn giá
+                            th Thành tiền
+                            th 
+                    tbody
 
-                    .form-group
-                        label(for="price") Giá
-                        input(type="number", name="price", id="price", class="form-control", required=true)
+                button.btn.btn-primary(type='submit') Lưu
+            a.btn.btn-link(href='/admin/dashboard') Hủy
 
-                    .form-group
-                        label(for="transactionType") Loại Giao Dịch
-                        select(name="transactionType", id="transactionType", class="form-control", required=true)
-                            option(value="import") Nhập Kho
-                            option(value="export") Xuất Kho
+    script.
+        let itemIndex = 0;
 
-                    .form-group
-                        label(for="note") Ghi Chú
-                        textarea(name="note", id="note", class="form-control")
+        function updateItem(selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const selectedValue = selectedOption.value;
 
-                    button(type="submit", class="btn btn-primary") Thêm Giao Dịch
+            // Kiểm tra xem có sản phẩm nào được chọn không
+            if (!selectedValue) {
+                return; // Nếu không có sản phẩm nào được chọn, không làm gì cả
+            }
+
+            const selectedText = selectedOption.dataset.title;
+            const price = parseFloat(selectedOption.dataset.price);
+            const color = selectedOption.dataset.color;
+            const size = selectedOption.dataset.size;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <input type="hidden" name="items[${itemIndex}][variantId]" value="${selectedValue}">
+                    ${selectedText} - ${size}/${color}
+                </td>
+                <td>
+                    <input type="number" name="items[${itemIndex}][quantityReceived]" class="mx-2 quantity-input" min="1" value="1" required>
+                </td>
+                <td>
+                    <input type="number" name="items[${itemIndex}][importPrice]" class="mx-2 price-input" value="${price.toFixed(0)}" required>
+                </td>
+                <td class="totalPrice">${price.toFixed(0)}</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Xóa</button>
+                </td>
+            `;
+
+            document.querySelector('#itemsTable tbody').appendChild(row);
+
+            // Gán sự kiện cho ô số lượng nhận
+            const quantityInput = row.querySelector('.quantity-input');
+            quantityInput.addEventListener('input', () => updateRow(row));
+
+            // Gán sự kiện cho ô đơn giá
+            const priceInput = row.querySelector('.price-input');
+            priceInput.addEventListener('input', () => updateRow(row));
+
+            // Vô hiệu hóa tùy chọn đã chọn
+            disableSelectedOption(selectedValue);
+
+            itemIndex++; // Tăng chỉ số hàng
+        }
+
+        function updateRow(row) {
+            const price = parseFloat(row.querySelector('.price-input').value);
+            const quantity = parseInt(row.querySelector('.quantity-input').value);
+            const totalPrice = price * quantity;
+            row.querySelector('.totalPrice').innerText = totalPrice.toFixed(0);
+        }
+
+        function disableSelectedOption(value) {
+            const selectElements = document.querySelectorAll('select[name^="items"]');
+            selectElements.forEach(select => {
+                const option = select.querySelector(`option[value="${value}"]`);
+                if (option) {
+                    option.disabled = true; // Vô hiệu hóa tùy chọn đã chọn
+                }
+            });
+        }
+
+        function removeItem(button) {
+            const row = button.closest('tr');
+            const variantId = row.querySelector('input[name^="items"][type="hidden"]').value;
+
+            // Khôi phục tùy chọn sản phẩm
+            const selectElements = document.querySelectorAll('select[name^="items"]');
+            selectElements.forEach(select => {
+                const option = select.querySelector(`option[value="${variantId}"]`);
+                if (option) {
+                    option.disabled = false; // Kích hoạt lại tùy chọn
+                }
+            });
+
+            row.remove(); // Xóa hàng
+        }

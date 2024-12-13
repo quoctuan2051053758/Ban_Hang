@@ -1,26 +1,60 @@
 extends  ../../layouts/default.pug
 
 block main
-    
+    +alert-success(5000)
+    +alert-error(5000)
     .app-main 
         .container-fluid
-            h1 Kho hàng
-            table(class="table table-hover table-sm" checkbox-multi)
+            h1 Danh sách đơn nhập hàng
+            table(class="table table-hover")
                 thead
                     tr
-                        th Sản Phẩm
-                        th Số Lượng
-                        th Giá
-                        th Ngày Nhập
-                        th Ghi Chú
+                        th Mã Phiếu Nhập
+                        th Ngày Dự Kiến
+                        th Trạng Thái
+                        th Người Tạo
+                        th Hành động
                 tbody
-                    if(inventories && inventories.length  > 0)
-                        each inventory in inventories
-                            tr
-                                td #{inventory.product_id.title}
-                                td #{inventory.quantity}
-                                td #{inventory.price}
-                                td #{inventory.createdAt.toLocaleDateString()} #{inventory.createdAt.toLocaleTimeString()}
-                                td #{inventory.note}
-                    else 
-                        p Chưa có giao dịch nào
+                    each inventory in inventories
+                        tr
+                            td #{inventory.code}
+                            td #{new Date(inventory.expectedDate).toLocaleDateString()} 
+                            td 
+                                if(inventory.status == "pending")
+                                    a(
+                                        href="javascript:;" 
+                                        data-status=inventory.status
+                                        data-id=inventory.id
+                                        button-change-status
+                                        class="badge badge-success"
+                                    )  Chưa nhập hàng 
+                                if(inventory.status == "completed") 
+                                   a(
+                                        href="javascript:;" 
+                                        data-status=inventory.status
+                                        data-id=inventory.id
+                                        button-change-status
+                                        class="badge badge-success"
+                                    )  Đã nhập
+                                
+                            td 
+                                
+                                p #{inventory.fullName} 
+                                p #{new Date(inventory.createdAt).toLocaleString()}
+                            td 
+                                if(inventory.status == "pending")
+                                    a(href=`/admin/inventorys/enter/${inventory.id}` data-id=inventory.id class="btn btn-primary btn-enter") Nhập hàng
+                                    a(href=`/admin/inventorys/detail/${inventory.id}` data-id=inventory.id class="btn btn-secondary btn-enter") Xem đơn
+                                if(inventory.status == "completed")
+                                    a(href=`/admin/inventorys/cancel/${inventory.id}` data-id=inventory.id class="btn btn-info btn-enter") Hủy đơn
+            //- script.     
+            //-     document.addEventListener('DOMContentLoaded', function() {
+            //-         const enterButtons = document.querySelectorAll('.btn-enter');
+            //-         enterButtons.forEach(button => {
+            //-             button.addEventListener('click', function() {
+            //-                 const inventoryId = this.getAttribute('data-id');
+            //-                 window.location.href = `/admin/inventorys/enter/${inventoryId}`;
+            //-             });
+            //-         });
+            //-     });
+            

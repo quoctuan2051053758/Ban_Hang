@@ -4,44 +4,135 @@ include ../../mixins/alert.pug
 block main 
     +alert-success(5000)
     +alert-error(5000)
-    .container.my-5 
-        .row.justify-content-center 
-            .col-8
-                h1(class="mb-4") Đăng nhập tài khoản
-                form(
-                    action = `/user/login`
-                    method="POST"
-                )      
-                    div(class="form-group")
-                        label(for="email") Email 
-                        input(
-                            type="text"
-                            class="form-control"
-                            id="email"
-                            name="email"
-                            required
-                        ) 
-                    div(class="form-group")
-                        label(for="password") Mật khẩu
-                        input(
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            name="password"
-                            required
-                        )
-                    div(class="form-group")
-                        button(
-                            type="submit" 
-                            class="btn btn-primary btn-block"
-                        ) Đăng nhập
-                    div(class="form-check")
-                        input(
-                            type="checkbox" 
-                            name="remember" 
-                            id="remember"
-                            class="form-check-input"
-                        ) 
-                        label(for="remember") Ghi nhớ mật khẩu
+    //- .container.my-5 
+    //-     .row.justify-content-center 
+    //-         .col-8
+    //-             h1(class="mb-4") Đăng nhập tài khoản
+    //-             form(
+    //-                 action = `/user/login`
+    //-                 method="POST"
+    //-             )      
+    //-                 div(class="form-group")
+    //-                     label(for="email") Email 
+    //-                     input(
+    //-                         type="text"
+    //-                         class="form-control"
+    //-                         id="email"
+    //-                         name="email"
+    //-                         required
+    //-                     ) 
+    //-                 div(class="form-group")
+    //-                     label(for="password") Mật khẩu
+    //-                     input(
+    //-                         type="password"
+    //-                         class="form-control"
+    //-                         id="password"
+    //-                         name="password"
+    //-                         required
+    //-                     )
+    //-                 div(class="form-group")
+    //-                     button(
+    //-                         type="submit" 
+    //-                         class="btn btn-primary btn-block"
+    //-                     ) Đăng nhập
+    //-                 div(class="form-check")
+    //-                     input(
+    //-                         type="checkbox" 
+    //-                         name="remember" 
+    //-                         id="remember"
+    //-                         class="form-check-input"
+    //-                     ) 
+    //-                     label(for="remember") Ghi nhớ mật khẩu
                     
-                a(href="/user/password/forgot") Quên mật khẩu ? 
+    //-             a(href="/user/password/forgot") Quên mật khẩu ? 
+    
+    div.loginarea.sp_bottom_80.sp_top_80
+        div.container
+            div.row
+                div.col-xl-8.offset-md-2.loginarea__col
+                    ul.nav.tab__button__wrap.text-center(id="myTab", role="tablist")
+                        li.nav-item(role="presentation")
+                            button.single__tab__link.active(data-bs-toggle="tab", data-bs-target="#projects__one", type="button") Đăng nhập
+                        li.nav-item(role="presentation")
+                            button.single__tab__link(data-bs-toggle="tab", data-bs-target="#projects__two", type="button") Đăng ký
+
+                    div.tab-content.tab__content__wrapper(id="myTabContent")
+                        div.tab-pane.fade.active.show(id="projects__one", role="tabpanel", aria-labelledby="projects__one")
+                            div.col-xl-8.offset-md-2.loginarea__col
+                                div.loginarea__wraper
+                                    div.loginarea__heading
+                                        h5.login__title Đăng nhập tài khoản
+                                        p.login__description Bạn chưa có tài khoản?
+                                            a(href="/user/register", data-bs-toggle="modal", data-bs-target="#registerModal") Đăng ký miễn phí
+
+                                    form(action = `/user/login`
+                                        method="POST"
+                                    )
+                                        div.loginarea__form
+                                            label.form__label Email
+                                            input.common__login__input(type="text", placeholder="Nhập email của bạn" name="email")
+
+                                        div.loginarea__form
+                                            label.form__label Mật khẩu
+                                            input.common__login__input(type="password", placeholder="Nhập mật khẩu" name="password")
+
+                                        div.loginarea__form.d-flex.justify-content-between.flex-wrap.gap-2
+                                            div.form__check
+                                                input(type="checkbox", id="remember" name="remember" )
+                                                label(for="remember") Ghi nhớ tài khoản
+                                            div.text-end.login__form__link
+                                                a(href="/user/password/forgot") Quên mật khẩu
+
+                                        div.loginarea__button.text-center
+                                            button.default__button(type="submit") Đăng nhập
+
+                                    div.loginarea__social__option
+                                        ul.loginarea__social__btn
+                                            li
+                                                a.default__button(href="#")
+                                                    i.fab.fa-facebook-f
+                                                    |  facebook
+                                            li
+                                                a.default__button(href="#")
+                                                    i.fab.fa-google
+                                                    |  Google
+
+                        div.tab-pane.fade(id="projects__two", role="tabpanel", aria-labelledby="projects__two")
+                            div.col-xl-8.offset-md-2.loginarea__col
+                                div.loginarea__wraper
+                                    div.loginarea__heading
+                                        h5.login__title Đăng ký tài khoản
+                                        p.login__description Bạn đã có tài khoản?
+                                            a(href="/user/login", data-bs-toggle="modal", data-bs-target="#registerModal") Log In
+
+                                    form(action = `/user/register`
+                                        method="POST"
+                                    )
+                                        div.row
+                                            div.col-xl-6
+                                                div.loginarea__form
+                                                    label.form__label Họ tên 
+                                                    input.common__login__input(type="text", placeholder="Nhập họ và tên", name="fullName")
+
+                                            div.col-xl-6
+                                                div.loginarea__form
+                                                    label.form__label Email
+                                                    input.common__login__input(type="email", placeholder="Nhập email" name="email" required)
+
+                                            div.col-xl-6
+                                                div.loginarea__form
+                                                    label.form__label Mật khẩu
+                                                    input.common__login__input(type="password", placeholder="Nhập mật khẩu" name="password" required)
+
+                                            div.col-xl-6
+                                                div.loginarea__form
+                                                    label.form__label Nhập lại mật khẩu
+                                                    input.common__login__input(type="password", placeholder="Nhập lại mật khẩu" name="confirmPassword")
+
+                                        div.loginarea__form.d-flex.justify-content-between.flex-wrap.gap-2
+                                            div.form__check
+                                                input(type="checkbox", id="regi__privacy")
+                                                label(for="regi__privacy") Accept the Terms and Privacy Policy
+
+                                        div.login__button
+                                            button.default__button.text-center(type="submit") Đăng ký

@@ -39,8 +39,6 @@ module.exports.dashboard = async(req,res)=>{
         sevenDaysAgo.setDate(today.getDate() - 7); // Lùi lại 7 ngày
 
 
-        console.log("Last Sunday:", sevenDaysAgo); // In ra Chủ nhật tuần trước
-        console.log("Today:", today); // In ra ngày hôm nay
         
         let weeklyRevenue = Array(7).fill(0);
         try {

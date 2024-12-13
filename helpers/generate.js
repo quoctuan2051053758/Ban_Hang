@@ -1,3 +1,5 @@
+const Inventory = require('../model/inventory.model');
+
 module.exports.generateRandomString = (length)=>{
     const characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     let result="";
@@ -13,4 +15,36 @@ module.exports.generateRandomNumber = (length)=>{
         result+=characters.charAt(Math.floor(Math.random()*characters.length))
     }
     return result
+}
+module.exports.generateCreatment = async()=>{
+    try {
+        const lastInventory = await Inventory.findOne().sort({ code: -1 });
+        let newNumber;
+
+        if (lastInventory) {
+            const lastCode = lastInventory.code;
+
+            // Kiểm tra xem lastCode có bắt đầu bằng 'RI' và có đủ độ dài sau 'RI'
+            if (lastCode.startsWith('RI') && lastCode.length > 2) {
+                const lastNumber = parseInt(lastCode.replace('RI', '')); // Lấy số sau 'RI'
+
+                // Kiểm tra xem lastNumber có phải là số hợp lệ không
+                if (!isNaN(lastNumber)) {
+                    newNumber = lastNumber + 1; // Tăng số lên một đơn vị
+                } else {
+                    throw new Error('Last number is not a valid number');
+                }
+            } else {
+                throw new Error('Last code format is invalid');
+            }
+        } else {
+            newNumber = 1; // Nếu không có phiếu nào, bắt đầu từ 1
+        }
+
+        // Trả về mã mới với định dạng 'RIxxxxxx'
+        return `RI${String(newNumber).padStart(6, '0')}`;
+    } catch (error) {
+        console.error('Error generating code:', error);
+        throw error; // Ném lỗi nếu có
+    }
 }

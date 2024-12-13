@@ -19,5 +19,5 @@ route.post('/password/reset',validate.resetPasswordPost,controller.resetPassword
 route.get('/info',authMiddleware.requireAuth,controller.info)
 
 
-
+ 
 module.exports = route

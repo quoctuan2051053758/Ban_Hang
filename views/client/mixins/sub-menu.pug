@@ -1,30 +1,39 @@
-//- mixin sub-menu_parent(items, path)  
-//-     each item in items
-//-         if item.parent_id==="" 
-//-                 a(href=`${path}/${item.slug}`) #{item.title} 
-//-                 if item.children && item.children.length > 0
-//-                     +sub-menu(item.children, path) 
 
-//- mixin sub-menu(items, path)
-//-     ul.submenu 
-//-         each item in items
-//-             li 
-//-                 a(href=`${path}/${item.slug}`) #{item.title}
-//-                     if item.children && item.children.length > 0
-//-                         +sub-menu(item.children, path) 
+
+
 mixin sub-menu_parent(items, path)  
+    ul.headerarea__submenu.headerarea__megamenu
         each item in items
             if item.parent_id === "" 
-                li(class="sub-menu") 
-                    a(href=`${path}/${item.slug}`) #{item.title} 
+                li.mega__menu__li
+                    a.menu__title(href=`${path}/${item.slug}`) #{item.title}
                     if item.children && item.children.length > 0
-                        +sub-menu(item.children, path) // Gọi mixin cho submenu
-
+                        +sub-menu(item.children,path)
 mixin sub-menu(items, path)
     ul
         each item in items
             li 
                 a(href=`${path}/${item.slug}`) #{item.title}
-                // Kiểm tra nếu item có children
-                if item.children && item.children.length > 0
-                    +sub-menu(item.children, path) // Chỉ gọi mixin nếu có children
+
+
+
+mixin sub-menu_mobie(items, path)
+    each item in items
+        li.menu-item-has-children
+            a.menu__title(href=`${path}/${item.slug}`) #{item.title}
+            if item.children && item.children.length > 0
+                +sub-menu_mobie_Children(item.children,path)
+
+mixin sub-menu_mobie_Children(items, path)
+    ul.dropdown
+        each item in items
+            li
+                a(href=`${path}/${item.slug}`) #{item.title}
+
+
+mixin sub_category(items)
+    each item in items
+        li
+            a(href=`/products/${item.slug}`) #{item.title} 
+        if item.children && item.children.length > 0
+            +sub_category(item.children)

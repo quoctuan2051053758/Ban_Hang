@@ -1,66 +1,243 @@
 extends ../../layouts/default.pug
+include ../../mixins/featured.pug
 include ../../mixins/box-head.pug
 block main
+    
+        
+        
     +alert-success(5000) 
     +alert-error(5000)
-    .product-detail
-        .container.my-5
-            .row 
-                .col-6 
-                    .inner-thumb 
-                        img(src=product.thumbnail, alt=product.title )
-                .col-6
-                    h1(class="inner-title") #{product.title}
-
-                    if(product.category)
-                        div(class="inner-category") 
+    div.single__product.sp_top_50.sp_bottom_80
+        .container
+            .row
+                .col-xl-6.col-lg-6.col-md-12
+                    .featurearea__details__img
+                        .featurearea__big__img
+                            each thumnail in product.thumbnail
+                                .featurearea__single__big__img
+                                    img(src=thumnail, alt=product.title)
+                        .featurearea__thumb__img.featurearea__thumb__img__slider__active.slider__default__arrow
+                            each thumnail in product.thumbnail
+                                .featurearea__single__thumb__img
+                                    img(src=thumnail, alt=product.title)
+                .col-xl-6.col-lg-6.col-md-12
+                    .single__product__wrap
+                        .single__product__heding
+                            h2 B. Pair of Blue Shoes
                             span Danh mục: 
-                            a(href=`/product/${product.category.slug}`) #{product.category.title} 
-                    
-                    if(product.priceNew)
-                        h2(class="inner-price-new") Giá: #{product.priceNew}$
-                    
-                    if(product.price)
-                        h2(class="inner-price-old") Giá gốc: #{product.price}$
-                    
-                    if(product.discountPercentage)
-                        h3(class="inner-percent") Giảm tới <span> #{product.discountPercentage}% </span>
+                                a(href=`/product/${product.category.slug}`) #{product.category.title}
+                        .single__product__price
+                            if product.discountPercentage
+                                span(id="price-display") #{product.variants[0].discountPrice}Đ
+                                del(class="original-price") #{product.variants[0].price}Đ
+                                label Save #{product.discountPercentage}%
+                            else 
+                                span(id="price-display") #{product.variants[0].price}Đ
+                        hr
+                        .single__product__description
+                            
+                        .single__product__special__feature
+                            ul
+                                li.product__variant__inventory
+                                    strong.inventory__title Tình trạng:
+                                    span.variant__inventory(id="stock-display") Còn #{product.variants[0].stock} sản phẩm trong kho
+                        hr
+                        
+                        form(action=`/cart/add/${product._id}` method="POST")
+                            .single__product__swatch.d-flex.flex-wrap.align-items-center
+                                p Màu sắc:
+                                    each color in product.uniqueColors
+                                        input.form-check-input(type="radio", name="color", id=`color-${color}`, data-price=product.sizesByColor[color][0].discountPrice, data-original-price=product.sizesByColor[color][0].price, value=color) 
+                                        label.form-check-label(for=`color-${color}`) #{color}  
+                            .single__product__swatch.d-flex.flex-wrap.align-items-center
+                                span.header Kích cỡ:
+                                ul
+                                    each color in product.uniqueColors
+                                            .color-sizes(id=`sizes-${color}`, style="display: none;")
+                                                each variant in product.sizesByColor[color]
+                                                    li
+                                                        input.form-check-input(type="radio", name="size", value=variant.size, id=`size-${variant.size}-${color}`,data-stock=variant.stock)
+                                                        label.form-check-label(for=`size-${variant.size}-${color}`) #{variant.size}                                
+                                    
+                            
+                            .single__product__quantity
+                                .qty-container
+                                    button.qty-btn-minus.btn-qty(type="button") -
+                                    input.input-qty(
+                                        class="form-control mb-2"
+                                        type="number"
+                                        name="quantity"
+                                        value="1"
+                                        min="1"
+                                        
+                                        placeholder="Số lượng"
+                                    )
+                                    button.qty-btn-plus.btn-qty(type="button") +
+                                button.default__button(type="submit" class="btn btn-success btn-block")
+                                    i.fas.fa-shopping-cart
+                                    | Thêm vào giỏ hàng
+                        .single__product__bottom__menu
+                            ul
+                                li
+                                    a(href=`/wishlists/toggle/${product.id}` title="Add to wishlist")
+                                        span.add__wishlist
+                                            if productIdsInWishlist.includes(product._id.toString())
+                                                i.fas.fa-heart
+                                                | Đã thêm vào danh sách yêu thích
+                                            else
+                                                i.far.fa-heart 
+                                                | Thêm vào danh sách yêu thích
+                                                                       
+                        hr    
+    .descriptionarea.sp_bottom_80
+        .container
+            .row
+                .col-lg-12.col-md-12.descriptionarea__tab__wrapper
+                    ul.nav.descriptionarea__tab__button#myTab(role="tablist")
+                        li.nav-item(role="presentation")
+                            button.descriptionarea__link.active(
+                                data-bs-toggle="tab",
+                                data-bs-target="#description",
+                                type="button",
+                                aria-selected="false",
+                                role="tab",
+                                tabindex="-1"
+                            ) Mô tả
+                    .tab-content.tab__content__wrapper#myTabContent1
+                        .tab-pane.fade.active.show#description(role="tabpanel", aria-labelledby="description")
+                            p
+                                !=product.description 
+    .related__section.sp_bottom_50
+        .container
+            .row
+                .col-xl-12
+                    .section__title.text-center
+                        h2 Sản phẩm liên quan
+            .row.grid__responsive.row__custom__class.feature__slider__active.slider__default__arrow
+                +featured(relatedProducts)   
+        
+        script(src="") 
+        
+        //- script.
+        //-     document.querySelectorAll('input[name="color"]').forEach((input) => {
+        //-         input.addEventListener('change', function() {
+        //-             const selectedColor = this.value;
+        //-             const selectedPrice = this.dataset.price; // Lấy giá đã giảm từ data-price
+        //-             const originalPrice = this.dataset.originalPrice; // Lấy giá gốc từ data-original-price
 
-                    if(product.stock)
-                        h4(class="inner-stock") Còn lại: <span> #{product.stock} </span> sản phẩm
+        //-             const priceDisplay = document.getElementById('price-display');
+        //-             priceDisplay.textContent = parseFloat(selectedPrice) + 'Đ'; // Cập nhật giá đã giảm
 
-                    form(action=`/cart/add/${product.id}` method="POST")
-                        .form-group
-                            label Màu Sắc:
-                            .d-flex.flex-wrap
-                                each color in product.color.split(', ')
-                                    .form-check.m-2
-                                        input.form-check-input(type="radio", name="color", value=color.trim(), id=`color-${color.trim()}`)
-                                        label.form-check-label(for=`color-${color.trim()}`) #{color.trim()}
-                        .form-group
-                            label Kích Cỡ:
-                            each size in product.size
-                                .form-check
-                                    input.form-check-input(type="radio", name="size", value=size)
-                                    label(for=`size-${size}`) #{size}
-                        input(
-                            class="form-control mb-2"
-                            type="number"
-                            name="quantity"
-                            value="1"
-                            min="1"
-                            max=product.stock
-                        )
-                        button( 
-                            type="submit" 
-                            class="btn btn-success btn-block"
-                        ) Thêm vào giỏ hàng
+        //-             // Nếu có giá gốc, hiển thị nó
+        //-             const originalPriceDisplay = document.querySelector('.original-price');
+        //-             if (originalPriceDisplay) {
+        //-                 originalPriceDisplay.textContent = parseFloat(originalPrice) + 'Đ';
+        //-             }
+        //-             // Ẩn tất cả kích cỡ và chỉ hiển thị kích cỡ của màu đã chọn
+        //-             document.querySelectorAll('.color-sizes').forEach((sizeElement) => {
+        //-                 sizeElement.style.display = 'none';
+        //-             });
+
+        //-             const selectedSizeContainer = document.getElementById(`sizes-${selectedColor}`);
+        //-             if (selectedSizeContainer) {
+        //-                 selectedSizeContainer.style.display = 'block'; // Hiển thị kích cỡ của màu đã chọn
+        //-             }
+        //-             // Reset stock display
+        //-             const stockDisplay = document.getElementById('stock-display');
+        //-             //- stockDisplay.textContent = 'Còn 0 sản phẩm trong kho'; // Reset stock
+
+        //-             // Reset max quantity
+        //-             const quantityInput = document.querySelector('input[name="quantity"]');
+        //-             quantityInput.max = 0;
+
+        //-         });
+        //-     });
+        //-     document.querySelectorAll('input[name="size"]').forEach((input) => {
+        //-         input.addEventListener('change', function() {
+        //-             const selectedSizeStock = this.dataset.stock; // Lấy stock từ data-stock
+        //-             const stockDisplay = document.getElementById('stock-display');
+        //-             stockDisplay.textContent = `Còn ${selectedSizeStock} sản phẩm trong kho`; // Cập nhật thông tin tồn kho
+        //-             const quantityInput = document.querySelector('input[name="quantity"]');
+        //-             quantityInput.max = selectedSizeStock;
+        //-         });
+        //-     });
+
+        //-     document.querySelectorAll('.form-check-label').forEach(label => {
+        //-         label.addEventListener('click', function() {
+        //-             // Xóa lớp 'selected' từ tất cả các label
+        //-             document.querySelectorAll('.form-check-label').forEach(l => l.classList.remove('selected'));
+                    
+        //-             // Thêm lớp 'selected' cho label được nhấp
+        //-             this.classList.add('selected');
+        //-         });
+        //-     });
+    //- .product-detail
+    //-     .container.my-5
+    //-         .row 
+    //-             .col-6 
+    //-                 .inner-thumb 
+    //-                     img(src=product.thumbnail, alt=product.title )
+    //-             .col-6
+    //-                 h1(class="inner-title") #{product.title}
+
+    //-                 if(product.category)
+    //-                     div(class="inner-category") 
+    //-                         span Danh mục: 
+    //-                         a(href=`/product/${product.category.slug}`) #{product.category.title} 
+                    
+    //-                 if(product.priceNew)
+    //-                     h2(class="inner-price-new") Giá: #{product.priceNew}$
+                    
+    //-                 if(product.price)
+    //-                     h2(class="inner-price-old") Giá gốc: #{product.price}$
+                    
+    //-                 if(product.discountPercentage)
+    //-                     h3(class="inner-percent") Giảm tới <span> #{product.discountPercentage}% </span>
+
+    //-                 if(product.stock)
+    //-                     h4(class="inner-stock") Còn lại: <span> #{product.stock} </span> sản phẩm
+
+    //-                 form(action=`/cart/add/${product.id}` method="POST")
+    //-                     .form-group
+    //-                         label Màu Sắc:
+    //-                         .d-flex.flex-wrap
+    //-                             //- each color in product.color.split(', ')
+    //-                             //-     .form-check.m-2
+    //-                             //-         input.form-check-input(type="radio", name="color", value=color.trim(), id=`color-${color.trim()}`)
+    //-                             //-         label.form-check-label(for=`color-${color.trim()}`) #{color.trim()}
+    //-                             each variant in product.variants
+    //-                                 .form-check.m-2
+    //-                                     input.form-check-input(type="radio", name="color", value=variant.colors, id=`color-${variant.colors}`)
+    //-                                     label.form-check-label(for=`color-${variant.colors}`) #{variant.colors}
+                        
+    //-                     //- .form-group
+    //-                     //-     label Kích Cỡ:
+    //-                     //-     each size in product.size
+    //-                     //-         .form-check
+    //-                     //-             input.form-check-input(type="radio", name="size", value=size)
+    //-                     //-             label(for=`size-${size}`) #{size}
+    //-                     div #{product}
+    //-                     input(     
+    //-                         class="form-control mb-2"
+    //-                         type="number"
+    //-                         name="quantity"
+    //-                         value="1"
+    //-                         min="1"
+    //-                         max=product.stock
+    //-                     )
+    //-                     button( 
+    //-                         type="submit" 
+    //-                         class="btn btn-success btn-block"
+    //-                     ) Thêm vào giỏ hàng
             
 
-                    //- if(product.description)
-                    //-     div(class="description mb-4") Mô tả: !{product.description}
-        .container.my-3
-            .row 
-                .col-12
-                    +box-head("Mô tả sản phẩm")  
-                    .inner-desc !{product.description}                
+    //-                 //- if(product.description)
+    //-                 //-     div(class="description mb-4") Mô tả: !{product.description}
+    //-     .container.my-3
+    //-         .row 
+    //-             .col-12
+    //-                 +box-head("Mô tả sản phẩm")  
+    //-                 .inner-desc !{product.description}   
+
+
+    

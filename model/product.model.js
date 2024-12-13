@@ -2,6 +2,13 @@ const mongoose = require("mongoose")
 const slug = require("mongoose-slug-updater")
 mongoose.plugin(slug)
 
+const variantSchema = new mongoose.Schema({
+    color: { type: String, required: true },
+    price: { type: Number, required: true },
+    stock:{ type: Number, required: true },
+    size:{type:String, required: true}
+});
+
 const productSchema=new mongoose.Schema(
     { 
         title: String,
@@ -10,12 +17,14 @@ const productSchema=new mongoose.Schema(
             default:""
         },
         description: String,
-        price: Number,
         discountPercentage: Number,
-        stock: Number,
-        thumbnail: String,
+        variants:[variantSchema],
+        thumbnail: { // Thay đổi kiểu dữ liệu thành mảng
+            type: [String], // Mảng các URL thumbnail
+            default: []
+        },
         status: String,
-        featured:String,
+        featured: { type: String, enum: ['1', '0'], default: '0' },
         position: Number,
         slug: {
             type:String,
@@ -28,14 +37,6 @@ const productSchema=new mongoose.Schema(
                 type:Date,
                 default:Date.now
             }
-        },
-        color: {
-            type: String,
-            default: ""
-        },
-        size:{
-            type: [String], // Mảng các kích cỡ
-            default: "freesize" //
         },
         deleted: {
             type: Boolean,

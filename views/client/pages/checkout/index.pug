@@ -5,6 +5,46 @@ include ../../mixins/product-layout.pug
 block main  
     +alert-success(5000)
     +alert-error(5000)
+    .cartarea.sp_bottom_100.sp_top_100
+        .container
+            .row
+                .col-xl-12
+                        .cartarea__table__content.table-responsive
+                            table
+                                thead
+                                    th STT
+                                    th Ảnh
+                                    th Tên
+                                    //- th Màu 
+                                    //- th Size
+                                    th Giá
+                                    th Số lượng
+                                    th Tổng tiền
+                                tbody
+                                    if(cartDetail.products.length>0)
+                                        each item,index in cartDetail.products
+                                            tr
+                                                td #{index+1}
+                                                td.cartarea__product__thumbnail
+                                                    a(href="#") 
+                                                        img(src=item.productInfo.thumbnail[0], alt=item.productInfo.title)
+                                                td.cartarea__product__name
+                                                    a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title} - #{item.size} / #{item.color}
+                                                    
+                                                td.cartarea__product__price__cart
+                                                    span.amount #{item.discountPrice}
+                                                td.cartarea__product__quantity
+                                                    .featurearea__quantity
+                                                        |#{item.quantity}
+                                                        
+                                                td.cartarea__product__subtotal #{item.totalPrice}
+                            
+            .row
+                .col-lg-12
+                    .cartarea__shiping__update__wrapper
+                        .cartarea__shiping__update
+                            h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}
+    
     .container.my-3
         .row 
             .col-12 
@@ -50,13 +90,24 @@ block main
                         )
                             div(class="form-group")
                                 label(for="fullName") Họ và tên 
-                                input(
-                                    type="text"
-                                    class="form-control"
-                                    id="fullName"
-                                    name="fullName"
-                                    required
-                                )
+                                if(user)
+                                    input(
+                                        type="text"
+                                        class="form-control"
+                                        id="fullName"
+                                        name="fullName"
+                                        value=user.fullName
+                                        required
+                                    )
+                                else
+                                    input(
+                                        type="text"
+                                        class="form-control"
+                                        id="fullName"
+                                        name="fullName"
+                                        required
+                                    )
+                                
                             div(class="form-group")
                                 label(for="phone") Số điện thoại
                                 input(

@@ -1,0 +1,73 @@
+extends ../../layouts/default.pug
+block main
+    +alert-success(5000) 
+    +alert-error(5000) 
+    .blog.sp_bottom_80.sp_top_80
+        .container
+            .row
+                
+                .col-xl-3.col-lg-3.col-md-12.col-12
+                    //- .blog__sidebar
+                    //-     h4.blog__sidebar__title Tìm kiếm
+                    //-     .blog__search
+                    //-         input(type='text', placeholder='Search our store')
+                    //-         button
+                    //-             i.fas.fa-search
+
+                    .blog__sidebar
+                        h4.blog__sidebar__title Bài viết gần đây
+                        ul
+                            each blogPostsNew in blogPostsNews
+                                li.blog__sidebar__list
+                                    .blog__popular
+                                        .blog__popular__img
+                                            a(href=`/blogs/${blogPostsNew.slug}`)
+                                                img(src=blogPostsNew.thumbnail, alt='')
+                                        .blog__small__text
+                                            h6
+                                                a(href=`/blogs/${blogPostsNew.slug}`) #{blogPostsNew.title}
+                                            .blog__small__meta
+                                                ul
+                                                    li.blog__small__date
+                                                        i.far.fa-calendar-alt= new Date(blogPostsNew.createdAt).toLocaleDateString()
+
+                            //- li.blog__sidebar__list
+                            //-     .blog__popular
+                            //-         .blog__popular__img
+                            //-             a(href='#')
+                            //-                 img(src='img/blog/blog-2.jpg', alt='')
+                            //-         .blog__small__text
+                            //-             h6
+                            //-                 a(href='#') A Glimpse into Men's
+                            //-             .blog__small__meta
+                            //-                 ul
+                            //-                     li.blog__small__date
+                            //-                         i.far.fa-calendar-alt Aug 01, 2024
+                
+                .col-xl-9.col-lg-9.col-md-12.col-12
+                        .row
+                            each post in blogPosts
+                                .col-xl-6.col-lg-6.col-md-6.col-12
+                                    .blog__single__wrap
+                                        .blog__img
+                                            a(href=`/blogs/${post.slug}`)
+                                                img(src=post.thumbnail, alt='')
+                                        
+                                        .blog__meta
+                                            ul
+                                                li.blog__date
+                                                    i.far.fa-calendar-alt= new Date(post.createdAt).toLocaleDateString()
+                                        
+                                        .blog__title
+                                            h2
+                                                a(href=`/blogs/${post.slug}`, tabindex='0') #{post.title}
+                                        
+                                        .blog__button
+                                            a(href=`/blogs/${post.slug}`, tabindex='0') Read More
+
+
+
+
+
+
+

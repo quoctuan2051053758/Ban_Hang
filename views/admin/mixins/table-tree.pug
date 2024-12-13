@@ -2,24 +2,16 @@ mixin table-tree(items, level=1)
     each item, index in items
         - const prefix = Array(level + 1).join("-- ")
         tr
-            td 
-                input(type="checkbox" name="id" value=item.id)
+            
             td #{item.index}
-            td
-                img(
-                    src=item.thumbnail
-                    alt= item.title
-                    height="auto"
-                    width="100px"
-                )
-            td #{prefix} #{item.title}
-            //- td 
-            //-     input(type="number"
-            //-         value=item.position 
-            //-         style="width:60px"
-            //-         name="position"
-            //-         min="1"
+            //- td
+            //-     img(
+            //-         src=item.thumbnail
+            //-         alt= item.title
+            //-         height="auto"
+            //-         width="100px"
             //-     )
+            td #{prefix} #{item.title}
             td
                 if(role.permissions.includes("products-category_edit"))
                     if(item.status == "active")
@@ -39,10 +31,6 @@ mixin table-tree(items, level=1)
                             class="badge badge-danger"
                         ) ngừng hoạt động
             td
-                a(
-                    href=`${prefixAdmin}/products-category/detail/${item.id}` 
-                    class="btn btn-secondary btn-sm"
-                ) Chi tiết
                 if(role.permissions.includes("products-category_edit"))
                     a(
                         href=`${prefixAdmin}/products-category/edit/${item.id}` 

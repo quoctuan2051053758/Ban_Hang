@@ -44,9 +44,9 @@ module.exports.index = async (req,res)=>{
                 product.totalPrice =product.priceNew * product.quantity
             }
             order.totalPrice = order.products.reduce((sum,item)=>sum+item.totalPrice,0)
-
         }
     }
+
     
     res.render('admin/pages/order/index',{
         pageTitle:"Đặt hàng",

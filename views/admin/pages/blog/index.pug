@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug
+
+block main
+    .app-main 
+        .container-fluid
+            a.btn.btn-primary(href='/admin/blogs/create') Thêm bài viết
+            table.table
+                thead
+                    tr
+                        th Tiêu đề
+                        //- th Danh mục
+                        th Trạng thái
+                        th Hành động
+                tbody
+                    each blog in blogs
+                        tr
+                            td
+                                p #{blog.title}
+                            //- td #{blog.category}
+                            td #{blog.status}
+                            td
+                                a(href=`${prefixAdmin}/blogs/edit/${blog._id}`) Chỉnh sửa
+                                form(action=`/blogs/${blog._id}/delete`, method='POST', style='display:inline;')
+                                    button(type='submit') Xóa
