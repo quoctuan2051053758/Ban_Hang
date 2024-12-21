@@ -3,7 +3,9 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug
 include ../../mixins/sub-menu.pug
 include ../../mixins/pagination.pug
-block main  
+block main 
+    +alert-error(5000)
+    +alert-success(5000)
     .shop.sp_top_80
         .container
             .row.grid__responsive
@@ -122,13 +124,13 @@ block main
                                                     ul
                                                         li
                                                             span(data-bs-toggle="modal" data-bs-target=`#${item.id}`)
-                                                                a.quick__view__action(href=`/products/detail/${item.slug}` data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết" data-bs-original-title="Quick View")
-                                                                    i.far.fa-eye
+                                                                a.quick__view__action(href=`#` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-bs-original-title="Quick View")
+                                                                    i.fas.fa-shopping-cart
                                                         li
-                                                            a(href=`/cart/add/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-bs-original-title="Add To Cart")
-                                                                i.fas.fa-shopping-cart
+                                                            a(href=`/cart/add/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết" data-bs-original-title="Add To Cart")
+                                                                i.far.fa-eye
                                                         li
-                                                            a(href=`/wishlists/toggle/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Wishlist" data-bs-original-title="Add To Wishlist")
+                                                            a(href=`/wishlists/toggle/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào danh sách yêu thích" data-bs-original-title="Add To Wishlist")
                                                                 if productIdsInWishlist.includes(item._id.toString())
                                                                     i.fas.fa-heart
                                                                 else

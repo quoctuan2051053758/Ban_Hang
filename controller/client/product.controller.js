@@ -79,7 +79,6 @@ module.exports.detail = async(req,res)=>{
             product_category_id:category.id,
             _id: { $ne: product._id }
         })
-        console.log(relatedProducts)
         res.render('client/pages/products/detail',{
             pageTitle:product.title,
             product: {
@@ -135,7 +134,4 @@ module.exports.category = async(req,res)=>{
             products:newProducts,
             pagination:objectPagination
         });
-    // }catch(error){
-    //     res.redirect("/products")
-    // }
 }

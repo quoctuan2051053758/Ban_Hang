@@ -64,26 +64,25 @@ module.exports.order =async (req,res)=>{
         }
         const productInfo = await Product.findOne({
             _id:product.product_id
-        }).select("price discountPercentage stock")
-        item.productInfo=productInfo
-        const selectedVariant = productInfo.variants.find(variant => 
+        }).select("price discountPercentage variants")
+        const selectedVariant = productInfo.variants.find(variant =>
             variant.color === product.color && variant.size === product.size
-        )
+        );
         if(selectedVariant){
             // const discountPrice = selectedVariant.price - (selectedVariant.price * (productInfo.discountPercentage / 100));
-            objectProduct.price = selectedVariant.price; 
-            objectProduct.discountPercentage = productInfo.discountPercentage
-            products.push(objectProduct)
-        }else{
-            product.price = 0; // Nếu không tìm thấy variant, gán giá mặc định
-            product.discountPrice = 0;
+            const discountPrice = selectedVariant.price - (selectedVariant.price * (productInfo.discountPercentage / 100));
+            objectProduct.price = selectedVariant.price;
+            objectProduct.discountPercentage = productInfo.discountPercentage;
+            objectProduct.totalPrice = discountPrice * product.quantity; // Tính totalPrice
+
+            products.push(objectProduct);
+        } else {
+            // Nếu không tìm thấy variant, gán giá mặc định và totalPrice = 0
+            objectProduct.price = 0;
+            objectProduct.discountPercentage = 0;
+            objectProduct.totalPrice = 0;
+            products.push(objectProduct); // Vẫn thêm sản phẩm vào danh sách
         }
-        item.totalPrice = item.discountPrice * item.quantity
-        // objectProduct.price=productInfo.price
-        // objectProduct.discountPercentage=productInfo.discountPercentage
-        // products.push(objectProduct)
-        // productInfo.stock -= product.quantity
-        // await productInfo.save()
     }
     const orderInfo = {
         cart_id:cartId,
@@ -111,14 +110,42 @@ module.exports.success =async (req,res)=>{
             _id:product.product_id
         }).select("title thumbnail price discountPercentage")
         product.productInfo=productInfo
+
+
         product.priceNew=productsHelper.priceNewProduct(product)
         product.totalPrice =product.priceNew * product.quantity
+        product.priceNewFormatted = product.priceNew.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        product.totalPriceFormatted = product.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
     }
     order.totalPrice = order.products.reduce((sum,item)=>sum+item.totalPrice,0)
-
+    order.totalPriceFormatted = order.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    // order.totalPrice = 
     res.render('client/pages/checkout/success',{
         pageTitle:"Đặt hàng Thành công",
         order:order
 
+    });
+}
+// [GET] /checkout/history
+module.exports.history =async (req,res)=>{
+    const orders = await Order.find({
+        cart_id:req.cookies.cartId
+    })
+    for(const order of orders){
+        for(const product of order.products){
+            const productInfo = await Product.findOne({
+                _id: product.product_id
+            })
+            product.productInfo= productInfo
+            product.price = product.price - (product.price*product.discountPercentage/100)
+            product.totalPrice = product.price *product.quantity
+        }
+        order.totalPrice = order.products.reduce((sum,item)=>sum+item.totalPrice,0)
+        order.totalPriceFormatted = order.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    }
+    
+    res.render('client/pages/checkout/history',{
+        pageTitle:"Đơn đã đặt",
+        orders:orders
     });
 }

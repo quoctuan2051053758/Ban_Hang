@@ -50,6 +50,10 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
                                 a.nav-link(href=`${prefixAdmin}/products-category/create`)
                                     i.nav-icon.bi.bi-circle
                                     p Thêm
+                            li.nav-item
+                                a.nav-link(href=`${prefixAdmin}/products-category/addDiscount`)
+                                    i.nav-icon.bi.bi-circle
+                                    p Giảm theo danh mục
                 if(role.permissions.includes("products_view"))
                     li.nav-item
                         a.nav-link(href="#") Quản trị sản phẩm
@@ -87,7 +91,7 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
                                     p Nhập hàng
                 
                 li.nav-item
-                    a.nav-link(href=`${prefixAdmin}/blogs`) Tin tức
+                    a.nav-link(href=`#`) Tin tức
                         i.nav-arrow.bi.bi-chevron-right
                     ul.nav.nav-treeview
                             li.nav-item

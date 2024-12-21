@@ -47,12 +47,11 @@ module.exports.index = async(req,res)=>{
         const uniqueColors = Object.keys(sizesByColor);
 
     
-        // Gán các thuộc tính đã xử lý vào sản phẩm
         const productDetail = {
-            ...product.toObject(), // Sao chép tất cả các thuộc tính của sản phẩm
-            variants,              // Thêm thuộc tính variants
-            sizesByColor,         // Thêm thuộc tính sizesByColor
-            uniqueColors          // Thêm thuộc tính uniqueColors
+            ...product.toObject(), 
+            variants,              
+            sizesByColor,         
+            uniqueColors          
         };
         productDetails.push(productDetail);
     }

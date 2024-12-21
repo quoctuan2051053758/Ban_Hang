@@ -23,8 +23,8 @@ html(lang="en")
 
 
     body.layout-fixed.sidebar-expand-lg.bg-body-tertiary
-        +alert-error(5000)
-        +alert-success(5000)
+        +alert-error(3000)
+        +alert-success(3000)
         .app-wrapper
             if(role.permissions.length>0)
                 include  ../partials/header.pug
@@ -33,6 +33,7 @@ html(lang="en")
                 include ../partials/sider.pug
 
                     //- .main
+                    
                 block main
 
 
@@ -97,7 +98,7 @@ html(lang="en")
         const sales_chart_options = {
             series: [
                 {
-                    name: "Digital Goods",
+                    name: "Doanh thu",
                     data: revenueData,
                 },
                 //- {
@@ -262,6 +263,7 @@ html(lang="en")
             
                 //- <script src="/TT_Admin/assets/plugins/echarts/echarts-custom-for-dashboard.js" type="text/javascript"></script>
                 //- <script src="/TT_Admin/assets/js/scripts.js" type="text/javascript"></script> 
-               
+    
+           
 
         

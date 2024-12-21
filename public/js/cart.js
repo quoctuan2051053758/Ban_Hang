@@ -1,44 +1,51 @@
 var buttonPlus = document.querySelectorAll(".qty-btn-plus");
 var buttonMinus = document.querySelectorAll(".qty-btn-minus");
-// Tăng số lượng
+
+// Gán sự kiện cho nút tăng số lượng
+
 buttonPlus.forEach(button => {
-    button.addEventListener("click", function() {
-        var inputField = this.closest(".qty-container").querySelector("input[name='quantity']");
-        inputField.value = Number(inputField.value) + 1;
-        updateCart(inputField);
-    });
+    button.addEventListener("click", incrementQuantity);
 });
-// Giảm số lượng
+
+// Gán sự kiện cho nút giảm số lượng
 buttonMinus.forEach(button => {
-    button.addEventListener("click", function() {
-        var inputField = this.closest(".qty-container").querySelector("input[name='quantity']");
-        var amount = Number(inputField.value);
-        if (amount > 1) {
-            inputField.value = amount - 1;
-            updateCart(inputField);
-        }
-    });
+    button.addEventListener("click", decrementQuantity);
 });
+
+// Hàm tăng số lượng
+function incrementQuantity() {
+    var inputField = this.closest(".qty-container").querySelector("input[name='quantity']");
+    inputField.value = Number(inputField.value) + 1;
+    updateCart(inputField);
+}
+
+// Hàm giảm số lượng
+function decrementQuantity() {
+    var inputField = this.closest(".qty-container").querySelector("input[name='quantity']");
+    var amount = Number(inputField.value);
+    if (amount > 1) {
+        inputField.value = amount - 1;
+        updateCart(inputField);
+    }
+}
 
 // Cập nhật giỏ hàng khi thay đổi số lượng
 const inputQuantity = document.querySelectorAll("input[name='quantity']");
 if (inputQuantity.length > 0) {
     inputQuantity.forEach(input => {
-        input.addEventListener("change", () => {
-            updateCart(input);
-        });
+        input.addEventListener("change", quantityChange);
     });
 }
 
-// function updateCart(input) {
-//     const productId = input.getAttribute("product-id");
-//     const productSize = input.getAttribute("product-size");
-//     const productColor = input.getAttribute("product-color");
-//     const quantity = input.value;
-
-//     // Điều hướng đến endpoint cập nhật
-//     window.location.href = `/cart/update/${productId}/${productSize}/${productColor}/${quantity}`;
-// }
+// Hàm xử lý thay đổi số lượng
+function quantityChange() {
+    const newValue = Number(this.value);
+    // Kiểm tra số lượng không âm
+    if (newValue < 1) {
+        this.value = 1; // Đặt lại về 1 nếu nhỏ hơn 1
+    }
+    updateCart(this);
+}
 
 function updateCart(input) {
     const productId = input.getAttribute("product-id");
@@ -50,37 +57,34 @@ function updateCart(input) {
     const url = `/cart/update/${productId}/${productSize}/${productColor}/${quantity}`;
     
     fetch(url, {
-        method: 'GET',
+        method: 'GET', // Hoặc 'POST' nếu cần
     })
     .then(response => {
         if (!response.ok) {
             return response.json().then(data => {
-                throw new Error(data.error); // Lấy thông báo lỗi từ phản hồi
+                throw new Error(data.error);
             });
         }
         return response.json();
     })
     .then(data => {
-        // Hiển thị thông báo từ server
         displayMessage(data.success, 'success');
         location.reload(); // Tải lại trang nếu cần
     })
     .catch(error => {
+        console.error("Lỗi:", error);
         displayMessage(error.message, 'error');
-        // console.error('Có lỗi xảy ra:', error);
     });
 }
+
 function displayMessage(message, type) {
-    // Thay thế bằng logic hiển thị thông báo của bạn
     const messageContainer = document.createElement('div');
     messageContainer.className = `alert alert-${type}`;
     messageContainer.textContent = message;
 
-    // Thêm thông báo vào body hoặc phần nào đó trong giao diện
     document.body.insertAdjacentElement('afterbegin', messageContainer);
 
-    // Tự động ẩn sau một thời gian
     setTimeout(() => {
         messageContainer.remove();
-    }, 3000); // 2000 ms = 2 giây
+    }, 3000);
 }

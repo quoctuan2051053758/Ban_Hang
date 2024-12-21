@@ -11,10 +11,27 @@ module.exports.add =async (req,res)=>{
     const color = req.body.color
     if( !req.body.size || !req.body.color){
         return res.redirect("back")
+        
+    }
+    const product = await Product.findById(productId);
+    if (!product) {
+        req.flash("error", "Sản phẩm không tồn tại!");
+        return res.redirect("back");
     }
     const cart = await Cart.findOne({
         _id:cartId
     })
+    const variant = product.variants.find(v => v.size === size && v.color === color);
+    if (!variant) {
+        req.flash("error", "Kích thước hoặc màu sắc không hợp lệ!");
+        return res.redirect("back");
+    }
+
+    // Kiểm tra số lượng tồn kho
+    if (quantity > variant.stock) {
+        req.flash("error", `Số lượng yêu cầu vượt quá số lượng tồn kho. Tối đa là ${variant.stock}.`);
+        return res.redirect("back");
+    }
 
     const existProductInCart = cart.products.find(item=>
         item.product_id==productId &&
@@ -44,10 +61,9 @@ module.exports.add =async (req,res)=>{
             $push:{products:objectCart}
         })
     }
-    
-    
 
     req.flash("success","Đã thêm vào giỏ hàng")
+    // res.send("oke")
     res.redirect("back")
 }
 
@@ -151,50 +167,4 @@ module.exports.update = async (req, res) => {
         return res.status(500).json({ error: "Có lỗi xảy ra trong quá trình cập nhật" });
     }
 };
-
-
-// module.exports.update =async (req,res)=>{
-//     const cartId=req.cookies.cartId
-//     const productId=req.params.productId
-//     const productSize = req.params.productSize;
-//     const productColor = req.params.productColor;
-//     const quantity=parseInt(req.params.quantity)
-//     try{
-//         const product = await Product.findById(productId);
-//         if (!product) {
-//             req.flash("error", "Sản phẩm không tồn tại");
-//             // return res.send("Cập nhật số lượng không thành công");
-//             return res.redirect("back");
-//         }
-//             const cart = await Cart.findOne({ _id: cartId });
-//             // Tính tổng số lượng sản phẩm trong giỏ hàng
-//             const selectedVariant = product.variants.find(variant => 
-//                 variant.size === productSize && variant.color === productColor
-//             );
-
-//             // Kiểm tra số lượng tồn kho
-//             if (quantity > selectedVariant.stock) {
-//                 req.flash("error", "Số lượng yêu cầu vượt quá tồn kho");
-//                 // return res.status(400).send("Số lượng yêu cầu vượt quá tồn kho");
-//                 return res.redirect("back");
-//             }
-//     }catch(error){
-//     console.error(error);
-//         req.flash("error", "Có lỗi xảy ra trong quá trình cập nhật");
-//         res.redirect("back")
-//     }
-//     await Cart.updateOne({
-//         _id:cartId,
-//         "products.product_id":productId,
-//         "products.size": productSize,
-//         "products.color": productColor
-//     },{
-//         $set:{
-//             "products.$.quantity":quantity
-//         }
-//     })
-//     req.flash("success","Cập nhật số lượng thành công")
-//     res.redirect("back")
-//     // return res.send("Cập nhật số lượng thành công");
-// }
 

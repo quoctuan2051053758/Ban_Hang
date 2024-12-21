@@ -15,7 +15,7 @@ const checkoutRoute=require("./checkout.route")
 const userRoute=require("./user.route")
 const blogRoute=require("./blog.route")
 const wishlistRoute=require("./wishlist.route")
-
+const aboutRoute=require("./about.route")
 module.exports = (app)=>{
     app.use(categoryMiddleware.category)
     app.use(cartMiddleware.cartId)
@@ -37,6 +37,8 @@ module.exports = (app)=>{
     app.use("/user",userRoute)
 
     app.use("/blogs",blogRoute)
+
+    app.use("/about",aboutRoute)
 
     app.use("/wishlists",wishlistRoute,authMiddleware.requireAuth)
 }

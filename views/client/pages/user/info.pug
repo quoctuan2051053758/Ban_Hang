@@ -5,4 +5,12 @@ block main
         .row 
             .col-12 
                 +box-head("Thông tin tài khoản")
-            div #{user}
+            input.form-control(type="text" name="fullName" value=userInfo.fullName)
+            //- input(type="text" name="password" value=userInfo.password)
+            input.form-control(type="text" name="email" value=userInfo.email)
+        .row
+            .col-lg-12
+                .cartarea__shiping__update__wrapper
+                    .cartarea__shiping__update
+                    .cartarea__clear
+                        a.default__button(href="/user/changePassword") Đổi mật khẩu

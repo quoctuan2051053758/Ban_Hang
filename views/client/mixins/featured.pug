@@ -11,14 +11,14 @@ mixin featured(items)
                         ul
                             li
                                 span(data-bs-toggle="modal" data-bs-target=`#${item.id}`)
-                                    a.quick__view__action(href=`/products/detail/${item.slug}` data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết" data-bs-original-title="Quick View")
-                                        i.far.fa-eye
+                                    a.quick__view__action(href=`/cart/add/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-bs-original-title="Quick View")
+                                        i.fas.fa-shopping-cart
                             li
-                                a(href=`/cart/add/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-bs-original-title="Add To Cart")
-                                    i.fas.fa-shopping-cart
+                                a(href=`/products/detail/${item.slug}` data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiêt" data-bs-original-title="Add To Cart")
+                                    i.far.fa-eye
                             li
-                                a(href=`/wishlists/toggle/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Wishlist" data-bs-original-title="Add To Wishlist")
-                                    if item.isInWishlist
+                                a(href=`/wishlists/toggle/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào danh sách yêu thích" data-bs-original-title="Add To Wishlist")
+                                    if productIdsInWishlist.includes(item._id.toString())
                                         i.fas.fa-heart
                                     else
                                         i.far.fa-heart

@@ -1013,8 +1013,8 @@ $('.featurearea__thumb__img').slick({
 
 
 
-var buttonPlus  = $(".qty-btn-plus");
-var buttonMinus = $(".qty-btn-minus");
+var buttonPlus  = $(".qty-btn-plus1");
+var buttonMinus = $(".qty-btn-minus1");
 
 var incrementPlus = buttonPlus.click(function() {
   var $n = $(this)

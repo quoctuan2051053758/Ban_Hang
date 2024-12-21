@@ -188,8 +188,50 @@ module.exports.resetPasswordPost =async (req,res)=>{
 
 // [Get] /user/info
 module.exports.info =async (req,res)=>{
+    const userInfo = await User.findOne({
+        tokenUser:req.cookies.tokenUser,
+        deleted:false,
+        status:"active"
+    })
+    userInfo.password = md5(userInfo.password)
     res.render('client/pages/user/info',{
         pageTitle:"Thông tin cá nhân",
-        
+        userInfo:userInfo
     });
+}
+
+// [Get] /user/changePasword
+module.exports.changePassword =async (req,res)=>{
+    const userInfo = await User.findOne({
+        tokenUser:req.cookies.tokenUser,
+        deleted:false,
+        status:"active"
+    })
+    userInfo.password = md5(userInfo.password)
+    res.render('client/pages/user/change-password',{
+        pageTitle:"Đổi mật khẩu",
+        userInfo:userInfo
+    });
+}
+
+// [POST] /user/changePasword
+module.exports.changePasswordPost =async (req,res)=>{
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const userInfo = await User.findOne({
+        tokenUser: req.cookies.tokenUser,
+        deleted: false,
+        status: "active"
+    });
+    if (md5(currentPassword) !== userInfo.password) {
+        req.flash("error","Mật khẩu hiện tại không đúng")
+        return res.redirect("back")
+    }
+    if (newPassword !== confirmPassword) {
+        req.flash("error","Mật khẩu mới không khớp.")
+        return res.redirect("back")
+    }
+    userInfo.password = md5(newPassword);
+    await userInfo.save();
+    req.flash("success","Đổi mật khẩu thành công.")
+    res.redirect("/")
 }

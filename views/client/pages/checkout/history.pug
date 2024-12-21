@@ -1,0 +1,81 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+
+block main  
+    style. 
+        //- .cartarea__table__content td {
+        //-     padding: 10px;
+        //-     vertical-align: top;
+        //-     font-size: 14px;
+        //-     line-height: 1.6;
+        //-     color: #333;
+        //- }
+
+        .cartarea__table__content td .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .cartarea__table__content td .product-info {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+
+        .cartarea__table__content td .product-text {
+            display: inline-block;
+        }
+
+
+        .cartarea__table__content td .product-title {
+            font-weight: bold;
+            color: #555;
+            display: block; 
+            margin-bottom: 4px;
+        }
+
+        .cartarea__table__content td .product-details {
+            color: #777;
+            font-size: 13px;
+            display: block; 
+        }
+    +alert-success(5000)
+    +alert-error(5000)
+    .cartarea.sp_bottom_100.sp_top_100
+        .container
+            .row
+                .col-xl-12
+                        .cartarea__table__content.table-responsive
+                            table 
+                                thead 
+                                    tr
+                                        th Stt 
+                                        th sản phẩm 
+                                        th Giá
+                                tbody 
+                                    if orders.length >0 
+                                        each order,index in orders 
+                                            tr 
+                                                td #{index+1}
+                                                td 
+                                                    each product in order.products
+                                                        div.product-info
+                                                            img(src=product.productInfo.thumbnail[0], alt="",class="product-image") 
+                                                            div.product-text
+                                                                span.product-title   #{product.productInfo.title} 
+                                                                span.product-details #{product.size}/#{product.color} Số lượng: #{product.quantity} 
+                                                        br
+                                                td #{order.totalPriceFormatted}
+                                    else 
+                                        tr 
+                                            td Chưa có đơn đặt hàng nào
+
+

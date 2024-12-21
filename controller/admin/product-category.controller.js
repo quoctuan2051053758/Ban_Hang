@@ -3,6 +3,8 @@ const systemConfig= require("../../config/system")
 const filterStatusHelper = require("../../helpers/filterStatus")
 const searchHelper = require("../../helpers/search")
 const createTreeHelper = require("../../helpers/createTree")
+const productsCategoryHelper= require("../../helpers/product-category");
+const Product= require("../../model/product.model")
 module.exports.index = async(req,res)=>{
     const filterStatus = filterStatusHelper(req.query)
     let find={
@@ -17,7 +19,6 @@ module.exports.index = async(req,res)=>{
         find.status = req.query.status;
     }
 
-    const records = await ProductCategory.find(find)
     const newRecords=createTreeHelper.tree(records);
     res.render('admin/pages/products-category/index',{
         pageTitle:"Danh sách sản phẩm",
@@ -105,4 +106,36 @@ module.exports.detail = async(req,res)=>{
         pageTitle:"Danh mục",
         product:product
     });
+}
+
+//[GET] /admin/products-category/addCount
+module.exports.addDiscount = async(req,res)=>{
+    const records = await ProductCategory.find({
+        deleted:false
+    })
+    const newRecords=createTreeHelper.tree(records);
+
+    res.render('admin/pages/products-category/addDiscount',{
+        pageTitle:"Danh mục",
+        // product:product,
+        records:newRecords
+    });
+}
+//[POST] /admin/products-category/addCount
+module.exports.addDiscountPost = async(req,res)=>{
+    const category = await ProductCategory.findOne({
+        _id:req.body.parent_id
+    })
+    const listSubCategory= await productsCategoryHelper.getSubCategory(category._id)
+        
+    const listSubCategoryId = listSubCategory.map(item=>item.id)
+    
+    const product = await Product.updateMany({
+        product_category_id:{$in:[category._id,...listSubCategoryId]},
+        deleted:false
+    },{
+        $set:{discountPercentage:req.body.discount}
+    })
+    req.flash("success","Cập nhật giảm giá theo danh mục thành công")
+    res.redirect("back")
 }

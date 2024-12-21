@@ -43,7 +43,6 @@ module.exports.edit = async (req,res)=>{
             deleted:false
         }
         const data= await Role.findOne(find)
-        console.log(data)
         res.render('admin/pages/roles/edit',{
             pageTitle:"Nhóm quyền",
             data:data
@@ -80,7 +79,6 @@ module.exports.permissions = async (req,res)=>{
 
 //[Patch] admin/roles/permissions
 module.exports.permissionsPatch = async (req,res)=>{
-    console.log(req.body.permissions)
     const permissions = JSON.parse(req.body.permissions)
     for(const item of permissions){
         const id = item.id;

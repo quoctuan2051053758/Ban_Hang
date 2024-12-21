@@ -68,7 +68,7 @@ module.exports.addReceiveInventory  = async (req,res)=>{
             for (const id of variantIds) {
                 items.push({
                     variantId: id,
-                    quantityAvailable: 0, // Gán giá trị mặc định cho quantityAvailable
+                    quantityAvailable: 0,
                     quantityReceived: Number(quantityReceived),
                     importPrice: Number(importPrice)
                 });
@@ -88,6 +88,7 @@ module.exports.addReceiveInventory  = async (req,res)=>{
             }
         });
         // Lưu vào cơ sở dữ liệu
+        req.flash("sucess","Tạo đơn nhập hàng thành công")
         await newInventory.save();
         res.redirect("back");
 }
@@ -108,14 +109,14 @@ module.exports.add = async (req,res)=>{
         );
         
     }
-   
+    req.flash("success","Nhập hàng thành công")
     await Inventory.findByIdAndUpdate(inventoryId, { status: 'completed' });
     res.redirect("back")
     
 }
 
 
-//[GET] admin/inventorys/add:id
+//[GET] admin/inventorys/calcel:id
 module.exports.cancel = async (req,res)=>{
     const inventoryId = req.params.id
     const inventory = await Inventory.findOne({
@@ -126,7 +127,7 @@ module.exports.cancel = async (req,res)=>{
         console.log(variantId)
         await Product.findOneAndUpdate(
             { 'variants._id': variantId },
-            { $inc: { 'variants.$.stock':- quantityReceived } } // Tăng số lượng tồn kho
+            { $inc: { 'variants.$.stock':- quantityReceived } } 
         );
         
     }

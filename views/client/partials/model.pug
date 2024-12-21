@@ -1,119 +1,103 @@
-style.
-    
-    
 each item in productModel
-        div.grid__quick__view__modal.modalarea.modal.fade(id=`${item._id}`, tabindex="-1", aria-labelledby=`${item.id}`, aria-hidden="true")
-            div.modal-dialog
-                div.modal-content
-                    button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-                    div.modal-body
-                        .row.align-items-center
-                            .col-xl-6.col-lg-6.col-md-6
-                                .grid__quick__img
-                                    img(src=item.thumbnail[0], alt=item.title)
-                            .col-xl-6.col-lg-6.col-md-6.col-12
-                                .single__product__special__feature
-                            
-                                .product__variant__inventory
-                                    
-                                .grid__quick__content
-                                    h3 #{item.title}
-                                    .quick__price
-                                        if item.variants && item.variants.length > 0
-                                            if item.discountPercentage 
-                                                //- span(id="price-display") #{(item.variants[0].price - (item.variants[0].price * (item.discountPercentage / 100))).toFixed(2)}Đ
-                                                del(class="original-price") #{item.variants[0].price}Đ
-                                                |#{(item.variants[0].price - (item.variants[0].price * (item.discountPercentage / 100))).toFixed(0)}Đ
-                                            else 
-                                                span(id="price-display") #{item.variants[0].price}Đ
+    div.grid__quick__view__modal.modalarea.modal.fade(id=`${item._id}`, tabindex="-1", aria-labelledby=`${item._id}`, aria-hidden="true")
+        div.modal-dialog
+            div.modal-content
+                button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+                div.modal-body
+                    .row.align-items-center
+                        .col-xl-6.col-lg-6.col-md-6
+                            .grid__quick__img
+                                img(src=item.thumbnail[0], alt=item.title)
+                        .col-xl-6.col-lg-6.col-md-6.col-12
+                            .grid__quick__content
+                                h3 #{item.title}
+                                .quick__price
+                                    if item.variants && item.variants.length > 0
+                                        if item.discountPercentage
+                                            del.original-price #{item.variants[0].price}Đ
+                                            span#price-display #{(item.variants[0].price - (item.variants[0].price * (item.discountPercentage / 100))).toFixed(0)}Đ
                                         else
-                                            p Không có giá cho sản phẩm này 
-                                    strong.inventory__title Tình trạng:
-                                    p.variant__inventory(id="stock-display") Còn #{item.variants[0].stock} sản phẩm trong kho
-                                    form(action=`/cart/add/${item._id}` method="POST") 
-                                        .selector__wrapper
-                                            span Màu sắc:
-                                            if item.uniqueColors && item.uniqueColors.length > 0 
-                                                each color in item.uniqueColors
-                                                    input.form-check-input(type="radio", name="color", id=`color-${color}`, data-price=item.sizesByColor[color][0].discountPrice, data-original-price=item.sizesByColor[color][0].price, value=color) 
-                                                    label.form-check-label(for=`color-${color}`) #{color}  
-                                            else
-                                                p Không có màu nào cho sản phẩm này
-                                            
-                                        .single__product__swatch.d-flex.flex-wrap.align-items-center
-                                                span Kích cỡ
-                                                if item.uniqueColors 
-                                                    each color in item.uniqueColors
-                                                        .color-sizes(id=`sizes-${color}`, style="display: none;")
-                                                            each variant in item.sizesByColor[color]
-                                                                input.form-check-input(type="radio", name="size", value=variant.size, id=`size-${variant.size}-${color}`,data-stock=variant.stock)
-                                                                label.form-check-label(for=`size-${variant.size}-${color}`) #{variant.size}                                
-                                        .featurearea__quantity
-                                            .qty-container
-                                                button.qty-btn-minus.btn-qty(type="button")
-                                                    i.fa.fa-minus
-                                                input.input-qty(type="number"
-                                                    name="quantity"
-                                                    value="1"
-                                                    min="1"
-                                                    placeholder="Số lượng"
-                                                )
-                                                button.qty-btn-plus.btn-qty(type="button")
-                                                    i.fa.fa-plus
-                                            button.default__button(type="submit") Thêm vào giỏ hàng
+                                            span#price-display #{item.variants[0].price}Đ
+                                    else
+                                        p Không có giá cho sản phẩm này
+                                strong.inventory__title Tình trạng:
+                                p.variant__inventory#stock-display Còn #{item.variants[0].stock} sản phẩm trong kho
+                                form(action=`/cart/add/${item._id}` method="POST")
+                                    .selector__wrapper
+                                        span Màu sắc:
+                                        each color in item.uniqueColors
+                                            input.form-check-input.color(type="radio", name="color", id=`color-${item._id}-${color.replace(/\s+/g, '')}`, data-price=item.sizesByColor[color][0].discountPrice, data-original-price=item.sizesByColor[color][0].price, value=color)
+                                            label.form-check-label(for=`color-${item._id}-${color.replace(/\s+/g, '')}`) #{color}
+                                    .single__product__swatch.d-flex.flex-wrap.align-items-center
+                                        span.header Kích cỡ:
+                                        ul
+                                            each color in item.uniqueColors
+                                                .color-sizes.size-container(id=`sizes-${item._id}-${color.replace(/\s+/g, '')}`, style="display: none;")
+                                                    each variant in item.sizesByColor[color]
+                                                        li
+                                                            input.form-check-input.size(type="radio", name="size", value=variant.size, id=`size-${item._id}-${variant.size}-${color.replace(/\s+/g, '')}`, data-stock=variant.stock)
+                                                            label.form-check-label(for=`size-${item._id}-${variant.size}-${color.replace(/\s+/g, '')}`) #{variant.size}
+                                    div.featurearea__quantity
+                                        .qty-container
+                                            button.qty-btn-minus1.btn-qty(type="button") -
+                                            input.input-qty(
+                                                class="form-control mb-2"
+                                                type="number"
+                                                name="quantity"
+                                                value="1"
+                                                min="1"
+                                                placeholder="Số lượng"
+                                            )
+                                            button.qty-btn-plus1.btn-qty(type="button") +
+                                        button.default__button(type="submit" class="btn btn-success btn-block")
+                                            i.fas.fa-shopping-cart
+                                            | Thêm vào giỏ hàng
+
 script.
-    document.querySelectorAll('input[name="color"]').forEach((input) => {
-        input.addEventListener('change', function() {
-            const selectedColor = this.value;
-            const selectedPrice = this.dataset.price; // Lấy giá đã giảm từ data-price
-            const originalPrice = this.dataset.originalPrice; // Lấy giá gốc từ data-original-price
+    document.querySelectorAll('.grid__quick__view__modal').forEach(modal => {
+        modal.querySelectorAll('.color').forEach(input => {
+            input.addEventListener('change', function () {
+                const selectedColor = this.value.replace(/\s+/g, ''); // Loại bỏ khoảng trắng
+                const selectedPrice = this.dataset.price;
+                const originalPrice = this.dataset.originalPrice;
 
-            const priceDisplay = document.getElementById('price-display');
-            priceDisplay.textContent = parseFloat(selectedPrice) + 'Đ'; // Cập nhật giá đã giảm
+                // Cập nhật giá trong modal
+                const priceDisplay = modal.querySelector('#price-display');
+                if (priceDisplay) {
+                    priceDisplay.textContent = `${selectedPrice}Đ`;
+                }
 
-            // Nếu có giá gốc, hiển thị nó
-            const originalPriceDisplay = document.querySelector('.original-price');
-            if (originalPriceDisplay) {
-                originalPriceDisplay.textContent = parseFloat(originalPrice) + 'Đ';
-            }
+                const originalPriceDisplay = modal.querySelector('.original-price');
+                if (originalPriceDisplay) {
+                    originalPriceDisplay.textContent = `${originalPrice}Đ`;
+                }
 
-            // Ẩn tất cả kích cỡ và chỉ hiển thị kích cỡ của màu đã chọn
-            document.querySelectorAll('.color-sizes').forEach((sizeElement) => {
-                sizeElement.style.display = 'none';
+                // Ẩn tất cả các kích cỡ
+                modal.querySelectorAll('.size-container').forEach(container => {
+                    container.style.display = 'none';
+                });
+
+                // Hiển thị kích cỡ cho màu được chọn
+                const selectedSizeContainer = modal.querySelector(`#sizes-${modal.id}-${selectedColor}`);
+                if (selectedSizeContainer) {
+                    selectedSizeContainer.style.display = 'block';
+                }
+
+                // Reset thông tin tồn kho
+                //- const stockDisplay = modal.querySelector('#stock-display');
+                //- if (stockDisplay) {
+                //-     stockDisplay.textContent = 'Còn 0 sản phẩm trong kho';
+                //- }
             });
+        });
 
-            const selectedSizeContainer = document.getElementById(`sizes-${selectedColor}`);
-            if (selectedSizeContainer) {
-                selectedSizeContainer.style.display = 'block'; // Hiển thị kích cỡ của màu đã chọn
-            }
-
-            // Reset stock display và max quantity
-            document.querySelectorAll('.variant__inventory').forEach(stockElement => {
-                stockElement.textContent = 'Còn 0 sản phẩm trong kho'; // Reset stock
+        modal.querySelectorAll('.size').forEach(input => {
+            input.addEventListener('change', function () {
+                const stock = this.dataset.stock;
+                const stockDisplay = modal.querySelector('#stock-display');
+                if (stockDisplay) {
+                    stockDisplay.textContent = `Còn ${stock} sản phẩm trong kho`;
+                }
             });
-
-            const quantityInput = document.querySelector('input[name="quantity"]');
-            quantityInput.max = 0; // Đặt max quantity là 0 trước khi chọn kích cỡ
         });
     });
-
-    document.querySelectorAll('input[name="size"]').forEach((input) => {
-        input.addEventListener('change', function() {
-            const selectedSizeStock = this.dataset.stock; // Lấy stock từ data-stock
-            const stockDisplay = this.closest('.modal-body').querySelector('.variant__inventory');
-            stockDisplay.textContent = `Còn ${selectedSizeStock} sản phẩm trong kho`; // Cập nhật thông tin tồn kho cho modal tương ứng
-
-            const quantityInput = this.closest('.modal-body').querySelector('input[name="quantity"]');
-            quantityInput.max = selectedSizeStock; // Cập nhật max quantity theo stock
-        });
-    });
-
-    document.querySelectorAll('.form-check-label').forEach(label => {
-        label.addEventListener('click', function() {
-            // Xóa lớp 'selected' từ tất cả các label
-            document.querySelectorAll('.form-check-label').forEach(l => l.classList.remove('selected'));
-            
-            // Thêm lớp 'selected' cho label được nhấp
-            this.classList.add('selected');
-        });
-    });  

@@ -104,7 +104,7 @@ header
                                     a(href="/") Trang chủ
                                 li.position-static
                                     a.headerarea__has__dropdown(href="/products") Sản phẩm
-                                        span.header__label New
+                                       
                                     - const pathProduct = "/products"
                                         //- a(href=pathProduct) Sản phẩm
                                     +sub-menu_parent(layoutProductsCategory,pathProduct)
@@ -261,10 +261,12 @@ header
                         a(href="/cart") Giỏ hàng
                     li
                         a(href="/wishlists") Yêu thích
+                    li
+                        a(href="/checkout/history") Đơn đặt hàng
         else
             div.setting__wrap__heading
                 h6
-                    a(href="#") Account
+                    a(href="#") Tài khoản
             div.setting__wrap__list__inner
                 ul
                     li
@@ -273,6 +275,8 @@ header
                         a(href="/cart") Giỏ hàng
                     li
                         a(href="/wishlist") Yêu thích
+                    li
+                        a(href="/checkout/history") Đơn đặt hàng
     
     //- header__search
     div.headersearch__active
@@ -303,7 +307,7 @@ header
                                 a(href=`/products/detail/${item.productInfo.slug}`)
                                     img(src=item.productInfo.thumbnail[0] alt="product")
                                 .minicart__single__close
-                                    button(href=`/cart/delete/${item.product_id}/${item.size}/${item.color}`)
+                                    a(href=`/cart/delete/${item.product_id}/${item.size}/${item.color}`)
                                         i.fa.fa-close
                             .minicart__single__content
                                 h4

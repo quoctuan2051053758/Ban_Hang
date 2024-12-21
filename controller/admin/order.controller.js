@@ -24,12 +24,6 @@ module.exports.index = async (req,res)=>{
         find.title = objectSearch.regex
     }
 
-    // if(req.query.sortKey && req.query.sortValue){
-    //     sort[req.query.sortKey] =req.query.sortValue
-        
-    // }else{
-    //     sort.position = "desc"
-    //     }
     const orders = await Order.find(find)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip)
@@ -42,11 +36,14 @@ module.exports.index = async (req,res)=>{
                 product.productInfo=productInfo
                 product.priceNew=productsHelper.priceNewProduct(product)
                 product.totalPrice =product.priceNew * product.quantity
+                product.priceNewFormatted = product.priceNew.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                product.totalPriceFormatted = product.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            
             }
             order.totalPrice = order.products.reduce((sum,item)=>sum+item.totalPrice,0)
-        }
+            order.totalPriceFormatted = order.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }   
     }
-
     
     res.render('admin/pages/order/index',{
         pageTitle:"Đặt hàng",
