@@ -23,10 +23,10 @@ block main
                                     each product in products
                                         tr
                                             td.cartarea__product__thumbnail
-                                                a(href=`/products/${product.slug}`)
+                                                a(href=`/products/detail/${product.slug}`)
                                                     img(src=product.thumbnail[0], alt="food-1")
                                             td.cartarea__product__name
-                                                a(href=`/products/${product.slug}`)  #{product.title}
+                                                a(href=`/products/detail/${product.slug}`)  #{product.title}
                                             td.cartarea__product__price__cart
                                                 span.amount 
                                                     - var discountAmount = product.variants[0].price * (product.discountPercentage / 100)

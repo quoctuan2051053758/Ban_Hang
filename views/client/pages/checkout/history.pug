@@ -60,6 +60,7 @@ block main
                                         th Stt 
                                         th sản phẩm 
                                         th Giá
+                                        th Ngày đặt
                                 tbody 
                                     if orders.length >0 
                                         each order,index in orders 
@@ -74,6 +75,7 @@ block main
                                                                 span.product-details #{product.size}/#{product.color} Số lượng: #{product.quantity} 
                                                         br
                                                 td #{order.totalPriceFormatted}
+                                                td #{order.createdAt.toLocaleDateString('vi-VN')}
                                     else 
                                         tr 
                                             td Chưa có đơn đặt hàng nào
