@@ -47,24 +47,19 @@ module.exports.export = async (req,res)=>{
 
 
 module.exports.addReceiveInventory  = async (req,res)=>{
-    const expectedDate = req.body;
+    const expectedDate = req.body.expectedDate;
     const inventoryStatus = req.body.status ? 'received' : 'pending';
-        console.log(req.body)
-        // Tạo mã code cho đơn nhập hàng
         const code = await generateCreatment.generateCreatment();
         const items = [];
         let index = 0;
 
-        // Lặp qua các thuộc tính trong req.body
         while (req.body[`items[${index}][variantId]`] !== undefined) {
             const variantId = req.body[`items[${index}][variantId]`];
             const quantityReceived = req.body[`items[${index}][quantityReceived]`];
             const importPrice = req.body[`items[${index}][importPrice]`];
 
-            // Kiểm tra nếu variantId là một mảng hay không
             const variantIds = Array.isArray(variantId) ? variantId : [variantId];
 
-            // Thêm các mặt hàng vào mảng items
             for (const id of variantIds) {
                 items.push({
                     variantId: id,
@@ -73,21 +68,17 @@ module.exports.addReceiveInventory  = async (req,res)=>{
                     importPrice: Number(importPrice)
                 });
             }
-
             index++;
         }
-
-        // Tạo đối tượng Inventory
         const newInventory = new Inventory({ 
             code: code, // Gán mã với tiền tố
             expectedDate,
             status:inventoryStatus,
             items,
             createdBy: {
-                account_id: res.locals.user.id, // Lấy thông tin người dùng từ middleware
+                account_id: res.locals.user.id,
             }
         });
-        // Lưu vào cơ sở dữ liệu
         req.flash("sucess","Tạo đơn nhập hàng thành công")
         await newInventory.save();
         res.redirect("back");
@@ -105,7 +96,7 @@ module.exports.add = async (req,res)=>{
         console.log(variantId)
         await Product.findOneAndUpdate(
             { 'variants._id': variantId },
-            { $inc: { 'variants.$.stock': quantityReceived } } // Tăng số lượng tồn kho
+            { $inc: { 'variants.$.stock': quantityReceived } } 
         );
         
     }
@@ -124,15 +115,12 @@ module.exports.cancel = async (req,res)=>{
     })
     for (const item of inventory.items){
         const { variantId, quantityReceived } = item;
-        console.log(variantId)
         await Product.findOneAndUpdate(
             { 'variants._id': variantId },
-            { $inc: { 'variants.$.stock':- quantityReceived } } 
+            { $inc: { 'variants.$.stock':- quantityReceived } }  
         );
-        
     }
     req.flash("success","Đã hủy đơn hàng")
-    // Xóa đơn nhập hàng
     await Inventory.findByIdAndDelete(inventoryId);
     res.redirect("back") 
 }

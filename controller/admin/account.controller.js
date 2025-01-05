@@ -47,6 +47,7 @@ module.exports.createPost = async(req,res)=>{
         req.body.password=md5(req.body.password)
         const records = new Account(req.body)
         await records.save()
+        req.flash("success",`Thêm tài khoản thành công`)
         res.redirect(`${systemConfig.prefixAdmin}/accounts`)
     } 
 }
@@ -56,16 +57,15 @@ module.exports.edit = async(req,res)=>{
         _id:req.params.id,
         deleted:false
     }
-    
     try{
         const data = await Account.findOne(find)
-        const role = await Role.find({
+        const roles = await Role.find({
             deleted: false
         })
         res.render('admin/pages/accounts/edit',{
             pageTitle:"Trang chỉnh sửa tài khoản",
             data:data,
-            role:role
+            roles:roles
 
         });
     }catch(error){
@@ -93,6 +93,15 @@ module.exports.editPatch = async(req,res)=>{
         await Account.updateOne({_id:id},req.body)
         req.flash("success","Cập nhật tài khoản thành công")   
     }
+    res.redirect("back")
+    
+}
+//[delete] /admin/accounts/delete/:id
+module.exports.deleteAccount = async(req,res)=>{
+    const id = req.params.id
+
+    await Account.findByIdAndDelete(id)
+    req.flash("success","Xóa tài khoản thành công")
     res.redirect("back")
     
 }

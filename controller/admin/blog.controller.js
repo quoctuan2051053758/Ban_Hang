@@ -6,7 +6,7 @@ const systemConfig= require("../../config/system")
 module.exports.index = async (req,res)=>{
     const blogs=await Blog.find()
     res.render('admin/pages/blog/index',{
-        pageTitle:"Nhóm quyền",
+        pageTitle:"Trang bài viết",
         blogs:blogs
     });
 }
@@ -15,7 +15,7 @@ module.exports.index = async (req,res)=>{
 module.exports.create = async (req,res)=>{
     
     res.render('admin/pages/blog/create',{
-        pageTitle:"Thêm tin tức",
+        pageTitle:"Thêm bài viết",
     });
 }
 module.exports.createPost = async (req,res)=>{
@@ -33,9 +33,8 @@ module.exports.createPost = async (req,res)=>{
     });
     console.log(req.body)
     await newBlog.save();
-    req.flash("success","Thêm tin tức")
+    req.flash("success","Thêm bài viết thành công")
     res.redirect(`${systemConfig.prefixAdmin}/blogs`)
-    // res.send("oke")
 }
 
 
@@ -45,9 +44,8 @@ module.exports.edit = async (req,res)=>{
     const blog= await Blog.findOne({
         _id:id
     })
-    console.log(blog)
     res.render('admin/pages/blog/edit',{
-        pageTitle:"Thêm tin tức",
+        pageTitle:"Chỉnh sửa bài viêt",
         blog:blog
     });
 }
@@ -60,18 +58,12 @@ module.exports.editPatch = async (req,res)=>{
         account_id : res.locals.user.id,
         updatedAt:new Date()
     }
-    // const newBlog = new Blog({
-    //     title,
-    //     content,
-    //     thumbnail,
-    //     status
-    // });
     await Blog.updateOne({_id:id},{
         ...req.body,
         $push: {updatedBy:updatedBy}
     })
     console.log(req.body)
     // await newBlog.save();
-    req.flash("success","Cập nhật tin tức thành công")
+    req.flash("success","Cập nhật bài viết thành công")
     res.redirect(`${systemConfig.prefixAdmin}/blogs`)
 }

@@ -13,7 +13,6 @@ const roleSchema=new mongoose.Schema(
             default:false
         },
         
-        deletedAt: Date
     },{
         timestamps:true
     }

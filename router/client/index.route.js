@@ -40,5 +40,5 @@ module.exports = (app)=>{
 
     app.use("/about",aboutRoute)
 
-    app.use("/wishlists",wishlistRoute,authMiddleware.requireAuth)
+    app.use("/wishlists",authMiddleware.requireAuth,wishlistRoute)
 }

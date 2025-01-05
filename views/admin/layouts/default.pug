@@ -93,18 +93,28 @@ html(lang="en")
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script> <!-- ChartJS -->
     
     script.
-        const revenueData = !{JSON.stringify(dailyRevenueData)}
-        
+        const revenueData = !{JSON.stringify(weeklyRevenue)};
+        const getLast7Days = () => {
+            return Array.from({ length: 7 }, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - i); 
+                return date; 
+            }).reverse(); 
+        };
+
+        // Hàm định dạng ngày bằng tiếng Việt
+        const formatDateToVietnamese = (date) => {
+            return new Intl.DateTimeFormat('vi-VN', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' }).format(date);
+        };
+
+        const last7Days = getLast7Days();
+
         const sales_chart_options = {
             series: [
                 {
                     name: "Doanh thu",
                     data: revenueData,
                 },
-                //- {
-                //-     name: "Doanh thu",
-                //-     data: [65, 59, 80, 81, 56, 55, 40],
-                //- },
             ],
             chart: {
                 height: 300,
@@ -124,20 +134,15 @@ html(lang="en")
                 curve: "smooth",
             },
             xaxis: {
-                type: "datetime",
-                categories: [
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 1)).toISOString().split('T')[0],
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 2)).toISOString().split('T')[0],
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 3)).toISOString().split('T')[0],
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 4)).toISOString().split('T')[0],
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 5)).toISOString().split('T')[0],
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 6)).toISOString().split('T')[0],
-                  new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7)).toISOString().split('T')[0],
-              ],
+                type: "category",
+                categories: last7Days.map((date) => formatDateToVietnamese(date)), // Định dạng ngày
             },
             tooltip: {
                 x: {
-                    format: "MMMM yyyy",
+                    formatter: (value, opts) => {
+                        const index = opts.dataPointIndex;
+                        return formatDateToVietnamese(last7Days[index]);
+                    },
                 },
             },
         };
@@ -259,11 +264,7 @@ html(lang="en")
             option_sparkline3,
         );
         sparkline3.render();       
-                //- <script>window.jQuery||document.write('<script src="/TT_Admin/assets/js/jquery-1.11.2.min.js"><\/script>');</script>
-            
-                //- <script src="/TT_Admin/assets/plugins/echarts/echarts-custom-for-dashboard.js" type="text/javascript"></script>
-                //- <script src="/TT_Admin/assets/js/scripts.js" type="text/javascript"></script> 
-    
+                
            
 
         

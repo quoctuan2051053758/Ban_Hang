@@ -14,7 +14,9 @@ const authMiddleware=require("../../middlewares/admin/auth.middleware")
 
 module.exports = (app)=>{
     const PATH_ADMIN=systemConfig.prefixAdmin;
-
+    app.get(PATH_ADMIN, authMiddleware.requireAuth, (req, res) => {
+        res.redirect(`${PATH_ADMIN}/dashboard`);
+    });
     app.use(PATH_ADMIN + "/dashboard",authMiddleware.requireAuth ,dashboardRoutes)
 
     app.use(PATH_ADMIN + "/products",authMiddleware.requireAuth ,productRoutes)

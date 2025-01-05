@@ -6,7 +6,7 @@ block main
     if(role.permissions.includes("products_edit"))
         .app-main 
             .container-fluid
-                +alert-error(5000)
+
                 h1(class="mb-4") Chỉnh sửa sản phẩm 
                 form(
                     action = `${prefixAdmin}/products/edit/${product.id}?_method=PATCH`

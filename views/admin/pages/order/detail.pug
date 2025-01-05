@@ -1,0 +1,50 @@
+extends  ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+
+include ../../mixins/sort.pug
+include ../../mixins/moment.pug
+
+
+
+block main
+    .app-main 
+        .container-fluid
+                .card
+                    .card-header.bg-primary.text-white
+                        h2 Thông tin đơn hàng
+                    .card-body
+                        .row
+                            .col-md-6
+                            h3 Thông tin khách hàng
+                            ul.list-group
+                                li.list-group-item Tên: #{order.userInfo.fullName}
+                                li.list-group-item Số điện thoại: #{order.userInfo.phone}
+                                li.list-group-item Địa chỉ: #{order.userInfo.address}
+                            .col-md-6
+                            h3 Trạng thái khác
+                            ul.list-group
+                                li.list-group-item Ngày đặt: #{new Date(order.createdAt).toLocaleString()}
+                    hr
+                    h3.mt-4.mb-3 Sản phẩm trong giỏ hàng
+                    table.table.table-striped.table-bordered
+                        thead.table-dark
+                            tr
+                                th Tên Sản Phẩm
+                                th Giá
+                                th Giảm Giá
+                                th Số Lượng
+                                th Size
+                                th Màu Sắc
+                        tbody
+                            each product in order.products
+                                tr
+                                    td #{product.productInfo.title}
+                                    td #{product.price.toLocaleString()} VND
+                                    td #{product.discountPercentage}%
+                                    td #{product.quantity}
+                                    td #{product.size}
+                                    td #{product.color}
+

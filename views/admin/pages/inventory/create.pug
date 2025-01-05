@@ -10,7 +10,7 @@ block main
                     label(for='expectedDate') Dự Kiến Ngày Nhập:
                     input.form-control(type='date', name='expectedDate', required)
 
-                .form-group
+                .form-group.d-none
                     input(type="checkbox" name="status" id="status") 
                     label(for="status") Nhập ngay sau khi tạo đơn nhập
                 h3 Nhập Hàng
@@ -34,7 +34,7 @@ block main
                             th 
                     tbody
 
-                button.btn.btn-primary(type='submit') Lưu
+                button.btn.btn-primary(type='submit') Tạo đơn
             a.btn.btn-link(href='/admin/dashboard') Hủy
 
     script.
@@ -44,9 +44,8 @@ block main
             const selectedOption = selectElement.options[selectElement.selectedIndex];
             const selectedValue = selectedOption.value;
 
-            // Kiểm tra xem có sản phẩm nào được chọn không
             if (!selectedValue) {
-                return; // Nếu không có sản phẩm nào được chọn, không làm gì cả
+                return; 
             }
 
             const selectedText = selectedOption.dataset.title;

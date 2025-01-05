@@ -22,5 +22,5 @@ route.patch('/edit/:id',
     validate.editPatch,
     controller.editPatch
 )
-
+route.delete('/delete/:id',controller.deleteAccount)
 module.exports = route

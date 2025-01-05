@@ -5,8 +5,6 @@ include ../../mixins/select-tree.pug
 block main 
     .app-main 
         .container-fluid
-            +alert-error(5000)
-            +alert-success(5000)
             h1(class="mb-4") Cập nhật thông tin cá nhân
             form(
                 action = `${prefixAdmin}/my-account/edit?_method=PATCH`

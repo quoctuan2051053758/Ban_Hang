@@ -1,6 +1,9 @@
 mixin filter-status(filterStatus)
-    each item in filterStatus
-        button(
-            class=`btn btn-sm ml-1 btn-outline-success ${item.class}`
-            button-status=item.status
-        ) #{item.name}
+    .d-flex.flex-wrap.gap-2
+        each item in filterStatus
+            button(
+                class=`btn btn-sm btn-outline-success ${item.class}`
+                button-status=item.status
+            ) 
+                i(class="bi bi-filter")
+                span #{item.name}

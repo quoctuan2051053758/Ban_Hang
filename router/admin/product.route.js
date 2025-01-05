@@ -30,7 +30,8 @@ route.patch(
     controller.editPatch
 )
 route.get('/detail/:id',controller.detail )
-
-
+route.get('/product-delete',controller.productdelete)
+route.get('/restore/:id',controller.productRestore)
+route.get('/deleteItem/:id',controller.delete)
 
 module.exports = route

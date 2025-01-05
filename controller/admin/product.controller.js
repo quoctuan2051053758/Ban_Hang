@@ -28,7 +28,7 @@ module.exports.index = async(req,res)=>{
     let objectPagination=paginationHelper(
         {
             currentPage:1,
-            limitItems:4
+            limitItems:6
         },
         req.query,
         countProducts
@@ -37,10 +37,16 @@ module.exports.index = async(req,res)=>{
 
     //sort
     const sort = {};
-    if(req.query.sortKey && req.query.sortValue){
-        sort[req.query.sortKey] =req.query.sortValue
-    }else{
-        sort.position = "desc"
+    if (req.query.sortKey && req.query.sortValue) {
+        if (req.query.sortKey === "price") {
+            sort['variants.0.price'] = req.query.sortValue === "desc" ? -1 : 1; 
+        } else if (req.query.sortKey === "title") {
+            sort.title = req.query.sortValue === "asc" ? 1 : -1;
+        } else if (req.query.sortKey === "created") {
+            sort.createdAt = req.query.sortValue === "ascending" ? 1 : -1;
+        }
+    } else {
+        sort.position = "desc";
     }
 
     
@@ -65,8 +71,6 @@ module.exports.index = async(req,res)=>{
             })
             updatedBy.accountFullName = userUpdated.fullName
         }
-        
-
     }
     
     res.render('admin/pages/products/index',{
@@ -220,7 +224,7 @@ module.exports.edit = async(req,res)=>{
             category:newRecords
         });
     }catch(error){
-        req.flash("error","không tìm thấy sản phẩm")
+        req.flash("error","không tìm thấy sản phẩm") 
         res.redirect(`${systemConfig.prefixAdmin}/products`)
     }
     
@@ -269,4 +273,38 @@ module.exports.detail = async(req,res)=>{
         res.redirect(`${systemConfig.prefixAdmin}/products`)
     }
     
+}
+
+
+//[GET] admin/products/delete
+module.exports.productdelete = async(req,res)=>{
+        const find = {
+            deleted:true
+        }
+        const products = await Product.find(find)
+        res.render('admin/pages/products/product-delete',{
+            pageTitle:"sản phẩm đã xóa",
+            products:products
+        });
+    
+    
+}
+
+module.exports.productRestore = async(req,res)=>{
+    const id = req.params.id
+    await Product.updateOne({_id : id },{
+        deleted: false,
+    });
+    req.flash("success","Khôi phục sản phẩm thành công")
+    res.redirect('back');
+
+
+}
+module.exports.delete = async(req,res)=>{
+    const id = req.params.id
+    
+    await Product.deleteOne({ _id: id })
+    req.flash("success","Xóa sản phẩm thành công")
+    res.redirect('back');
+
 }

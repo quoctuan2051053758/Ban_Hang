@@ -6,7 +6,7 @@ block main
                 .col-lg-12
                     .ltn__blog-details-wrap--
                         .ltn__page-details-inner.ltn__blog-details-inner
-                            img.img-fluid(src="img/blog/blog_details.jpg", alt="blog_details")
+                            //- img.img-fluid(src=blog.thumbnail, alt=blog.title)
                         h1.ltn__blog-title #{blog.title}
                         .ltn__blog-meta
                             ul
@@ -16,10 +16,7 @@ block main
                                 li.ltn__blog-date
                                     i.far.fa-calendar-alt
                                     | #{new Date(blog.createdAt).toLocaleDateString('en-VI', { year: 'numeric', month: 'numeric', day: 'numeric' })}
-                                li
-                                    a(href="#")
-                                        i.fas.fa-comment
-                                        | 2 comments
+                                
                         p.sp_top_20 !{blog.content}
                         //- blockquote
                         //-     span Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.

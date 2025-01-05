@@ -183,7 +183,6 @@ if(sort){
         url.searchParams.delete("sortValue")
         window.location.href=url.href
     })
-    //thêm selected
     const sortKey =   url.searchParams.get("sortKey")
     const sortValue =   url.searchParams.get("sortValue")
     if(sortKey && sortValue){

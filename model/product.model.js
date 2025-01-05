@@ -19,8 +19,8 @@ const productSchema=new mongoose.Schema(
         description: String,
         discountPercentage: Number,
         variants:[variantSchema],
-        thumbnail: { // Thay đổi kiểu dữ liệu thành mảng
-            type: [String], // Mảng các URL thumbnail
+        thumbnail: {
+            type: [String], 
             default: []
         },
         status: String,

@@ -17,17 +17,51 @@ module.exports.index = async(req,res)=>{
         req.query,
         countProducts
     )
-    const products = await Product.find({
-        status : "active",
-        deleted:false
-    }).sort({position:"desc"})
+    const sort = {};
+    const filter = {
+        status: "active",
+        deleted: false
+    };
+    if (req.query.price) {
+        switch (req.query.price) {
+            case 'under-100k':
+                filter['variants.0.price'] = { $lt: 100000 }; 
+                break;
+            case '100k-200k':
+                filter['variants.0.price'] = { $gte: 100000, $lt: 200000 }; 
+                break;
+            case '200k-500k':
+                filter['variants.0.price'] = { $gte: 200000, $lt: 500000 }; 
+                break;
+            case '500k-1m':
+                filter['variants.0.price'] = { $gte: 500000, $lt: 1000000 }; 
+                break;
+            case 'above-1m':
+                filter['variants.0.price'] = { $gte: 1000000 }; 
+                break;
+            default:
+                break;
+        }
+    }
+    if (req.query.sortKey && req.query.sortValue) {
+        if (req.query.sortKey === "price") {
+            sort['variants.0.price'] = req.query.sortValue === "desc" ? -1 : 1; 
+        } else if (req.query.sortKey === "title") {
+            sort.title = req.query.sortValue === "asc" ? 1 : -1;
+        } else if (req.query.sortKey === "created") {
+            sort.createdAt = req.query.sortValue === "ascending" ? 1 : -1;
+        }
+    } else {
+        sort.position = "desc";
+    }
+    const products = await Product.find(filter).sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
     res.render('client/pages/products/index',{
         pageTitle:"Trang danh sách sản phẩm",
         products:products,
         pagination:objectPagination
-        // discountedPrice:discountedPrice
+  
     });
 }
 

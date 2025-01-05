@@ -20,7 +20,5 @@ module.exports.requireAuth =async (req,res,next)=>{
             res.locals.role=role;
             next()
         }
-        
     }
-    
 }

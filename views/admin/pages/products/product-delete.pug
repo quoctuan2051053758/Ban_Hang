@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/sort.pug
+include ../../mixins/moment.pug
+
+block main
+    .app-main 
+        .container-fluid
+            if products.length > 0
+                .row
+                    each product in products
+                        .col-12.col-md-6.col-lg-4.mb-4  
+                            .card.h-100
+                                img(src=product.thumbnail[0], alt=product.title, class="card-img-top", style="object-fit: cover; height: 200px; width: 100%; border-radius: 8px;")
+
+                                .card-body.d-flex.flex-column
+                                    // Cố định chiều cao của card-body để đảm bảo các phần tử không bị chồng lên
+                                    h5.card-title.text-center.mb-3 #{product.title}
+                                    
+                                    .d-flex.flex-column.align-items-stretch.mt-auto
+                                        a.btn.btn-warning.mb-2.d-block(href=`${prefixAdmin}/products/restore/${product._id}`) Khôi phục  
+                                        a.btn.btn-danger.d-block(href=`${prefixAdmin}/products/deleteItem/${product._id}`) Xóa  
+            else
+                p.text-center Không có sản phẩm nào đã xóa

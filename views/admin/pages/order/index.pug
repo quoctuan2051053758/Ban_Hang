@@ -10,16 +10,15 @@ include ../../mixins/moment.pug
 
 
 block main
-    +alert-success(5000)
-    +alert-error(5000)
+
     if(role.permissions.includes("products_view"))
         
-        <main class="app-main"> <!--begin::App Content Header-->
-            <div class="app-content-header"> <!--begin::Container-->
+        <main class="app-main"> 
+            <div class="app-content-header"> 
                 
             </div>  
-            <div class="app-content"> <!--begin::Container-->
-                <div class="container-fluid"> <!--begin::Row-->
+            <div class="app-content">
+                <div class="container-fluid"> 
                     <div class="row">
                         <div class>
                             <div class="card mb-12">
@@ -48,28 +47,30 @@ block main
                                         <thead>
                                             <tr>
                                                 th STT
-                                                th Sản phẩm 
-                                                //- th Số lượng
-                                                //- th Giá
+                                                th Tên
+                                                th Số điện thoại
                                                 th Tổng giá
-                                                //- th Trạng thái
-                                                //- th Hành động
+                                                th Ngày tạo
+                                                th Hành động
                                             </tr>
                                         </thead>
                                         <tbody>
                                             
-                                            each order in orders
+                                            each order,index in orders
                                                 tr 
+                                                    td #{index+1}
                                                     td #{order.userInfo.fullName}
-                                                    td    
-                                                        each product in order.products
-                                                            if product.productInfo
-                                                                | <b>- #{product.productInfo.title}</b> - #{product.size}/#{product.color}- Số lượng #{product.quantity} </br>
-                                                            else 
-                                                                | sản phẩm không còn nữa
                                                     
+                                                    td #{order.userInfo.phone}
                                                     
                                                     td #{order.totalPriceFormatted }
+                                                    td 
+                                                        +formatDate(order.createdAt)
+                                                    td  
+                                                        a(
+                                                            href=`${prefixAdmin}/orders/detail/${order.id}` 
+                                                            class="btn btn-warning btn-sm"
+                                                        ) Xem
                                                     
                                                 
                                         </tbody>

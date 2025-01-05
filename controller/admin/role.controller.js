@@ -60,7 +60,6 @@ module.exports.editPatch = async (req,res)=>{
         req.flash("success","Cập nhật nhóm quyền thành công")
     }catch(error){
         req.flash("error","Cập nhật nhóm quyền thất bại")
-        
     }
     res.redirect("back")
 }

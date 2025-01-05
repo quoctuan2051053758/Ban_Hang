@@ -9,7 +9,6 @@ module.exports.index = async(req,res)=>{
     const filterStatus = filterStatusHelper(req.query)
     let find={
         deleted:false
-
     }
     const objectSearch = searchHelper(req.query);
     if(objectSearch.regex){
@@ -18,7 +17,7 @@ module.exports.index = async(req,res)=>{
     if(req.query.status){
         find.status = req.query.status;
     }
-
+    const records = await ProductCategory.find(find) 
     const newRecords=createTreeHelper.tree(records);
     res.render('admin/pages/products-category/index',{
         pageTitle:"Danh sách sản phẩm",

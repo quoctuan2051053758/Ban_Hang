@@ -2,8 +2,7 @@ extends  ../../layouts/default.pug
 include ../../mixins/alert.pug
 block main 
     if(role.permissions.includes("roles_permissions"))
-        +alert-error(5000)
-        +alert-success(5000)
+
         .app-main 
             .container-fluid
                 h1(class="mb-4") Phân quyền

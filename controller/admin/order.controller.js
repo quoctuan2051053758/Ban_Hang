@@ -51,3 +51,22 @@ module.exports.index = async (req,res)=>{
         pagination:objectPagination
     });
 }
+
+module.exports.detail = async (req,res)=>{
+    let find = {
+        _id:req.params.id
+    };
+    const order = await Order.findOne(find)
+    for(const product of order.products){
+        const productInfo = await Product.findOne({
+            _id:product.product_id
+        }).select("title thumbnail price discountPercentage")
+        product.productInfo=productInfo
+        console.log(product.productInfo)
+    }
+    
+    res.render('admin/pages/order/detail',{
+        pageTitle:"Chi tiết đơn hàng",
+        order:order
+    });
+}

@@ -3,22 +3,45 @@ extends ../../layouts/default.pug
 block main
     .app-main 
         .container-fluid
-            a.btn.btn-primary(href='/admin/blogs/create') Thêm bài viết
-            table.table
-                thead
+            .d-flex.justify-content-between.align-items-center.mb-4
+                h2 Danh sách bài viết
+                a.btn.btn-primary(href='/admin/blogs/create') Thêm bài viết
+            table.table.table-hover.table-striped.table-bordered
+                thead.thead-dark
                     tr
-                        th Tiêu đề
+                        th(scope='col') Tiêu đề
                         //- th Danh mục
-                        th Trạng thái
-                        th Hành động
+                        th(scope='col') Trạng thái
+                        th(scope='col') Hành động
                 tbody
                     each blog in blogs
                         tr
                             td
-                                p #{blog.title}
+                                p.mb-0 #{blog.title}
                             //- td #{blog.category}
-                            td #{blog.status}
                             td
-                                a(href=`${prefixAdmin}/blogs/edit/${blog._id}`) Chỉnh sửa
+                                if(blog.status == "active")
+                                    a(
+                                        href="javascript:;" 
+                                        data-status=blog.status
+                                        data-id=blog.id
+                                        button-change-status
+                                        class="badge badge-success"
+                                    ) Đang hoạt động
+                                else    
+                                    a(
+                                        href="javascript:;" 
+                                        data-status=blog.status
+                                        data-id=blog.id
+                                        button-change-status
+                                        class="badge badge-danger"
+                                    ) Ngừng hoạt động
+                                
+                            td
+                                a.btn.btn-warning.btn-sm.mr-2(href=`${prefixAdmin}/blogs/edit/${blog._id}`) 
+                                    i.fas.fa-edit.mr-1 
+                                    | Chỉnh sửa
                                 form(action=`/blogs/${blog._id}/delete`, method='POST', style='display:inline;')
-                                    button(type='submit') Xóa
+                                    button.btn.btn-danger.btn-sm(type='submit', onclick='return confirm("Bạn có chắc chắn muốn xóa tài khoản này không?")') 
+                                        i.fas.fa-trash-alt.mr-1 
+                                        | Xóa

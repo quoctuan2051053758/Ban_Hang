@@ -5,8 +5,7 @@ include ../../mixins/select-tree.pug
 block main 
         .app-main 
             .container-fluid
-                +alert-error(5000)
-                h1(class="mb-4") Thêm mới tin tức
+                h1(class="mb-4") Thêm mới bài viết
                 form(
                     action = `${prefixAdmin}/blogs/create`
                     id = "form-create-product"
@@ -79,4 +78,4 @@ block main
                         )
                         label(for="statusActive" class="form-check-label") Dừng hoạt động
                     .form-group
-                        button(type="submit" class="btn btn-primary") Thêm
+                        button(type="submit" class="btn btn-primary") Thêm mới

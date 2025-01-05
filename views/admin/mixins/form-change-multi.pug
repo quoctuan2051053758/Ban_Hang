@@ -4,14 +4,13 @@ mixin form-change-multi(path)
         method ="POST"
         form-change-multi
     )
-        .d-flex.align-items-start 
+        .d-flex.align-items-center
             .form-group 
                 select(name="type" class="form-control")
                     option(disabled selected) -- Chọn hành động --
                     option(value="active") Hoạt động
                     option(value="inactive") Dừng hoạt động
                     option(value="delete-all") Xóa tất cả 
-                    option(value="change-position") Thay đổi vị trí
             .form-group 
                 input(
                     type="text"
@@ -19,4 +18,5 @@ mixin form-change-multi(path)
                     value=""
                     class="form-control d-none"
                 )  
-            button(type="submit" class="btn btn-primary") Áp dụng
+            .form-group  
+                button(type="submit" class="btn btn-primary") Áp dụng

@@ -19,7 +19,6 @@ const orderSchema=new mongoose.Schema(
                 color:String
             }
         ],
-        
         deleted: {
             type: Boolean,
             default:false

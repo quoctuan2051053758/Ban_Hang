@@ -5,8 +5,7 @@ include ../../mixins/select-tree.pug
 block main 
         .app-main 
             .container-fluid
-                +alert-error(5000)
-                h1(class="mb-4") Thêm mới tin tức
+                h1(class="mb-4") Chỉnh sửa bài viết
                 form(
                     action = `${prefixAdmin}/blogs/edit/${blog.id}?_method=PATCH`
                     id = "form-create-product"

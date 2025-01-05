@@ -109,9 +109,9 @@ header
                                         //- a(href=pathProduct) Sản phẩm
                                     +sub-menu_parent(layoutProductsCategory,pathProduct)
                                 li
-                                    a(href="/blogs") Blog
+                                    a(href="/blogs") Tin tức
                                 li
-                                    a(href="/about") About
+                                    a(href="/about") Về chúng tôi
                 .col-xl-3.col-lg-3.col-md-6
                     .headerarea__right
                         ul.headerarea__right__nav
@@ -179,7 +179,6 @@ header
                                                 path(d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32")
                                             span.bigcounter #{ miniCart ? miniCart.totalQuantity : 0}
 
-    //- Mobile Menu Start Here
     div.mobile-off-canvas-active
         a.mobile-aside-close
             i.fa.fa-close
@@ -205,31 +204,10 @@ header
                                 ul.dropdown
                                     
                                     +sub-menu_mobie(layoutProductsCategory,"/products")         
-                            li.menu-item-has-children
-                                a(href="categories.html") Categories
-                                ul.dropdown
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Summer Styles
-                                        ul.dropdown
-                                            li
-                                                a(href="categories.html")
-                                                    img.img-fluid(src="img/collection/collection__3.png" alt="Collection")
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Men
-                                        ul.dropdown
-                                            li
-                                                a(href="categories.html")
-                                                    img.img-fluid(src="img/collection/collection__7.png" alt="Collection")
-                                    li.menu-item-has-children
-                                        a.menu__title(href="categories.html") Women
-                                        ul.dropdown
-                                            li
-                                                a(href="categories.html")
-                                                    img.img-fluid(src="img/collection/collection__8.png" alt="Collection")
                             li
-                                a(href="about.html") About
+                                a(href="about.html") Tin tức
                             li.menu-item-has-children
-                                a(href="blog.html") Pages
+                                a(href="/about") Về chúng tôi
             .mobile-social-wrap
                 a.facebook(href="#")
                     i.fab.fa-facebook
@@ -274,7 +252,7 @@ header
                     li
                         a(href="/cart") Giỏ hàng
                     li
-                        a(href="/wishlist") Yêu thích
+                        a(href="/wishlists") Yêu thích
                     li
                         a(href="/checkout/history") Đơn đặt hàng
     
@@ -301,19 +279,20 @@ header
                     button.minicart__close__btn
                         i.fa.fa-close
                 .minicart__single__wraper
-                    each item,index in cartsub.products
-                        .minicart__single
-                            .minicart__single__img
-                                a(href=`/products/detail/${item.productInfo.slug}`)
-                                    img(src=item.productInfo.thumbnail[0] alt="product")
-                                .minicart__single__close
-                                    a(href=`/cart/delete/${item.product_id}/${item.size}/${item.color}`)
-                                        i.fa.fa-close
-                            .minicart__single__content
-                                h4
-                                    a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
-                                span #{item.quantity} x 
-                                    span.money #{ item.discountPrice}
+                    if(cartsub.products.length>0)
+                        each item,index in cartsub.products
+                            .minicart__single
+                                .minicart__single__img
+                                    a(href=`/products/detail/${item.productInfo.slug}`)
+                                        img(src=item.productInfo.thumbnail[0] alt="product")
+                                    .minicart__single__close
+                                        a(href=`/cart/delete/${item.product_id}/${item.size}/${item.color}`)
+                                            i.fa.fa-close
+                                .minicart__single__content
+                                    h4
+                                        a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
+                                    span #{item.quantity} x 
+                                        span.money #{ item.discountPrice}
                     
                 .minicart__footer
                     .minicart__subtotal

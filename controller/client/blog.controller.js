@@ -9,12 +9,12 @@ module.exports.index =async (req,res)=>{
         .sort({ createdAt: -1 }) 
         .limit(2);
         res.render('client/pages/blog/index.pug',{
-            pageTitle:"Trang blog",
+            pageTitle:"Trang tin tức",
             blogPosts:blogPosts,
             blogPostsNews:blogPostsNews
         });
     } catch (error) {
-        console.error('Error fetching blog posts:', error);
+        console.error('Lỗi khi tải bài tin tức:', error);
         res.redirct("back")
     }
     
@@ -32,7 +32,7 @@ module.exports.detail =async (req,res)=>{
             blog:blog
         });
     } catch (error) {
-        console.error('Error fetching blog posts:', error);
+        console.error('Lỗi khi tải bài tin tức', error);
         res.redirct("back")
     }
     

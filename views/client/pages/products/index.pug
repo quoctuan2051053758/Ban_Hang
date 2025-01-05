@@ -6,7 +6,7 @@ include ../../mixins/pagination.pug
 block main 
     +alert-error(5000)
     +alert-success(5000)
-    .shop.sp_top_80
+    .shop.sp_top_30
         .container
             .row.grid__responsive
                 .col-xl-3.col-lg-3.col-md-4.col-sm-12.col-12
@@ -24,67 +24,36 @@ block main
                             .sidebar__menu
                                 ul
                                     +sub_category(layoutProductsCategory)
-                                    //- each item in layoutProductsCategory
-                                    //-     li
-                                    //-         a(href=`/products/${item.slug}`) #{item.title} <span>(22)</span>
-                                    //-     if item.children && item.children.length > 0
-
-                                        //- li
-                                        //-     a(href="#") Baby <span>(10)</span>
-                                        //- li
-                                        //-     a(href="#") Baby (T Shirt) <span>(3)</span>
-                                        //- li
-                                        //-     a(href="#") Brooches and Pins <span>(2)</span>
-                                        //- li
-                                        //-     a(href="#") Cap <span>(22)</span>
                         .sidebar__widget.widget-collapse-show
                             .sidebar__title
-                                h4 Availability
+                                h4 Giá
                                 i.fa.fa-angle-down
                             .sidebar__menu
                                 ul
                                     li
                                         .sidebar__box
-                                            input#in_stock(type="checkbox")
-                                            label(for="in_stock") In stock
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
-                                    li
-                                        .sidebar__box
-                                            input#out__of__stock(type="checkbox")
-                                            label(for="out__of__stock") Out of stock
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
-                        .sidebar__widget.widget-collapse-show
-                            .sidebar__title
-                                h4 Size
-                                i.fa.fa-angle-down
-                            .sidebar__menu
-                                ul
-                                    li
-                                        .sidebar__box
-                                            input#in_stock10(type="checkbox")
-                                            label(for="in_stock10") s
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
-                                    li
-                                        .sidebar__box
-                                            input#out__of__stock11(type="checkbox")
-                                            label(for="out__of__stock11") m
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
-                                    li
-                                        .sidebar__box
-                                            input#out__of__stock12(type="checkbox")
-                                            label(for="out__of__stock12") l
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
-                                    li
-                                        .sidebar__box
-                                            input#out__of__stock13(type="checkbox")
-                                            label(for="out__of__stock13") xl
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
-                                    li
-                                        .sidebar__box
-                                            input#out__of__stock14(type="checkbox")
-                                            label(for="out__of__stock14") xxl
-                                            a(href="#") <span.shopsidebar__number>(14)</span>
+                                            input#price1(type="radio" name="price" value="under-100k")
+                                            label(for="price1") Dưới 100.000 VND
 
+                                    li
+                                        .sidebar__box
+                                            input#price2(type="radio" name="price" value="100k-200k")
+                                            label(for="price2") 100.000 - 200.000 VND
+
+                                    li
+                                        .sidebar__box
+                                            input#price3(type="radio" name="price" value="200k-500k")
+                                            label(for="price3") 200.000 - 500.000 VND
+
+                                    li
+                                        .sidebar__box
+                                            input#price4(type="radio" name="price" value="500k-1m")
+                                            label(for="price4") 500.000 - 1.000.000 VND
+
+                                    li
+                                        .sidebar__box
+                                            input#price5(type="radio" name="price" value="above-1m")
+                                            label(for="price5") Trên 1.000.000 VND
                 .col-xl-9.col-lg-9.col-md-8.col-sm-12.col-12
                     .shop__right__wraper
                         .shop__tab
@@ -92,23 +61,28 @@ block main
                                 li.nav-item(role="presentation")
                                     button.shop__tap__link.active(type="button", data-bs-toggle="tab", data-bs-target="#projects__one")
                                         i.fas.fa-th-large
-                                li.nav-item(role="presentation")
-                                    button.shop__tap__link(type="button", data-bs-toggle="tab", data-bs-target="#projects__two")
-                                        i.fas.fa-list
+                                //- li.nav-item(role="presentation")
+                                //-     button.shop__tap__link(type="button", data-bs-toggle="tab", data-bs-target="#projects__two")
+                                //-         i.fas.fa-list
                         .shop__selecte
-                            select.nice-select(name="SortBy", id="SortBy")
-                                option(value="manual") Featured
-                                option(value="best-selling") Best Selling
-                                option(value="title-ascending") Alphabetically, A-Z
-                                option(value="title-descending") Alphabetically, Z-A
-                                option(value="price-ascending") Price, low to high
-                                option(value="price-descending") Price, high to low
-                                option(value="created-descending") Date, new to old
-                                option(value="created-ascending") Date, old to new
+                            select.nice-select(
+                                name="SortBy" 
+                                id="SortBy"
+                                sort-select
+                            )
+                                //- option(value="manual") Featured
+                                option(value="created-descending") Mới đến cũ
+                                option(value="created-ascending") Cũ đến mới
+                                option(value="price-desc") Giá giảm dần
+                                option(value="price-asc") Giá tăng dần
+                                option(value="title-asc") Tiêu đề A-Z 
+                                option(value="title-desc") Tiêu đề Z-A
+                                
+                            
                         .shop__number.text-right
-                            span Showing 1 - 15 of 68 result
-
-
+                            button(class="btn btn-danger"
+                                sort-clear
+                            ) Clear
                     .tab-content#myTabContent
                         .tab-pane.fade.active.show#projects__one(role="tabpanel", aria-labelledby="projects__one")
                             .row.grid__responsive
@@ -137,7 +111,7 @@ block main
                                                                     i.far.fa-heart
                                                         
                                                 .grid__wraper__badge
-                                                    //- span.new__badge New
+                                                
                                                     if(item.discountPercentage)
                                                         span.sale__badge -#{item.discountPercentage}%
                                             .grid__wraper__info
@@ -153,6 +127,60 @@ block main
                                                             span #{item.variants[0].price} Đ
                 
                 +pagination(pagination)
+    script. 
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortSelect = document.querySelector('#SortBy')
+            const sortClear=document.querySelector("[sort-clear]")
+            const priceRadios = document.querySelectorAll('.sidebar__box input[type="radio"]');
+            sortClear.addEventListener("click",()=>{
+                    url.searchParams.delete("sortKey")
+                    url.searchParams.delete("sortValue")
+                    window.location.href=url.href
+            })
+            sortSelect.addEventListener('change', function(e) {
+                const value = e.target.value;
+                const [sortKey, sortValue] = value.split('-');
+                const url = new URL(window.location.href);
+                url.searchParams.set('sortKey', sortKey);
+                url.searchParams.set('sortValue', sortValue);
+                window.location.href = url.href;
+            });
+
+           
+            const url = new URL(window.location.href);
+            const sortKey = url.searchParams.get('sortKey');
+            const sortValue = url.searchParams.get('sortValue');
+
+            if (sortKey && sortValue) {
+                const sortValueString = `${sortKey}-${sortValue}`;
+                const option = sortSelect.querySelector(`option[value='${sortValueString}']`);
+                if (option) {
+                    option.selected = true;
+                }
+            }
+            priceRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const selectedPrice = radio.value; // Lấy giá trị radio được chọn
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('price', selectedPrice); // Thêm tham số giá vào URL
+                    window.location.href = url.href; // Tải lại trang với tham số giá
+                });
+            });
+            const selectedPrice = url.searchParams.get('price');
+            if (selectedPrice) {
+                const selectedRadio = document.querySelector(`input[type="radio"][value="${selectedPrice}"]`);
+                if (selectedRadio) {
+                    selectedRadio.checked = true; 
+                }
+            }
+
+        });
+        
+    
+
+
+
+        
                 
 
 

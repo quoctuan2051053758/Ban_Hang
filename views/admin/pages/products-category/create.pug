@@ -6,7 +6,6 @@ block main
         .container-fluid
             if(role.permissions.includes("products-category_create"))
                 h1(class="mb-4") Thêm mới danh mục
-                +alert-error(5000)
                 form(
                     action = `${prefixAdmin}/products-category/create`
                     method="POST"

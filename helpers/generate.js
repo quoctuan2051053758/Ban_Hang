@@ -30,7 +30,7 @@ module.exports.generateCreatment = async()=>{
 
                 // Kiểm tra xem lastNumber có phải là số hợp lệ không
                 if (!isNaN(lastNumber)) {
-                    newNumber = lastNumber + 1; // Tăng số lên một đơn vị
+                    newNumber = lastNumber + 1; 
                 } else {
                     throw new Error('Last number is not a valid number');
                 }
@@ -38,10 +38,9 @@ module.exports.generateCreatment = async()=>{
                 throw new Error('Last code format is invalid');
             }
         } else {
-            newNumber = 1; // Nếu không có phiếu nào, bắt đầu từ 1
+            newNumber = 1;
         }
 
-        // Trả về mã mới với định dạng 'RIxxxxxx'
         return `RI${String(newNumber).padStart(6, '0')}`;
     } catch (error) {
         console.error('Error generating code:', error);
