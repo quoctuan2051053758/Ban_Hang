@@ -62,7 +62,6 @@ module.exports.detail = async (req,res)=>{
             _id:product.product_id
         }).select("title thumbnail price discountPercentage")
         product.productInfo=productInfo
-        console.log(product.productInfo)
     }
     
     res.render('admin/pages/order/detail',{

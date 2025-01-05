@@ -101,7 +101,7 @@ block main
                                                                 a.quick__view__action(href=`#` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng" data-bs-original-title="Quick View")
                                                                     i.fas.fa-shopping-cart
                                                         li
-                                                            a(href=`/cart/add/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết" data-bs-original-title="Add To Cart")
+                                                            a(href=`/products/detail/${item.slug}` data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết" data-bs-original-title="Add To Cart")
                                                                 i.far.fa-eye
                                                         li
                                                             a(href=`/wishlists/toggle/${item.id}` data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào danh sách yêu thích" data-bs-original-title="Add To Wishlist")
@@ -120,11 +120,11 @@ block main
                                                 .grid__wraper__price
                                                     if item.variants && item.variants.length > 0
                                                         if(item.discountPercentage)
-                                                            del #{item.variants[0].price} Đ
+                                                            del #{item.variants[0].price} 
                                                             - var discountAmount = item.variants[0].price * (item.discountPercentage / 100)
-                                                                span #{(item.variants[0].price - discountAmount).toFixed(0)} Đ 
+                                                                span #{(item.variants[0].price - discountAmount).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                                         else 
-                                                            span #{item.variants[0].price} Đ
+                                                            span #{item.variants[0].price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} 
                 
                 +pagination(pagination)
     script. 

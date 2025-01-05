@@ -31,6 +31,9 @@ mixin product-item(item)
                     a(href=`/products/detail/${item.slug}` tabindex="0") #{item.title}
                 .grid__wraper__price
                     if item.variants && item.variants.length > 0
-                        del #{item.variants[0].price} Đ
-                        - var discountAmount = item.variants[0].price * (item.discountPercentage / 100)
-                            span #{(item.variants[0].price - discountAmount).toFixed(0)} Đ 
+                        if(item.discountPercentage)
+                            del #{item.variants[0].price} Đ
+                            - var discountAmount = item.variants[0].price * (item.discountPercentage / 100)
+                                span #{(item.variants[0].price - discountAmount).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} 
+                        else 
+                            span #{item.variants[0].price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} 

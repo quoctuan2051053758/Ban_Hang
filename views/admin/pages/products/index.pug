@@ -117,7 +117,7 @@ block main
                                     ul.pagination.pagination-sm.m-0.float-end
                                         if pagination.currentPage > 1
                                             li.page-item
-                                                a.page-link(button-pagination=pagination.currentPage - 1) &laquo;
+                                                a.page-link(button-pagination=pagination.currentPage - 1) Trước đó
                                         - for(let i = 1; i <= pagination.totalPage; i++)
                                             li.page-item(class=`${pagination.currentPage == i ? "active" : ""}`)
                                                 a.page-link(button-pagination=i) #{i} 

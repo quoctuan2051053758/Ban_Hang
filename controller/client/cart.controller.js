@@ -10,6 +10,7 @@ module.exports.add =async (req,res)=>{
     const size= req.body.size;
     const color = req.body.color
     if( !req.body.size || !req.body.color){
+        req.flash("error", "Vui lòng chọn kích thước và màu sắc");
         return res.redirect("back")
         
     }

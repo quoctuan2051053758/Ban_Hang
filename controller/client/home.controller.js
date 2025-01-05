@@ -4,23 +4,19 @@ const productsCategoryHelper= require("../../helpers/product-category");
 const productsHelper= require("../../helpers/products")
 // GET
 module.exports.index = async(req,res)=>{
-    // lấy danh sách nổi bật
     const productsFeatured = await Product.find({
         featured:"1",
         deleted:false,
         status:"active"
-    }).limit(6)
+    }).limit(6).sort({ createdAt: -1 })
     const newProductsFeatured = productsHelper.priceNewProducts(productsFeatured)
 
-    // lấy ra danh sách sản phẩm mới nhất
     const productsNew = await Product.find({
         deleted:false,
         status:"active"
     }).sort({position:"desc"}).limit(4)
 
     const newproductsNew = productsHelper.priceNewProducts(productsNew)
-    
-
     const productDetails = [];
     const products = await Product.find()
     for(const product of products){
@@ -33,7 +29,7 @@ module.exports.index = async(req,res)=>{
         }));
         const sizesByColor = product.variants.reduce((acc, variant) => {
             if (!acc[variant.color]) {
-                acc[variant.color] = []; // Khởi tạo mảng cho màu sắc nếu chưa có
+                acc[variant.color] = []; 
             }
             acc[variant.color].push({
                 size: variant.size,
@@ -66,30 +62,26 @@ module.exports.index = async(req,res)=>{
     const productAccessory = await Product.find({
                 product_category_id:{$in:[accessory.id,...listSubCategoryId]},
                 deleted:false
-    }).limit(4)
-
-
+    }).limit(4).sort({ createdAt: -1 })
     const woment = await ProductCategory.findOne({
         slug:"thoi-trang-nu"
-    })
+    }).sort({ createdAt: -1 })
     const listSubCategoryAccessory= await productsCategoryHelper.getSubCategory(woment._id) 
     const listSubCategoryAccessoryId = listSubCategoryAccessory.map(item=>item.id)
     const productWoment = await Product.find({
                 product_category_id:{$in:[woment.id,...listSubCategoryAccessoryId]},
                 deleted:false
-    }).limit(4)
+    }).limit(4).sort({ createdAt: -1 })
     const man = await ProductCategory.findOne({
         slug:"thoi-trang-nam"
     })
     const listSubCategoryMan= await productsCategoryHelper.getSubCategory(man._id)
-    
     const listSubCategoryManId = listSubCategoryMan.map(item=>item.id)
     const productMan = await Product.find({
                 product_category_id:{$in:[man.id,...listSubCategoryManId]},
                 deleted:false
-    }).limit(4)
+    }).limit(4).sort({ createdAt: -1 })
     
-
     res.render('client/pages/home/index',{
         pageTitle:"Trang chủ",
         productsFeatured:newProductsFeatured,

@@ -77,7 +77,7 @@ block main
                         .single__product__bottom__menu
                             ul
                                 li
-                                    a(href=`/wishlists/toggle/${product.id}` title="Add to wishlist")
+                                    a(href=`/wishlists/toggle/${product._id}` title="Add to wishlist")
                                         span.add__wishlist
                                             if productIdsInWishlist.includes(product._id.toString())
                                                 i.fas.fa-heart

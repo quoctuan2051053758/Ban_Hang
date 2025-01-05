@@ -190,10 +190,7 @@ module.exports.createPost = async(req,res)=>{
     req.body.createdBy={
         account_id : res.locals.user.id
     }
-    console.log(req.body.variants)
-    req.body.variants = JSON.parse(req.body.variants) 
-    
-    
+    req.body.variants = JSON.parse(req.body.variants)   
     const product = new Product(req.body)
     await product.save()
     
