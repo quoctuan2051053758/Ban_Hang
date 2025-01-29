@@ -1,0 +1,23 @@
+extends ../../layouts/default.pug
+
+block main
+    .app-main 
+        .container-fluid
+            h1 Chi tiết đơn nhập
+            table.table.table-striped.table-hover
+                thead
+                    tr
+                        th Sản phẩm
+                        th Màu sắc
+                        th Kích cỡ
+                        th Giá nhập
+                        
+                        th Số lượng đã nhận
+                tbody
+                    each product in products
+                        tr
+                            td #{product.title}
+                            td #{product.color}
+                            td #{product.size}
+                            td #{product.importPrice}
+                            td #{product.quantityReceived}

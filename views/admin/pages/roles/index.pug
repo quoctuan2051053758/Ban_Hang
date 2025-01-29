@@ -31,10 +31,6 @@ block main
                                                 td #{item.title}
                                                 td #{item.description}
                                                 td
-                                                    a(
-                                                        href=`${prefixAdmin}/roles/detail/${item.id}` 
-                                                        class="btn btn-secondary btn-sm"
-                                                    ) Chi tiết
                                                     if(role.permissions.includes("roles_edit"))
                                                         a(
                                                             href=`${prefixAdmin}/roles/edit/${item.id}` 

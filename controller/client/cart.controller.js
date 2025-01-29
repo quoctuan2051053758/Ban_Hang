@@ -12,7 +12,6 @@ module.exports.add =async (req,res)=>{
     if( !req.body.size || !req.body.color){
         req.flash("error", "Vui lòng chọn kích thước và màu sắc");
         return res.redirect("back")
-        
     }
     const product = await Product.findById(productId);
     if (!product) {
@@ -27,7 +26,6 @@ module.exports.add =async (req,res)=>{
         req.flash("error", "Kích thước hoặc màu sắc không hợp lệ!");
         return res.redirect("back");
     }
-
     // Kiểm tra số lượng tồn kho
     if (quantity > variant.stock) {
         req.flash("error", `Số lượng yêu cầu vượt quá số lượng tồn kho. Tối đa là ${variant.stock}.`);
@@ -64,7 +62,6 @@ module.exports.add =async (req,res)=>{
     }
 
     req.flash("success","Đã thêm vào giỏ hàng")
-    // res.send("oke")
     res.redirect("back")
 }
 

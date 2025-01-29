@@ -26,16 +26,15 @@ module.exports.index = async (req,res)=>{
         inventories:inventories
     });
 }
-//[GET] admin/roles
 module.exports.import = async (req,res)=>{
     const products=await Product.find()
     res.render('admin/pages/inventory/create',{
-        pageTitle:"Kho hàng",
+        pageTitle:"Tạo đơn nhập",
         products:products
     });
 }
 
-//[GET] admin/roles
+
 module.exports.export = async (req,res)=>{
     const products=await Product.find()
     res.render('admin/pages/inventory/export',{
@@ -125,11 +124,41 @@ module.exports.cancel = async (req,res)=>{
     res.redirect("back") 
 }
 
-//[GET] admin/roles
 module.exports.detail = async (req,res)=>{
-    const products=await Product.find()
-    res.render('admin/pages/inventory/export',{
-        pageTitle:"Kho hàng",
-        products:products
-    });
+    const id = req.params.id;
+    try {
+        // Tìm kiếm thông tin tồn kho dựa trên ID
+        const inventory = await Inventory.findById(id);
+
+        if (!inventory) {
+            return res.status(404).send('Không tìm thấy mục tồn kho.');
+        }
+        const productDetails = [];
+        // In ra thông tin đơn nhập
+        for (const item of inventory.items) {
+            // Tìm sản phẩm dựa trên variantId
+            const product = await Product.findOne({ "variants._id": item.variantId });
+            const variant = product.variants.find(v => v._id.equals(item.variantId));
+            if (product) {
+                productDetails.push({
+                    title: product.title,
+                    color: variant.color,
+                    size:variant.size,
+                    importPrice: item.importPrice,
+                    quantityAvailable: item.quantityAvailable,
+                    quantityReceived: item.quantityReceived,
+                });
+            }
+        }
+        // Truyền dữ liệu vào view
+        res.render('admin/pages/inventory/detail', {
+            pageTitle: "Chi tiết đơn nhập",
+            products:productDetails,
+            inventory
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Có lỗi xảy ra khi truy xuất dữ liệu.');
+    }
 }
+

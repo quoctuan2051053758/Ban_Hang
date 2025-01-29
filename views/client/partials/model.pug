@@ -15,7 +15,7 @@ each item in productModel
                                     if item.variants && item.variants.length > 0
                                         if item.discountPercentage
                                             del.original-price #{item.variants[0].price}Đ
-                                            span#price-display #{(item.variants[0].price - (item.variants[0].price * (item.discountPercentage / 100))).toFixed(0)}Đ
+                                            span#price-display #{(item.variants[0].price - (item.variants[0].price * (item.discountPercentage / 100))).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}Đ
                                         else
                                             span#price-display #{item.variants[0].price}Đ
                                     else
@@ -64,7 +64,7 @@ script.
                 // Cập nhật giá trong modal
                 const priceDisplay = modal.querySelector('#price-display');
                 if (priceDisplay) {
-                    priceDisplay.textContent = `${selectedPrice}Đ`;
+                    priceDisplay.textContent = Number(selectedPrice).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
                 }
 
                 const originalPriceDisplay = modal.querySelector('.original-price');

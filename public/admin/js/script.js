@@ -21,8 +21,6 @@ if(formSearch){
     formSearch.addEventListener("submit",(e)=>{
         e.preventDefault();
         const keyword= e.target.elements.keyword.value;
-
-
         if(keyword){
             url.searchParams.set("keyword",keyword)
         }else{
@@ -100,8 +98,6 @@ if(formChangeMulti){
             return;
         }
     }
-
-
     if(inputChecked.length > 0){
         let ids=[]
         const inputIds= formChangeMulti.querySelector("input[name='ids']")

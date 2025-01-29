@@ -26,7 +26,7 @@ module.exports.index = async (req,res)=>{
 
     const orders = await Order.find(find)
         .limit(objectPagination.limitItems)
-        .skip(objectPagination.skip)
+        .skip(objectPagination.skip).sort({createdAt: -1})
     for(const order of orders){ 
         if(Array.isArray(order.products)){
             for(const product of order.products){

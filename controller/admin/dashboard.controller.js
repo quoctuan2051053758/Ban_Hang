@@ -117,7 +117,6 @@ module.exports.dashboard = async (req, res) => {
     const countProducts = await Product.countDocuments({
         deleted:false
     })
-    console.log(weeklyRevenue)
     res.render('admin/pages/dashboard/index', {
         pageTitle: "Tổng quan",
         total: formattedTotal,

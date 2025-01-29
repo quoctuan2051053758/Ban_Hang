@@ -37,7 +37,6 @@ block main
                                     )  Đã nhập
                                 
                             td 
-                                
                                 p #{inventory.fullName} 
                                 p #{new Date(inventory.createdAt).toLocaleString()}
                             td 
@@ -46,14 +45,5 @@ block main
                                     a(href=`/admin/inventorys/detail/${inventory.id}` data-id=inventory.id class="btn btn-secondary btn-enter") Xem đơn
                                 if(inventory.status == "completed")
                                     a(href=`/admin/inventorys/cancel/${inventory.id}` data-id=inventory.id class="btn btn-info btn-enter") Hủy đơn
-            //- script.     
-            //-     document.addEventListener('DOMContentLoaded', function() {
-            //-         const enterButtons = document.querySelectorAll('.btn-enter');
-            //-         enterButtons.forEach(button => {
-            //-             button.addEventListener('click', function() {
-            //-                 const inventoryId = this.getAttribute('data-id');
-            //-                 window.location.href = `/admin/inventorys/enter/${inventoryId}`;
-            //-             });
-            //-         });
-            //-     });
+            
             

@@ -33,8 +33,6 @@ module.exports.index = async(req,res)=>{
         req.query,
         countProducts
     )
-
-
     //sort
     const sort = {};
     if (req.query.sortKey && req.query.sortValue) {
@@ -231,9 +229,6 @@ module.exports.edit = async(req,res)=>{
 module.exports.editPatch = async(req,res)=>{
     const id = req.params.id
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
-
-   
-    
     req.body.variants = JSON.parse(req.body.variants)
     try{
         const updatedBy={
@@ -299,7 +294,6 @@ module.exports.productRestore = async(req,res)=>{
 }
 module.exports.delete = async(req,res)=>{
     const id = req.params.id
-    
     await Product.deleteOne({ _id: id })
     req.flash("success","Xóa sản phẩm thành công")
     res.redirect('back');

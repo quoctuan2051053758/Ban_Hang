@@ -30,7 +30,7 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
     .sidebar-brand
         a.brand-link(href="./index.html")
             img.brand-image.opacity-75.shadow(src="/admin/assets/img/AdminLTELogo.png", alt="AdminLTE Logo")
-            span.brand-text.fw-light Quản trị viên
+            span.brand-text.fw-light #{role.title}
     .sidebar-wrapper
         nav.mt-2
             ul.nav.sidebar-menu.flex-column(data-lte-toggle="treeview", role="menu", data-accordion="false")
@@ -46,10 +46,11 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
                                 a.nav-link(href=`${prefixAdmin}/products-category`)
                                     i.nav-icon.bi.bi-circle
                                     p Danh sách
-                            li.nav-item
-                                a.nav-link(href=`${prefixAdmin}/products-category/create`)
-                                    i.nav-icon.bi.bi-circle
-                                    p Thêm mới
+                            if(role.permissions.includes("products-category_create"))
+                                li.nav-item
+                                    a.nav-link(href=`${prefixAdmin}/products-category/create`)
+                                        i.nav-icon.bi.bi-circle
+                                        p Thêm mới
                             li.nav-item
                                 a.nav-link(href=`${prefixAdmin}/products-category/addDiscount`)
                                     i.nav-icon.bi.bi-circle
@@ -63,10 +64,11 @@ aside.app-sidebar.bg-body-secondary.shadow(data-bs-theme="dark")
                                 a.nav-link(href=`${prefixAdmin}/products`)
                                     i.nav-icon.bi.bi-circle
                                     p Danh sách
-                            li.nav-item
-                                a.nav-link(href=`${prefixAdmin}/products/create`)
-                                    i.nav-icon.bi.bi-circle
-                                    p Thêm mới
+                            if(role.permissions.includes("products_create"))
+                                li.nav-item
+                                    a.nav-link(href=`${prefixAdmin}/products/create`)
+                                        i.nav-icon.bi.bi-circle
+                                        p Thêm mới
                             li.nav-item
                                 a.nav-link(href=`${prefixAdmin}/products/product-delete`) 
                                     i.nav-icon.bi.bi-circle

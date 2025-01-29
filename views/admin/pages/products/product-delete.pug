@@ -21,7 +21,7 @@ block main
                                     h5.card-title.text-center.mb-3 #{product.title}
                                     
                                     .d-flex.flex-column.align-items-stretch.mt-auto
-                                        a.btn.btn-warning.mb-2.d-block(href=`${prefixAdmin}/products/restore/${product._id}`) Khôi phục  
+                                        a.btn.btn-primary.mb-2.d-block(href=`${prefixAdmin}/products/restore/${product._id}`) Khôi phục  
                                         a.btn.btn-danger.d-block(href=`${prefixAdmin}/products/deleteItem/${product._id}`) Xóa  
             else
                 p.text-center Không có sản phẩm nào đã xóa
